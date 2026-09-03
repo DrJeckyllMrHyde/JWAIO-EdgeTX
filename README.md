@@ -7,6 +7,8 @@ signal reçu.
 
 Version actuelle : **0.2.1 — version d'essai**.
 
+![Interface finale JWAIO sur RadioMaster TX15 Max](docs/assets/jwaio-tx15-interface-final.jpg)
+
 > JWAIO assiste le pilote mais ne remplace ni les vérifications de sécurité,
 > ni l'OSD vidéo, ni un dispositif de localisation autonome.
 
@@ -44,8 +46,8 @@ Les dossiers installés sont :
 Consulter le [mode d'emploi rapide](MODE_EMPLOI.txt), le
 [mode d'emploi détaillé](docs/MODE_EMPLOI.md) et le
 [guide d'installation](docs/INSTALLATION.md). La
-[présentation complète au format PDF](output/pdf/JWAIO-Presentation-v0.2.1.pdf)
-résume les fonctions du projet en 11 pages.
+[présentation synthétique au format PDF](output/pdf/JWAIO-Presentation-v0.2.1.pdf)
+résume les fonctions essentielles du projet en 6 pages.
 
 ## Capteurs attendus
 
@@ -74,7 +76,8 @@ python tools/jwaio_to_opendronelog.py "F260903_112000.csv"
 ```
 
 Voir [Utiliser JWAIO avec Open Drone Log](docs/OPEN_DRONE_LOG.md). Open Drone Log
-est un projet gratuit et open source indépendant de JWAIO.
+est un [projet gratuit et open source](https://opendronelog.com/) indépendant de
+JWAIO.
 
 ## Personnaliser le logo de la radio
 

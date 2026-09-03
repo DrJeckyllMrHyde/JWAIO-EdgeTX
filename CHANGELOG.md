@@ -2,6 +2,10 @@
 
 ## 0.2.1 - Distances GPS et présentation en deux colonnes
 
+- Présentation PDF ramenée à six pages synthétiques avec le logo du projet et
+  une photographie de l'interface finale sur TX15 Max.
+- Ajout de la photographie finale au README et du lien direct vers le site
+  gratuit et open source Open Drone Log dans la documentation rapide.
 - Ajout de la distance horizontale actuelle entre le drone et le point Home.
 - Ajout de la distance maximale au Home et du trajet total intégré depuis
   `GSpd`, avec repli sur les segments GPS.

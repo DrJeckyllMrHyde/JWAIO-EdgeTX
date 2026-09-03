@@ -69,6 +69,7 @@ Les CSV s'ouvrent directement dans Excel, LibreOffice Calc ou un tableur
 equivalent. Pour Open Drone Log, utilisez le convertisseur fourni :
   python tools/jwaio_to_opendronelog.py FICHIER_JWAIO.csv
 Il cree un fichier termine par -opendronelog.csv au format attendu par le site.
+Site officiel gratuit et open source : https://opendronelog.com/
 
 Personnaliser le logo de l'ecran radio
 --------------------------------------
@@ -83,4 +84,3 @@ Refaites la decouverte des capteurs avec le drone alimente, verifiez leur nom
 exact, puis rechargez le widget. Ne retirez jamais la carte SD radio allumee.
 
 Documentation detaillee : docs/MODE_EMPLOI.md
-
