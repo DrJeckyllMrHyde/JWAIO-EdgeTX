@@ -1,0 +1,21 @@
+# Fichiers de travail locaux
+work/
+tmp/
+.tmp/
+/.git-local/
+
+# Archives generees : elles seront publiees dans les Releases GitHub
+/outputs/
+
+# Apercus de controle du PDF
+output/pdf-preview/
+
+# Fichiers systeme et editeurs
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*.bak
+__pycache__/
+*.py[cod]
