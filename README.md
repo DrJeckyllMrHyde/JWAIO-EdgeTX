@@ -12,8 +12,8 @@ Version actuelle : **0.2.1 — version de test**.
 
 [⬇️ **Télécharger JWAIO v0.2.1 — version de test**](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.2.1/JWAIO-v0.2.1.zip)
 
-Le ZIP d'installation est prêt à être extrait directement à la racine de la carte
-SD de la radio.
+Le ZIP d'installation est prêt à être extrait directement à la racine de la
+mémoire de stockage EdgeTX de la radio.
 
 [Voir les notes de version et télécharger la sauvegarde source](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/v0.2.1)
 
@@ -27,26 +27,37 @@ SD de la radio.
 Cette section suffit pour installer et lancer le widget. Les explications
 complémentaires se trouvent plus bas dans le README et dans la documentation.
 
+La TX15 Max utilise sa mémoire flash interne par défaut. Si une carte microSD est
+installée, EdgeTX utilise celle-ci à la place. Dans ce guide, l'expression
+**mémoire de stockage EdgeTX** désigne donc le support actuellement utilisé par la
+radio.
+
 ### 1. Télécharger
 
 Cliquez sur le bouton **Télécharger JWAIO** situé en haut de cette page.
 
-### 2. Sauvegarder la carte SD
+### 2. Sauvegarder la mémoire de la radio
 
-Avant toute modification, copiez le contenu de la carte SD de la radio sur votre
-ordinateur. Vous pouvez également sauvegarder la configuration de la radio avec
-[EdgeTX Buddy](https://buddy.edgetx.org/).
+Avant toute modification, copiez tout le contenu de la mémoire de stockage EdgeTX
+sur votre ordinateur. Vous pouvez également sauvegarder la configuration de la
+radio avec [EdgeTX Buddy](https://buddy.edgetx.org/).
 
-### 3. Installer les fichiers
+### 3. Installer les fichiers dans la mémoire de la radio
 
-1. Éteignez la radio.
-2. Retirez sa carte SD et branchez-la à l'ordinateur.
-3. Ouvrez le fichier ZIP téléchargé.
-4. Copiez tout son contenu à la racine de la carte SD.
-5. Acceptez la fusion des dossiers si votre ordinateur la propose.
+1. Allumez la radio.
+2. Reliez le port USB-C de données de la radio à l'ordinateur.
+3. Lorsque EdgeTX demande le mode USB, choisissez **USB Storage**.
+4. Ouvrez le lecteur de stockage de la radio affiché sur l'ordinateur.
+5. Ouvrez le fichier ZIP téléchargé.
+6. Copiez tout son contenu à la racine du lecteur de la radio.
+7. Acceptez la fusion des dossiers si votre ordinateur la propose.
 
-**Attention :** ne copiez pas le dossier ZIP lui-même dans un nouveau
-sous-dossier. À la fin, les dossiers suivants doivent être présents sur la carte :
+Le lecteur affiché correspond à la mémoire interne par défaut, ou à la carte
+microSD lorsqu'une carte est installée.
+
+**Attention :** ne formatez pas le lecteur, ne supprimez pas ses dossiers
+existants et ne placez pas le contenu dans un sous-dossier supplémentaire. À la
+fin, les dossiers suivants doivent être visibles à la racine :
 
 ~~~text
 /WIDGETS/JWAIO/
@@ -56,12 +67,14 @@ sous-dossier. À la fin, les dossiers suivants doivent être présents sur la ca
 
 ### 4. Découvrir les capteurs
 
-1. Replacez la carte SD et allumez la radio.
-2. Sélectionnez le modèle concerné.
-3. Alimentez le drone, hélices retirées.
-4. Ouvrez la page de télémétrie du modèle.
-5. Lancez la découverte des nouveaux capteurs.
-6. Attendez que les capteurs apparaissent, puis arrêtez la découverte.
+1. Attendez la fin de la copie, puis éjectez proprement le lecteur depuis
+   l'ordinateur.
+2. Débranchez le câble USB et redémarrez la radio.
+3. Sélectionnez le modèle concerné.
+4. Alimentez le drone, hélices retirées.
+5. Ouvrez la page de télémétrie du modèle.
+6. Lancez la découverte des nouveaux capteurs.
+7. Attendez que les capteurs apparaissent, puis arrêtez la découverte.
 
 ### 5. Ajouter et régler JWAIO
 
@@ -189,8 +202,8 @@ du visuel qu'il emploie.
 ## Développement et vérification
 
 Les outils de construction se trouvent dans le dossier tools. Le projet vérifie
-notamment la structure de la carte SD, les dix réglages du menu, les sons WAV, les
-images PNG et la syntaxe des modules Lua.
+notamment la structure du paquet d'installation EdgeTX, les dix réglages du menu,
+les sons WAV, les images PNG et la syntaxe des modules Lua.
 
 Le test du convertisseur Open Drone Log s'exécute avec :
 
