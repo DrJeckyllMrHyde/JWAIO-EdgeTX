@@ -1,6 +1,6 @@
 # JWAIO — Jeckyll Widget All in One
 
-JWAIO est un widget Lua FPV plein écran conçu pour la **RadioMaster TX15 Max**
+JWAIO est un widget Lua FPV plein écran ou mode app conçu pour la **RadioMaster TX15 Max**
 sous **EdgeTX 2.12.x**. Il rassemble les contrôles avant décollage, les alertes
 sonores essentielles, le suivi GPS et un **Qwad Finder** basé sur la puissance du
 signal reçu.
@@ -14,26 +14,51 @@ Version actuelle : **0.2.1 — version d'essai**.
 
 ## Fonctions principales
 
-- Modes `ANGLE`, `ACRO` et `RTH`, avec états `Ready`, `Pre-Arm` et `Arm`.
-- Throttle en pourcentage et cinq états graphiques PNG.
-- `Fly Time` lu depuis TIMER 1 et `Fly Total` depuis TIMER 2.
-- Batteries LiPo, LiIon et LiHv, tension par cellule et distinction `NO_DATA`.
-- Alertes vocales de batterie, liaison, GPS, altitude, throttle et switches.
+- Affichage Modes `ANGLE`, `ACRO` et `RTH`, avec états `Ready`, `Pre-Arm` et `Arm`.
+--| effet sonore pour chaque mode engagé.
+
+- Affichage Throttle en pourcentage et cinq états graphiques PNG.
+--| effet sonore si Throttle 100% > a 3s [ protection esc ]
+
+- `Fly Time` lu depuis TIMER 1 et `Fly Total` depuis TIMER 2
+--| A configurer dans Betaflight.
+
+- Batteries LiPo, LiIon et LiHv, tension par cellule.
+--| Effet sonore si batterie engager Full.
+--| Effet sonore si batterie faible en fonction du choix de la batterie posé sur la machine.
+--| Effet sonore si batterie critique en fonction du choix de la batterie posé sur la machine.
+
+- Affichage Fixe Satellites, position gps.
+--| Effet sonore si 5 satellite fixé.
+--| Sauvegarde de la dernière position Gps.
+
 - Liaison ELRS ou TBS Crossfire avec LQ, RSSI et jauge de qualité.
-- GPS, satellites, dernière position, vitesse et altitude à 1 Hz.
-- Distance au Home, distance maximale et trajet total estimé.
-- Un journal CSV par armement, plus sauvegarde de la dernière position et des
-  distances du dernier vrai vol.
-- Qwad Finder chargé uniquement lorsque Beeper, Flip ou RTH est actif ; ses bips
-  accélèrent à l'approche du quad.
+--| Effet sonore si LQ < 70%.
+
+- Sauvegarde des valeurs GPS, satellites, dernière position, vitesse et altitude à 1 Hz dans un fichier CSV
+à des fins d'exploitation.
+
+- Exploitation du fichier grâce au logiciel gratuit libre de droit ou appli web [https://opendronelog.com/](https://app.opendronelog.com/)
+
+- Affichage Distance au Home, distance maximale et trajet total estimé.
+
+- Qwad Finder chargé uniquement lorsque Beeper, Flip ou RTH est actif.
+--| Effet sonore lors de l'approche de la machine perdu.
 
 ## Installation rapide
 
+Avant toute manipulation, sauvergarder votre config radio grace a l'appli [EdgeBuddi](https://buddy.edgetx.org/#/flash?version=v2.11.4&source=releases)
+--| Supprimer l'integration des sons de vos switchs sur votre radio, pour eviter tout risque de superposition.
+--| Si vous avez déjà programmer un Log auto sur votre radio, il faudra le couper pour éviter un double enregistrement.
+
 1. Télécharger `JWAIO-v0.2.1.zip` depuis la future page **Releases**.
-2. Sauvegarder la carte SD puis extraire le ZIP à sa racine.
-3. Découvrir les capteurs avec le drone alimenté.
-4. Redémarrer EdgeTX et ajouter **JWAIO** sur une page plein écran.
-5. Choisir la batterie, les switches et les sources dans les réglages du widget.
+2. Sauvegarder le contenu de votre carte SD
+3. Extraire le contenu du ZIP à sa racine.
+4. Découvrir les capteurs avec le drone alimenté.
+5. Redémarrer EdgeTX et ajouter **JWAIO** sur une page plein écran.
+|-- Il est possible de faire une page Appli.
+6. Choisir la batterie, les switches et les sources dans les réglages du widget.
+7. Have fun
 
 Les dossiers installés sont :
 
@@ -49,10 +74,10 @@ Consulter le [mode d'emploi rapide](MODE_EMPLOI.txt), le
 [présentation synthétique au format PDF](output/pdf/JWAIO-Presentation-v0.2.1.pdf)
 résume les fonctions essentielles du projet en 6 pages.
 
-## Capteurs attendus
+## Les Capteurs
 
-Pour respecter la limite de dix réglages du menu EdgeTX, plusieurs capteurs sont
-lus directement par leur nom :
+Pour respecter mon script lors, plusieurs capteurs sont lus directement par leur nom :
+Ce widget a besoin de :
 
 | Donnée | Nom EdgeTX attendu |
 |---|---|
@@ -62,8 +87,22 @@ lus directement par leur nom :
 | Vitesse sol | `GSpd` |
 | Satellites | `Sats` |
 | RSSI Finder | `1RSS` |
+| Link quality | `RQly` |
 
 Les noms sont modifiables dans `sdcard/WIDGETS/JWAIO/config.lua`.
+
+## Les Switchs
+
+Choisir dans le menu les switch associer au focntion du script :
+
+| Switch |
+|---|---|
+| Arm |
+| Pré-arm |
+| Beeper |
+| Flip |
+| RTH |
+| Thr |
 
 ## Journaux et Open Drone Log
 
@@ -109,3 +148,5 @@ python tests/test_opendronelog_converter.py
 - Composants tiers : [sdcard/THIRD_PARTY_NOTICES.txt](sdcard/THIRD_PARTY_NOTICES.txt).
 
 Copyright © 2026 **DrJeckyllMrHyde**.
+FB -> https://www.facebook.com/
+Yb -> https://www.youtube.com/@JeckyllHydeFpv
