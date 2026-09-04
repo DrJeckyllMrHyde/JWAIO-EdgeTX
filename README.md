@@ -17,22 +17,22 @@ Version actuelle : **0.2.1 — version d'essai**.
 - Affichage Modes `ANGLE`, `ACRO` et `RTH`, avec états `Ready`, `Pre-Arm` et `Arm`.  
 --| effet sonore pour chaque mode engagé.
 
-- Affichage Throttle en pourcentage et cinq états graphiques PNG.
+- Affichage Throttle en pourcentage et cinq états graphiques PNG.  
 --| effet sonore si Throttle 100% > a 3s [ protection esc ]
 
 - `Fly Time` lu depuis TIMER 1 et `Fly Total` depuis TIMER 2  
 --| A configurer dans Betaflight.
 
-- Batteries LiPo, LiIon et LiHv, tension par cellule.
---| Effet sonore si batterie engager Full.
---| Effet sonore si batterie faible en fonction du choix de la batterie posé sur la machine.
---| Effet sonore si batterie critique en fonction du choix de la batterie posé sur la machine.
+- Batteries LiPo, LiIon et LiHv, tension par cellule.  
+--| Effet sonore si batterie engager Full.  
+--| Effet sonore si batterie faible en fonction du choix de la batterie posé sur la machine.  
+--| Effet sonore si batterie critique en fonction du choix de la batterie posé sur la machine.  
+    
+- Affichage Fixe Satellites, position gps.  
+--| Effet sonore si 5 satellite fixé.  
+--| Sauvegarde de la dernière position Gps.  
 
-- Affichage Fixe Satellites, position gps.
---| Effet sonore si 5 satellite fixé.
---| Sauvegarde de la dernière position Gps.
-
-- Liaison ELRS ou TBS Crossfire avec LQ, RSSI et jauge de qualité.
+- Liaison ELRS ou TBS Crossfire avec LQ, RSSI et jauge de qualité.  
 --| Effet sonore si LQ < 70%.
 
 - Sauvegarde des valeurs GPS, satellites, dernière position, vitesse et altitude à 1 Hz dans un fichier CSV
