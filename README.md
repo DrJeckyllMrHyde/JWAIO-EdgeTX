@@ -7,6 +7,13 @@ signal reçu.
 
 Version actuelle : **0.2.1 — version d'essai**.
 
+## Téléchargement direct
+
+[⬇️ **Télécharger JWAIO v0.2.1 — version de test**](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.2.1/JWAIO-v0.2.1.zip)
+
+Extraire ensuite le contenu du ZIP à la racine de la carte SD de la radio.  
+[Voir les notes de version et la sauvegarde source](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/v0.2.1).
+
 ![Interface finale JWAIO sur RadioMaster TX15 Max](docs/assets/jwaio-tx15-interface-final.jpg)
 
 > JWAIO assiste le pilote mais ne remplace ni les vérifications de sécurité,
@@ -51,7 +58,7 @@ Avant toute manipulation, sauvergarder votre config radio grace a l'appli [EdgeB
 --| Supprimer l'integration des sons de vos switchs sur votre radio, pour eviter tout risque de superposition.  
 --| Si vous avez déjà programmer un Log auto sur votre radio, il faudra le couper pour éviter un double enregistrement.
 
-1. Télécharger `JWAIO-v0.2.1.zip` depuis la future page **Releases**.
+1. Télécharger directement [`JWAIO-v0.2.1.zip`](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.2.1/JWAIO-v0.2.1.zip).
 2. Sauvegarder le contenu de votre carte SD
 3. Extraire le contenu du ZIP à sa racine.
 4. Découvrir les capteurs avec le drone alimenté.
