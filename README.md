@@ -42,7 +42,7 @@ Avant toute modification, copiez tout le contenu de la mémoire de stockage Edge
 sur votre ordinateur. Vous pouvez également sauvegarder la configuration de la
 radio avec [EdgeTX Buddy](https://buddy.edgetx.org/).
 
-### 3. Installer les fichiers dans la mémoire de la radio
+### 3a. Installer les fichiers dans la mémoire de la radio
 
 1. Allumez la radio.
 2. Reliez le port USB-C de données de la radio à l'ordinateur.
@@ -64,6 +64,9 @@ fin, les dossiers suivants doivent être visibles à la racine :
 /SOUNDS/fr/JWAIO/
 /LOGS/JWAIO/
 ~~~
+
+### 3b. Supprimer le widget
+ en cour d'ecriture
 
 ### 4. Découvrir les capteurs
 
