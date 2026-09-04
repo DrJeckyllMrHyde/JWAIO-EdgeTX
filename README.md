@@ -14,13 +14,13 @@ Version actuelle : **0.2.1 — version d'essai**.
 
 ## Fonctions principales
 
-- Affichage Modes `ANGLE`, `ACRO` et `RTH`, avec états `Ready`, `Pre-Arm` et `Arm`.
+- Affichage Modes `ANGLE`, `ACRO` et `RTH`, avec états `Ready`, `Pre-Arm` et `Arm`.  
 --| effet sonore pour chaque mode engagé.
 
 - Affichage Throttle en pourcentage et cinq états graphiques PNG.
 --| effet sonore si Throttle 100% > a 3s [ protection esc ]
 
-- `Fly Time` lu depuis TIMER 1 et `Fly Total` depuis TIMER 2
+- `Fly Time` lu depuis TIMER 1 et `Fly Total` depuis TIMER 2  
 --| A configurer dans Betaflight.
 
 - Batteries LiPo, LiIon et LiHv, tension par cellule.
