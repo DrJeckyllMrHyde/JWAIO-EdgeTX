@@ -47,15 +47,15 @@ Version actuelle : **0.2.1 — version d'essai**.
 
 ## Installation rapide
 
-Avant toute manipulation, sauvergarder votre config radio grace a l'appli [EdgeBuddi](https://buddy.edgetx.org/#/flash?version=v2.11.4&source=releases)
---| Supprimer l'integration des sons de vos switchs sur votre radio, pour eviter tout risque de superposition.
+Avant toute manipulation, sauvergarder votre config radio grace a l'appli [EdgeBuddi](https://buddy.edgetx.org/#/flash?version=v2.11.4&source=releases)  
+--| Supprimer l'integration des sons de vos switchs sur votre radio, pour eviter tout risque de superposition.  
 --| Si vous avez déjà programmer un Log auto sur votre radio, il faudra le couper pour éviter un double enregistrement.
 
 1. Télécharger `JWAIO-v0.2.1.zip` depuis la future page **Releases**.
 2. Sauvegarder le contenu de votre carte SD
 3. Extraire le contenu du ZIP à sa racine.
 4. Découvrir les capteurs avec le drone alimenté.
-5. Redémarrer EdgeTX et ajouter **JWAIO** sur une page plein écran.
+5. Redémarrer EdgeTX et ajouter **JWAIO** sur une page plein écran.  
 |-- Il est possible de faire une page Appli.
 6. Choisir la batterie, les switches et les sources dans les réglages du widget.
 7. Have fun
@@ -95,14 +95,14 @@ Les noms sont modifiables dans `sdcard/WIDGETS/JWAIO/config.lua`.
 
 Choisir dans le menu les switch associer au focntion du script :
 
-| Switch |
+| Fonction | Switch |
 |---|---|
-| Arm |
-| Pré-arm |
-| Beeper |
-| Flip |
-| RTH |
-| Thr |
+| Moteur ON | `arm` |
+| Pré-arm | `pré-arm` |
+| beeper | `beeper` |
+| flip | `Flip over crash` |
+| RTH | `Return to hom` |
+| Channel Throttle | `thr` |
 
 ## Journaux et Open Drone Log
 
