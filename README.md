@@ -66,7 +66,44 @@ fin, les dossiers suivants doivent être visibles à la racine :
 ~~~
 
 ### 3b. Supprimer le widget
- en cour d'ecriture
+
+Avant la suppression, sauvegardez les journaux de vol que vous souhaitez
+conserver. Si JWAIO est utilisé par plusieurs modèles, retirez-le de chaque écran
+concerné.
+
+1. Sur la radio, ouvrez les réglages d'affichage de chaque modèle utilisant
+   JWAIO.
+2. Retirez le widget de ses pages ou remplacez-le par un autre widget.
+3. Allumez la radio et reliez son port USB-C de données à l'ordinateur.
+4. Lorsque EdgeTX demande le mode USB, choisissez **USB Storage**.
+5. Ouvrez le lecteur correspondant à la mémoire de stockage EdgeTX.
+6. Supprimez uniquement les dossiers suivants :
+
+~~~text
+/WIDGETS/JWAIO/
+/SOUNDS/fr/JWAIO/
+~~~
+
+Le dossier suivant contient les journaux de vol, la dernière position GPS et les
+distances sauvegardées. Supprimez-le seulement si vous ne souhaitez pas conserver
+ces données :
+
+~~~text
+/LOGS/JWAIO/
+~~~
+
+Vous pouvez également supprimer le fichier `/JWAIO_README.txt` s'il est présent
+à la racine.
+
+**Attention :** ne supprimez pas les dossiers parents `/WIDGETS/`,
+`/SOUNDS/` ou `/LOGS/`, car ils peuvent contenir des fichiers utilisés par
+EdgeTX ou par d'autres scripts.
+
+7. Éjectez proprement le lecteur depuis l'ordinateur.
+8. Débranchez le câble USB, puis redémarrez la radio.
+
+JWAIO est alors supprimé. Les réglages généraux d'EdgeTX et les autres widgets ne
+sont pas modifiés.
 
 ### 4. Découvrir les capteurs
 
