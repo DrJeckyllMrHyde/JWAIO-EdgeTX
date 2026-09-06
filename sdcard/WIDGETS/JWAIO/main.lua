@@ -80,8 +80,8 @@ local function updateFinder(widget)
   loadFinder(widget)
   if not widget.finder then return end
 
-  -- Le module calcule la force et la cadence. Le gestionnaire audio decide
-  -- ensuite si le bip peut etre joue sans couper une alerte prioritaire.
+  -- Le Finder passe avant les nouvelles annonces JWAIO pendant la recherche.
+  -- Une lecture deja commencee finit normalement, sans vider l'audio EdgeTX.
   widget.finder:update(widget.data, function()
     return audioModule.playFinderBip(widget.audio, widget.data.now)
   end)
@@ -90,12 +90,12 @@ end
 local function tick(widget)
   dataModule.update(widget.data, widget.options)
   flightModule.update(widget.flight, widget.data, widget.logger)
+  audioModule.update(widget.audio, widget.data)
+  updateFinder(widget)
   distanceModule.update(widget.distance, widget.data, widget.flight)
   -- Le journal passe apres le calcul afin que chaque ligne CSV contienne les
   -- distances correspondant exactement au meme echantillon GPS.
   loggerModule.update(widget.logger, widget.data)
-  audioModule.update(widget.audio, widget.data)
-  updateFinder(widget)
 end
 
 local function create(zone, currentOptions)

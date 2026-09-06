@@ -144,10 +144,10 @@ déjà une valeur compatible avec une cellule, elle est utilisée directement.
 | LiHv | 3,60 V/cellule | 3,40 V/cellule |
 
 Une source absente affiche `NO_DATA`. Elle ne doit pas être confondue avec une
-batterie faible. L'alerte faible est confirmée dans le temps puis demandée toutes
-les deux secondes tant que la tension reste basse. La file audio espace les
-lectures pour empêcher le recouvrement des fichiers. L'alerte critique est
-prioritaire.
+batterie faible. Chaque niveau est confirmé dans le temps puis annoncé une seule
+fois par épisode. Une récupération stable pendant cinq secondes réarme l'annonce.
+Une perte de télémétrie ou un rebond bref ne la réarme pas. Hors recherche Finder,
+l'alerte critique est prioritaire sur les autres annonces JWAIO.
 
 Lors d'une nouvelle connexion, `Lipo_Liion_Full.wav` est joué si une LiPo ou
 LiIon dépasse 4,10 V/cellule. `Lihv_Full.wav` est joué si une LiHv dépasse
@@ -223,14 +223,14 @@ correspondances de colonnes sont décrits dans `docs/OPEN_DRONE_LOG.md`.
 Les alertes restent actives même si l'ancien affichage `SON` a été supprimé. Les
 événements simultanés sont conservés dans une file priorisée et dédupliquée.
 
-- Batterie faible : répétition toutes les deux secondes tant que l'état persiste.
+- Batterie faible : une annonce par épisode, après confirmation dans le temps.
 - Batterie critique : annonce prioritaire par épisode.
 - Mauvaise liaison : LQ inférieur au seuil pendant deux secondes, une annonce.
 - GPS perdu : après un fix déjà obtenu et deux secondes de perte en vol.
 - Throttle : 95 % ou plus pendant trois secondes, une annonce.
-- Altitude : une annonce au-delà de 120 m gagnés depuis l'armement, une fois par
-  vol. La référence relative évite une alerte immédiate avec une altitude GPS
-  absolue déjà supérieure à 120 m au sol.
+- Altitude : une annonce lorsque le capteur `Alt` valide dépasse strictement
+  120 m, moteurs armés, une fois par armement. Vérifiez la référence du capteur :
+  cette valeur n'est pas nécessairement une hauteur au-dessus du sol.
 - Fix GPS : `Satellite.wav` lors du passage à l'état GPS OK, fixé à cinq
   satellites ou plus dans cette version.
 - Activations : ACRO, ANGLE, ARM, PRE-ARM, RTH, Beeper et Flip sont annoncés sur
@@ -245,12 +245,15 @@ sonore de Qwad Finder.
 Le module s'active si au moins une commande Beeper, Flip ou RTH est active. Il
 utilise `1RSS` en priorité et `RQly` comme solution de repli, lisse les variations
 du signal, puis transforme la mesure en force de 0 à 100 %. Plus cette force
-augmente, plus les bips se rapprochent. Pour éviter un chevauchement avec le WAV
-de 0,56 seconde, l'intervalle minimum est fixé à 0,65 seconde.
+augmente, plus les bips se rapprochent. Avec le bip allégé de 0,143 seconde,
+l'intervalle visé va de 1,20 à 0,20 seconde, selon le signal et la cadence EdgeTX.
 
 Le module n'est pas chargé au démarrage. Dès que Beeper, Flip et RTH sont tous
-inactifs, JWAIO retire l'instance et demande une collecte mémoire. Les alertes
-vocales de sécurité conservent toujours la priorité sur `finder_bip.wav`.
+inactifs, JWAIO retire l'instance et demande une collecte mémoire. Pendant la
+recherche, les autres annonces JWAIO sont différées ; un son déjà commencé finit
+normalement. Les alertes internes EdgeTX ne sont pas désactivées. À la sortie,
+les alertes encore pertinentes peuvent être jouées, sans rejouer les confirmations
+de switches devenues inutiles.
 
 ## 13. Procédure de contrôle sans hélices
 

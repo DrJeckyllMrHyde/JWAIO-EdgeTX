@@ -5,6 +5,15 @@ Compatibilite
 -------------
 RadioMaster TX15 Max avec EdgeTX 2.12.x, page d'accueil plein ecran.
 
+Derniere revision 0.2.1 : 06/09/2026
+-----------------------------------
+Alertes batterie sans repetition incessante, alerte Alt > 120 m corrigee,
+Qwad Finder plus reactif et prioritaire, sons alleges et donnees invalides
+ecartees des CSV. Le menu et le design restent identiques.
+Pour mettre a jour, sauvegardez puis remplacez les fichiers et les sons.
+Preservez vos journaux et votre logo personnalise WIDGETS/JWAIO/img/logo.png.
+Ne supprimez pas le widget du modele pour cette mise a jour ; redemarrez la radio.
+
 Avant l'installation
 ---------------------
 1. Retirez les helices du drone pour les premiers essais.
@@ -54,12 +63,21 @@ LiIon     : alerte a 3,00 V/cellule, critique a 2,80 V/cellule.
 Une LiHv pleine peut atteindre 4,35 V/cellule.
 NO_DATA signifie qu'aucune donnee valide n'est recue ; ce n'est pas une
 alerte de batterie faible.
+Chaque niveau est annonce une fois par episode, puis rearme apres cinq secondes
+de recuperation stable. La temporisation anti-sag reste active.
+Altitude : Alt valide strictement superieur a 120 m, une fois par armement.
+Il ne s'agit pas necessairement de la hauteur au-dessus du sol : verifiez Alt.
+Pendant Beeper, Flip ou RTH, le Finder differe les autres annonces JWAIO.
+Un son deja commence se termine normalement. Les alertes internes EdgeTX
+ne sont pas desactivees. Desactivez la recherche pour retrouver les annonces.
 
 Journaux de vol
 ---------------
 Un fichier CSV est cree a chaque armement dans /LOGS/JWAIO/. Une ligne est
 ecrite chaque seconde. La derniere position est conservee dans lastpos.txt et
 les distances du dernier vol dans lastdistance.txt.
+Les capteurs invalides ou perimes produisent des champs CSV vides, pas des
+anciennes valeurs. Un capteur Alt valide reste utilisable meme sans GPS.
 
 Le calcul d'un nouveau vol commence uniquement avec ARM actif ET un throttle
 strictement superieur a 5 %. Un controle moteur a 5 % ou moins ne remet donc

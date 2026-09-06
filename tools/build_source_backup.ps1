@@ -26,21 +26,29 @@ foreach ($name in @(
     "NOTICE", "AUTHORS.md", ".gitignore", ".gitattributes", "sdcard", "docs",
     "tools", "tests"
 )) {
-    Copy-Item -LiteralPath (Join-Path $projectRoot $name) -Destination $stagingRoot -Recurse
+    $source = Join-Path $projectRoot $name
+    if (Test-Path -LiteralPath $source -PathType Container) {
+        # Exclure les caches generes par les tests, sans modifier les sources.
+        Get-ChildItem -LiteralPath $source -Recurse -File | Where-Object {
+            $_.FullName -notmatch '[\\/]__pycache__[\\/]' -and
+            $_.Extension -notin @('.pyc', '.pyo')
+        } | ForEach-Object {
+            $relative = $_.FullName.Substring($projectRoot.Length + 1)
+            $destination = Join-Path $stagingRoot $relative
+            New-Item -ItemType Directory -Force -Path (Split-Path -Parent $destination) | Out-Null
+            Copy-Item -LiteralPath $_.FullName -Destination $destination
+        }
+    } else {
+        Copy-Item -LiteralPath $source -Destination $stagingRoot
+    }
 }
 
 $pdfOutput = Join-Path $stagingRoot "output\pdf"
 New-Item -ItemType Directory -Force -Path $pdfOutput | Out-Null
 Copy-Item -Path (Join-Path $projectRoot "output\pdf\*") -Destination $pdfOutput
 
-$qaRoot = Join-Path $stagingRoot "work"
-$qaLuaRoot = Join-Path $qaRoot "lua-check"
-New-Item -ItemType Directory -Force -Path $qaLuaRoot | Out-Null
-Copy-Item -LiteralPath (Join-Path $projectRoot "work\validate_release.py") -Destination $qaRoot
-Copy-Item -LiteralPath (Join-Path $projectRoot "work\generate_assets.py") -Destination $qaRoot
-foreach ($name in @("check.mjs", "runtime_harness.lua", "package.json", "pnpm-lock.yaml")) {
-    Copy-Item -LiteralPath (Join-Path $projectRoot ("work\lua-check\" + $name)) -Destination $qaLuaRoot
-}
+# La sauvegarde se construit depuis un clone propre. Les tests sont dans tests/ ;
+# ne jamais inclure le dossier work/ local (brouillons, journaux ou skins prives).
 Compress-Archive -Path (Join-Path $stagingRoot "*") -DestinationPath $archive -CompressionLevel Optimal -Force
 $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $archive).Hash.ToLowerInvariant()
 Set-Content -LiteralPath $hashFile -Value ("$hash  " + [IO.Path]::GetFileName($archive)) -Encoding ascii

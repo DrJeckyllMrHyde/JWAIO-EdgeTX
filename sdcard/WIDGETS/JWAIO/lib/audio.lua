@@ -30,6 +30,12 @@ return function(config)
     acro = 14
   }
 
+  local confirmations = {
+    arm=true, rth=true, preArm=true, beeper=true, flip=true,
+    angle=true, acro=true, satellite=true,
+    batteryFullLihv=true, batteryFullStandard=true
+  }
+
   local function fileFor(kind)
     local base = config.sounds[kind]
     if not base then return nil end
@@ -53,6 +59,7 @@ return function(config)
   local function request(audio, kind)
     -- Une annonce deja en attente n'est jamais ajoutee une seconde fois. Le tri
     -- maintient les alertes critiques devant les confirmations de switches.
+    if audio.finderActive and confirmations[kind] then return end
     if not priorities[kind] or not fileFor(kind) or audio.queued[kind] then return end
     audio.queue[#audio.queue + 1] = kind
     audio.queued[kind] = true
@@ -123,12 +130,56 @@ return function(config)
   end
 
   local function playNext(audio, now)
-    if #audio.queue == 0 or now < audio.nextPlay then return end
+    if audio.finderActive or #audio.queue == 0 or now < audio.nextPlay then return end
     local kind = table.remove(audio.queue, 1)
     audio.queued[kind] = nil
     local path = fileFor(kind)
-    if path and playFile then pcall(playFile, path) end
-    audio.nextPlay = now + (config.audioGapSeconds or 3.2)
+    if not path or not playFile then return end
+    local ok, result = pcall(playFile, path)
+    if not ok or result == false then
+      request(audio, kind)
+      audio.nextPlay = now + 1
+      return
+    end
+    -- Une alerte en attente n'est pas encore annoncee. Cela permet au Finder
+    -- de la differer sans perdre le franchissement, notamment celui des 120 m.
+    if kind == "batteryLow" then audio.batteryLow.announced = true end
+    if kind == "batteryCritical" then
+      audio.batteryCritical.announced = true
+      audio.batteryLow.announced = true
+    end
+    if kind == "altitude" then audio.altitudeAnnounced = true end
+    local duration = config.soundDurations and config.soundDurations[kind]
+    audio.nextPlay = now + (duration and (duration + (config.audioPaddingSeconds or 0.08))
+      or (config.audioGapSeconds or 3.2))
+  end
+
+  local function updateBatteryEpisode(audio, episode, kind, valid, value,
+      threshold, recover, now, hold)
+    if not valid then
+      -- Une perte de telemetrie n'est ni une batterie faible ni une recharge.
+      episode.since = nil
+      episode.recoveredSince = nil
+      cancel(audio, kind)
+      return
+    end
+    if value >= recover then
+      episode.recoveredSince = episode.recoveredSince or now
+      if now - episode.recoveredSince >= (config.batteryRecoverySeconds or 5) then
+        resetEpisode(episode)
+      end
+    else
+      episode.recoveredSince = nil
+    end
+    if value < threshold then
+      episode.since = episode.since or now
+      if not episode.announced and now - episode.since >= hold then
+        request(audio, kind)
+      end
+    else
+      episode.since = nil
+      cancel(audio, kind)
+    end
   end
 
   function M.new()
@@ -136,7 +187,7 @@ return function(config)
       queue = {},
       queued = {},
       nextPlay = 0,
-      batteryLowNext = 0,
+      finderActive = false,
       batteryLow = { since=nil, announced=false },
       batteryCritical = { since=nil, announced=false },
       link = { since=nil, announced=false },
@@ -146,6 +197,8 @@ return function(config)
       gpsReady = false,
       altitudeAnnounced = false,
       altitudeBaseline = nil,
+      groundAltitude = nil,
+      groundAltitudeAt = nil,
       batteryConnected = false,
       batteryMissingSince = nil,
       initialized = false,
@@ -160,32 +213,37 @@ return function(config)
     local inFlight = state.armed
     local profile = state.batteryProfile or config.batteryProfiles[1]
 
+    local wasArmed = audio.previous.armed
+    audio.finderActive = state.beeper or state.flip or state.rth or false
+    if audio.finderActive then
+      -- Les confirmations n'ont plus d'interet apres une recherche. Les alertes
+      -- encore pertinentes attendront sa fin ; aucune nouvelle voix ne retarde
+      -- les bips. Un WAV deja lance termine sa lecture (pas de purge globale).
+      for kind in pairs(confirmations) do cancel(audio, kind) end
+    end
+
     updateBatteryConnection(audio, state, profile, now)
     updateActivationSounds(audio, state)
 
     local gpsReady = state.gpsState == "GPS OK"
+    if not gpsReady then cancel(audio, "satellite") end
     if gpsReady and not audio.gpsReady then request(audio, "satellite") end
     audio.gpsReady = gpsReady
     if gpsReady then audio.hadGpsFix = true end
 
     local critical = state.batteryValid and state.battery < profile.critical
-    local low = state.batteryValid and state.battery < profile.warn and not critical
-
-    if updateEpisode(audio.batteryCritical, critical, now,
-       config.batteryCriticalHoldSeconds or 1.0) and
-       not audio.batteryCritical.announced then
+    updateBatteryEpisode(audio, audio.batteryCritical, "batteryCritical",
+      state.batteryValid, state.battery, profile.critical,
+      profile.critical + (config.batteryCriticalRecoveryMargin or 0.08), now,
+      config.batteryCriticalHoldSeconds or 1.0)
+    updateBatteryEpisode(audio, audio.batteryLow, "batteryLow",
+      state.batteryValid, state.battery, profile.warn, profile.recover, now,
+      config.batteryHoldSeconds or 1.2)
+    if critical then
+      -- Ne pas jouer une annonce de niveau bas quand le niveau critique est
+      -- deja atteint, meme pendant la temporisation anti-sag du critique.
       cancel(audio, "batteryLow")
-      request(audio, "batteryCritical")
-      audio.batteryCritical.announced = true
-    end
-
-    if updateEpisode(audio.batteryLow, low, now, config.batteryHoldSeconds) then
-      if now >= audio.batteryLowNext then
-        request(audio, "batteryLow")
-        audio.batteryLowNext = now + config.batteryRepeatSeconds
-      end
-    elseif state.batteryValid and state.battery >= profile.recover then
-      audio.batteryLowNext = 0
+      audio.batteryLow.since = nil
     end
 
     local poorLink = inFlight and state.lqValid and state.lq < config.lqWarn
@@ -203,19 +261,33 @@ return function(config)
       audio.gps.announced = true
     end
 
-    -- Le capteur Alt teste donne une altitude absolue. La limite de 120 m est
-    -- donc appliquee au gain depuis l'armement pour eviter une alerte au sol.
-    if inFlight and not audio.altitudeBaseline and state.altitudeValid then
-      audio.altitudeBaseline = state.altitude
+    -- Reference du gain figee au front ARM. Si Alt apparait seulement en vol,
+    -- ne pas prendre cette altitude tardive pour le sol et masquer les 120 m.
+    if not inFlight then
+      if state.altitudeValid then
+        audio.groundAltitude = state.altitude
+        audio.groundAltitudeAt = now
+      end
+    elseif wasArmed == false then
+      if state.altitudeValid then
+        audio.altitudeBaseline = state.altitude
+      elseif audio.groundAltitudeAt and now - audio.groundAltitudeAt <= 2.5 then
+        audio.altitudeBaseline = audio.groundAltitude
+      end
     end
-    local altitudeGain = nil
-    if state.altitudeValid and audio.altitudeBaseline then
-      altitudeGain = state.altitude - audio.altitudeBaseline
+    local altitudeForAlert = nil
+    -- Ne pas annoncer plus tard une mesure devenue invalide pendant l'attente.
+    if not state.altitudeValid then cancel(audio, "altitude") end
+    if state.altitudeValid then
+      if config.altitudeReference == "sensor" then
+        altitudeForAlert = state.altitude
+      elseif audio.altitudeBaseline then
+        altitudeForAlert = state.altitude - audio.altitudeBaseline
+      end
     end
-    if inFlight and not audio.altitudeAnnounced and altitudeGain and
-       altitudeGain > config.altitudeAlertMeters then
+    if inFlight and not audio.altitudeAnnounced and altitudeForAlert and
+       altitudeForAlert > config.altitudeAlertMeters then
       request(audio, "altitude")
-      audio.altitudeAnnounced = true
     end
 
     local highThrottle = inFlight and state.throttle >= config.throttleAlertPercent
@@ -233,24 +305,32 @@ return function(config)
       audio.hadGpsFix = gpsReady
       audio.altitudeAnnounced = false
       audio.altitudeBaseline = nil
+      cancel(audio, "altitude")
+      cancel(audio, "link")
+      cancel(audio, "gps")
+      cancel(audio, "throttle")
     end
+
+    if not poorLink then cancel(audio, "link") end
+    if not gpsLost then cancel(audio, "gps") end
+    if not highThrottle then cancel(audio, "throttle") end
 
     playNext(audio, now)
   end
 
   function M.playFinderBip(audio, now)
-    -- Les bips de recherche sont auxiliaires : ils ne sont acceptes que lorsque
-    -- la file d'alertes est vide et que le lecteur audio est disponible.
-    if #audio.queue > 0 or now < audio.nextPlay or not playFile then return false end
+    -- Priorite Finder sur la file JWAIO. Respecter la fin du WAV deja lance
+    -- evite d'empiler les sons dans le lecteur EdgeTX partage par la radio.
+    if not audio.finderActive or now < audio.nextPlay or not playFile then return false end
 
     local path = fileFor("finderBip")
     if not path then return false end
-    local ok = pcall(playFile, path)
-    if not ok then return false end
+    local ok, result = pcall(playFile, path)
+    if not ok or result == false then return false end
 
     -- Reserve seulement la duree approximative du petit bip, contrairement aux
     -- annonces vocales qui utilisent l'espacement general plus long.
-    audio.nextPlay = now + (config.finderAudioReserveSeconds or 0.60)
+    audio.nextPlay = now + (config.finderAudioReserveSeconds or 0.20)
     return true
   end
 

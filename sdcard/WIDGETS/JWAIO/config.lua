@@ -11,6 +11,7 @@
 
 return {
   version = "0.2.1",
+  iteration = "final-2026-09-06",
   basePath = "/WIDGETS/JWAIO",
   logPath = "/LOGS/JWAIO",
   soundPath = "/SOUNDS/fr/JWAIO",
@@ -45,7 +46,9 @@ return {
   },
   batteryHoldSeconds = 1.2,
   batteryCriticalHoldSeconds = 1.0,
-  batteryRepeatSeconds = 2.0,
+  -- Une annonce par episode, rearmee apres une recuperation stable.
+  batteryRecoverySeconds = 5.0,
+  batteryCriticalRecoveryMargin = 0.08,
   batteryReconnectSeconds = 3.0,
   perCellAutoMax = 5.20,
 
@@ -61,14 +64,13 @@ return {
 
   -- Qwad Finder. La formule reprend le principe du script MIT de Sunil Chahal:
   -- lissage exponentiel puis conversion de -110...-40 dBm vers 0...100 %.
-  -- Le bip WAV durant environ 0,56 s, la cadence minimale reste a 0,65 s pour
-  -- eviter le chevauchement des lectures a proximite du quad.
+  -- Bip allege de 0,143 s ; intervalle minimal de 0,20 s sans chevauchement.
   finderRssiMinimum = -110,
   finderRssiMaximum = -40,
-  finderFilterAlpha = 0.20,
-  finderFarSeconds = 2.00,
-  finderNearSeconds = 0.65,
-  finderAudioReserveSeconds = 0.60,
+  finderFilterSeconds = 0.10,
+  finderFarSeconds = 1.20,
+  finderNearSeconds = 0.20,
+  finderAudioReserveSeconds = 0.20,
 
   -- Protection ESC.
   throttleAlertPercent = 95,
@@ -80,6 +82,7 @@ return {
   gpsLostHoldSeconds = 2.0,
   navigationPeriodSeconds = 1.0,
   altitudeAlertMeters = 120,
+  altitudeReference = "sensor", -- Valeur Alt ; "relative" reste un reglage avance.
 
   -- Distances GPS. Un vrai vol ne commence qu'une fois ARM actif et le
   -- throttle strictement superieur a 5 %. Un controle moteur a 5 % ou moins
@@ -100,6 +103,15 @@ return {
   -- pour un essai explicite sur la radio avec les fichiers correspondants.
   audioExtension = ".wav",
   audioGapSeconds = 3.2,
+  -- Durees du pack WAV allege, arrondies par exces, plus une courte pause.
+  audioPaddingSeconds = 0.08,
+  soundDurations = {
+    acro=0.68, altitude=1.33, angle=0.68, arm=0.83,
+    batteryCritical=1.92, batteryLow=1.27, beeper=1.01, link=1.74,
+    finderBip=0.15, flip=0.85, gps=0.49, batteryFullLihv=0.87,
+    batteryFullStandard=0.85, preArm=0.63, rth=0.74, satellite=1.06,
+    throttle=0.34
+  },
   sounds = {
     acro = "Acro",
     altitude = "Altitude",

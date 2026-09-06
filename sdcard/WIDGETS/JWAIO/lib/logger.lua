@@ -79,16 +79,18 @@ return function(config, util)
     local line = table.concat({
       util.dateText(),
       util.timeText(),
-      numberOrBlank(state.lat, 7),
-      numberOrBlank(state.lon, 7),
-      numberOrBlank(state.altitude, 1),
-      numberOrBlank(state.speed, 1),
-      numberOrBlank(state.battery, 2),
-      numberOrBlank(state.distance, 1),
-      numberOrBlank(state.totalDistance, 1),
-      numberOrBlank(state.maxDistance, 1),
-      numberOrBlank(state.lq, 0),
-      numberOrBlank(state.sats, 0)
+      -- Une colonne vide indique une mesure indisponible, jamais un faux zero
+      -- ni une ancienne valeur. La derniere position reste sauvee separement.
+      numberOrBlank(state.gpsValid and state.lat or nil, 7),
+      numberOrBlank(state.gpsValid and state.lon or nil, 7),
+      numberOrBlank(state.altitudeValid and state.altitude or nil, 1),
+      numberOrBlank(state.speedValid and state.speed or nil, 1),
+      numberOrBlank(state.batteryValid and state.battery or nil, 2),
+      numberOrBlank(state.distanceValid and state.distance or nil, 1),
+      numberOrBlank(state.distanceValid and state.totalDistance or nil, 1),
+      numberOrBlank(state.distanceValid and state.maxDistance or nil, 1),
+      numberOrBlank(state.lqValid and state.lq or nil, 0),
+      numberOrBlank(state.satsValid and state.sats or nil, 0)
     }, ",")
 
     -- L'API io EdgeTX utilise des fonctions globales (io.write/io.close),

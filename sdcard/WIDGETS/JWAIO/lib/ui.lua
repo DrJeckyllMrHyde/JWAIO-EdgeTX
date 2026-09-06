@@ -163,11 +163,12 @@ return function(config, util)
   end
 
   local function drawFlightMetrics(t, state)
-    -- GPS OK est exige pour les quatre valeurs. Les compteurs internes ne sont
-    -- pas effaces pendant une perte : seule leur presentation passe a NO_DATA.
+    -- Une perte de mesure change sa presentation, sans effacer les compteurs.
     local gpsReady = state.gpsState == "GPS OK"
-    local speedValid = gpsReady and state.speedValid
-    local altitudeValid = gpsReady and state.altitudeValid
+    -- Alt peut provenir d'un capteur independant du GPS. Chaque mesure exige
+    -- sa propre validite ; seules les distances exigent une position GPS.
+    local speedValid = state.speedValid
+    local altitudeValid = state.altitudeValid
     local distanceValid = gpsReady and state.distanceValid
 
     local speed = speedValid and string.format("%.1f km/h", state.speed) or "NO_DATA"

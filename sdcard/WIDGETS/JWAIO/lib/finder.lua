@@ -23,12 +23,17 @@ return function(config, util)
     unit = "dBm",
     filtered = nil,
     strength = 0,
-    nextBeep = 0
+    nextBeep = 0,
+    lastBeep = nil,
+    lastUpdate = nil
   }
 
-  local function smoothing(previous, current)
+  local function smoothing(previous, current, dt)
     if previous == nil then return current end
-    local alpha = util.clamp(config.finderFilterAlpha or 0.20, 0.01, 1.00)
+    -- Une constante de temps de 100 ms rend le filtre reactif sans dependre
+    -- du nombre d'appels refresh/background par seconde.
+    local tau = math.max(0.01, config.finderFilterSeconds or 0.10)
+    local alpha = 1 - math.exp(-math.max(0, dt) / tau)
     return previous * (1 - alpha) + current * alpha
   end
 
@@ -39,6 +44,8 @@ return function(config, util)
     self.strength = 0
     -- Autoriser un bip immediat lorsque la telemetrie reviendra.
     self.nextBeep = now
+    self.lastBeep = nil
+    self.lastUpdate = nil
   end
 
   local function readSignal(state)
@@ -67,10 +74,12 @@ return function(config, util)
   end
 
   local function beepPeriod(strength)
-    local far = config.finderFarSeconds or 2.00
-    local near = config.finderNearSeconds or 0.65
+    local far = config.finderFarSeconds or 1.20
+    local near = config.finderNearSeconds or 0.20
     if far < near then far, near = near, far end
-    return far - (far - near) * util.clamp(strength, 0, 100) / 100
+    local remaining = 1 - util.clamp(strength, 0, 100) / 100
+    return math.max(config.finderAudioReserveSeconds or 0.20,
+      near + (far - near) * remaining * remaining)
   end
 
   function finder:update(state, tryBeep)
@@ -86,16 +95,21 @@ return function(config, util)
     if source ~= self.source then self.filtered = nil end
     self.source = source
     self.unit = unit
-    self.filtered = smoothing(self.filtered, raw)
+    local dt = self.lastUpdate and now - self.lastUpdate or 0
+    self.filtered = smoothing(self.filtered, raw, dt)
+    self.lastUpdate = now
     self.value = util.round(self.filtered)
     self.strength = normalizedStrength(self.filtered, source)
     self.valid = true
 
-    -- Ne decaler l'echeance que si le gestionnaire audio a reellement accepte
-    -- le bip. Une alerte batterie/GPS prioritaire peut donc le repousser sans le
-    -- perdre et sans superposer deux fichiers WAV.
+    -- Recalculer l'echeance a partir du dernier bip accepte : une hausse du
+    -- signal raccourcit immediatement l'attente programmee lorsque l'on etait
+    -- loin. Aucun rattrapage en rafale si EdgeTX appelle le widget moins vite.
+    local period = beepPeriod(self.strength)
+    self.nextBeep = self.lastBeep and (self.lastBeep + period) or now
     if now >= self.nextBeep and tryBeep and tryBeep() then
-      self.nextBeep = now + beepPeriod(self.strength)
+      self.lastBeep = now
+      self.nextBeep = now + period
     end
   end
 

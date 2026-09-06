@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1 — dernière révision du 6 septembre 2026
+
+- Correction des répétitions d'alertes batterie, avec réarmement après récupération stable.
+- Alerte au-delà de 120 m sur le capteur Alt valide, une fois par armement.
+- Qwad Finder plus réactif et prioritaire pendant la recherche.
+- Intégration des 17 sons allégés et adaptation de l'espacement audio.
+- Données périmées écartées ; champs CSV indisponibles laissés vides.
+- Version, menu et design conservés. Révision interne : `final-2026-09-06`.
+
 ## 0.2.1 - Distances GPS et présentation en deux colonnes
 
 - Présentation PDF ramenée à six pages synthétiques avec le logo du projet et

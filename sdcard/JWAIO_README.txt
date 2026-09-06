@@ -19,7 +19,10 @@ Points de controle V0.2.1 :
 - Relacher ARM remet Fly Time/TIMER 1 a zero, sans toucher TIMER 2.
 - Deux armements dans la meme seconde creent deux journaux distincts.
 - Les annonces modes, switches, batterie pleine, satellite et altitude sont actives.
-- L'alerte altitude utilise le gain de 120 m depuis l'armement.
+- L'alerte altitude utilise Alt valide > 120 m, une fois par armement.
+- Revision finale du 06/09/2026 : alertes batterie sans repetition incessante,
+  sons alleges et Finder plus reactif, prioritaire pendant la recherche.
+- Les champs CSV des capteurs invalides restent vides.
 - L'alerte throttle se declenche apres 3 secondes a 95 % ou plus.
 - Qwad Finder s'active avec Beeper, Flip ou RTH.
 - Le bip de recherche accelere lorsque le RSSI recu devient plus fort.

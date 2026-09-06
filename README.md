@@ -8,6 +8,19 @@ suivi GPS et le **Qwad Finder**, basé sur la puissance du signal reçu.
 
 Version actuelle : **0.2.1 — version de test**.
 
+### Mise à jour du 6 septembre 2026 — dernière révision 0.2.1
+
+- Alertes batterie corrigées pour éviter les répétitions incessantes.
+- Alerte altitude basée sur la valeur du capteur Alt au-delà de 120 m, moteurs armés.
+- Qwad Finder plus réactif, avec des bips rapprochés et prioritaires pendant la recherche.
+- Sons allégés et meilleure gestion des données absentes dans l'affichage et les CSV.
+
+Le numéro **0.2.1**, le menu et le design restent inchangés.
+Pour mettre à jour, sauvegardez vos fichiers, puis remplacez les fichiers du widget
+et les sons avec le ZIP ci-dessous. Conservez vos journaux et votre logo personnalisé
+(`/WIDGETS/JWAIO/img/logo.png`), puis redémarrez la radio.
+Pendant la recherche, les autres annonces JWAIO sont différées ; un son déjà commencé se termine normalement.
+
 ## Télécharger JWAIO
 
 [⬇️ **Télécharger JWAIO v0.2.1 — version de test**](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.2.1/JWAIO-v0.2.1.zip)

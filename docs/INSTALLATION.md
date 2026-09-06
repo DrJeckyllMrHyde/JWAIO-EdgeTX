@@ -128,12 +128,12 @@ et throttle. `finder_bip.wav` est utilisé par Qwad Finder.
 
 Qwad Finder s'active si Beeper, Flip ou RTH est actif. Il affiche `1RSS` en dBm,
 avec `RQly` comme repli, puis réduit l'intervalle entre les bips lorsque la force
-reçue augmente. Les annonces de sécurité restent prioritaires.
+reçue augmente. Pendant la recherche, les autres annonces JWAIO sont différées.
+Un son déjà commencé se termine ; les alertes internes EdgeTX restent actives.
 
-L'annonce d'altitude est jouée une seule fois par vol lorsque le gain depuis
-l'altitude mesurée à l'armement dépasse 120 m. Cette référence relative évite une
-fausse annonce immédiate lorsque `Alt` fournit une altitude absolue au-dessus du
-niveau de la mer.
+L'annonce d'altitude est jouée une fois par armement lorsque `Alt` valide dépasse
+strictement 120 m, moteurs armés. Vérifiez la référence de ce capteur : il ne
+s'agit pas nécessairement de la hauteur au-dessus du sol.
 
 ## Journaux
 

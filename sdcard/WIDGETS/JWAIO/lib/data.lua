@@ -20,8 +20,10 @@ return function(config, util)
     if getSourceValue then
       local ok, value, current, fresh = pcall(getSourceValue, source)
       if ok then
-        local valid = (current ~= false) and value ~= nil
-        return value, valid, fresh ~= false
+        -- getSourceValue peut renvoyer une ancienne valeur meme sans capteur
+        -- actif. Fresh signifie recemment recu, pas "valeur qui a change".
+        local valid = current == true and fresh == true and value ~= nil
+        return valid and value or nil, valid, fresh == true
       end
     end
 
@@ -33,7 +35,10 @@ return function(config, util)
 
   local function numericSource(source)
     local value, valid, fresh = sourceValue(source)
-    if type(value) ~= "number" then return nil, false, fresh end
+    if not valid or type(value) ~= "number" or value ~= value or
+       value == math.huge or value == -math.huge then
+      return nil, false, fresh
+    end
     return value, valid, fresh
   end
 
@@ -207,6 +212,8 @@ return function(config, util)
 
     state.lq, state.lqValid = numericSource(util.option(options, "LQ", 0))
     state.rssi, state.rssiValid = numericSource(state.sources.rssi)
+    -- Lire Alt avant les alertes, sans attendre le prochain echantillon GPS.
+    state.altitude, state.altitudeValid = numericSource(state.sources.altitude)
 
     -- La navigation est echantillonnee a 1 Hz, sur la meme base de temps que
     -- le CSV. Le RSSI reste rapide car le Qwad Finder en depend directement.
@@ -241,7 +248,6 @@ return function(config, util)
         state.gpsState = "NO_DATA"
       end
 
-      state.altitude, state.altitudeValid = numericSource(state.sources.altitude)
       state.speed, state.speedValid = numericSource(state.sources.speed)
       if state.speedValid then state.speed = state.speed * (config.speedMultiplier or 1) end
     end
