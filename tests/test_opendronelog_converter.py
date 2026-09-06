@@ -48,9 +48,30 @@ def main() -> None:
         assert rows[0]["Metadata"]
         assert rows[1]["Metadata"] == ""
 
+        # Alpha : colonnes supplementaires, horloge monotone, pas de faux GPS.
+        fields = sorted(MODULE.REQUIRED_INPUT) + ["elapsed_s", "pack_v", "throttle_pct",
+                                                "flight_mode", "diagnostic_extra"]
+        with source.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=fields)
+            writer.writeheader()
+            writer.writerow(dict(date="2026-09-06", time="12:00:00", elapsed_s="0",
+                                 cell_v="3.9", pack_v="23.4", throttle_pct="5", flight_mode="ACRO"))
+            writer.writerow(dict(date="2026-09-06", time="11:59:59", elapsed_s="1.25",
+                                 altitude="0", speed="0", diagnostic_extra="ignored"))
+        original = source.read_bytes()
+        assert MODULE.convert(source, target) == 2
+        with target.open(encoding="utf-8", newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        assert rows[0]["battery_voltage_v"] == "23.4"
+        assert rows[0]["rc_throttle"] == "5" and rows[0]["flight_mode"] == "ACRO"
+        assert rows[1]["time_s"] == "1.2"  # Presentation au dixieme.
+        assert rows[1]["alt_m"] == "0" and rows[1]["speed_ms"] == "0"
+        assert all(row["lat"] == row["lng"] == "" for row in rows)
+        assert rows[1]["battery_voltage_v"] == rows[1]["rc_throttle"] == ""
+        assert source.read_bytes() == original
+
     print("Open Drone Log converter: OK")
 
 
 if __name__ == "__main__":
     main()
-

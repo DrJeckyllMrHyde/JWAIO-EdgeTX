@@ -3,18 +3,24 @@
 -- Copyright 2026 DrJeckyllMrHyde
 -- SPDX-License-Identifier: Apache-2.0
 -- Fichier : config.lua
--- Version : 0.2.1
+-- Version : 0.3.0
 -- Cible   : RadioMaster TX15 Max / EdgeTX 2.12.x
--- Role    : reglages avances, seuils, capteurs et chemins de la carte SD.
+-- Role    : reglages avances, seuils, capteurs et chemins du stockage EdgeTX.
 -- Conseil : modifier ce fichier radio eteinte, puis redemarrer EdgeTX.
 -- ============================================================================
 
 return {
-  version = "0.2.1",
-  iteration = "final-2026-09-06",
+  version = "0.3.0",
+  iteration = "alpha-2",
   basePath = "/WIDGETS/JWAIO",
   logPath = "/LOGS/JWAIO",
   soundPath = "/SOUNDS/fr/JWAIO",
+
+  -- Les skins disposent de slots stables : EdgeTX memorise l'index CHOICE.
+  -- Le dossier original reste toujours le filet de securite du widget.
+  skinApi = 1,
+  defaultSkinFolder = "jwaio",
+  maximumSkinSlots = 8,
 
   -- Source a trois positions : bas=ANGLE, centre=ACRO, haut=RTH.
   modeSource = "CH5",
@@ -27,6 +33,7 @@ return {
   speedSource = "GSpd",
   speedMultiplier = 1.0, -- GSpd est deja fourni en km/h sur le modele teste
   satellitesSource = "Sats",
+  lqSource = "RQly",
   rssiSource = "1RSS",
 
   -- Batterie, valeurs par cellule. Le profil actif est choisi dans le menu.
@@ -46,7 +53,7 @@ return {
   },
   batteryHoldSeconds = 1.2,
   batteryCriticalHoldSeconds = 1.0,
-  -- Une annonce par episode, rearmee apres une recuperation stable.
+  -- Une annonce par episode : rearmement seulement apres recuperation stable.
   batteryRecoverySeconds = 5.0,
   batteryCriticalRecoveryMargin = 0.08,
   batteryReconnectSeconds = 3.0,
@@ -64,7 +71,8 @@ return {
 
   -- Qwad Finder. La formule reprend le principe du script MIT de Sunil Chahal:
   -- lissage exponentiel puis conversion de -110...-40 dBm vers 0...100 %.
-  -- Bip allege de 0,143 s ; intervalle minimal de 0,20 s sans chevauchement.
+  -- Nouveau bip WAV de 0,143 s. La cadence minimale de 0,20 s laisse une pause.
+  -- Lissage en temps reel, independant de la cadence des appels EdgeTX.
   finderRssiMinimum = -110,
   finderRssiMaximum = -40,
   finderFilterSeconds = 0.10,
@@ -82,7 +90,7 @@ return {
   gpsLostHoldSeconds = 2.0,
   navigationPeriodSeconds = 1.0,
   altitudeAlertMeters = 120,
-  altitudeReference = "sensor", -- Valeur Alt ; "relative" reste un reglage avance.
+  altitudeReference = "sensor", -- Alt affiche > 120 m ; option avancee "relative"
 
   -- Distances GPS. Un vrai vol ne commence qu'une fois ARM actif et le
   -- throttle strictement superieur a 5 %. Un controle moteur a 5 % ou moins
@@ -96,14 +104,19 @@ return {
   distanceJumpMarginMeters = 30,
   distanceSavePeriodSeconds = 1.0,
 
-  -- Ecriture carte SD.
+  -- Ecriture stockage EdgeTX. Diagnostics prives pour les essais terrain :
+  -- aucun menu supplementaire, tampon borne, ecriture groupee a 1 Hz.
   logPeriodSeconds = 1.0,
+  diagnosticsEnabled = true,
+  diagnosticBufferLimit = 64,
+  diagnosticFlushSeconds = 1.0,
 
   -- EdgeTX documente officiellement le WAV PCM. Mettre ".mp3" seulement
   -- pour un essai explicite sur la radio avec les fichiers correspondants.
   audioExtension = ".wav",
   audioGapSeconds = 3.2,
-  -- Durees du pack WAV allege, arrondies par exces, plus une courte pause.
+  -- Durees arrondies par exces du nouveau pack WAV PCM mono 32 kHz.
+  -- Elles evitent la file audio EdgeTX et remplacent l'attente fixe de 3,2 s.
   audioPaddingSeconds = 0.08,
   soundDurations = {
     acro=0.68, altitude=1.33, angle=0.68, arm=0.83,

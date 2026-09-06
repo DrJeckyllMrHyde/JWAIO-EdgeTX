@@ -41,6 +41,9 @@ OUTPUT_FIELDS = [
     "speed_ms",
     "satellites",
     "rc_signal",
+    "battery_voltage_v",
+    "rc_throttle",
+    "flight_mode",
     "jwaio_cell_v",
     "jwaio_total_distance_m",
     "jwaio_max_distance_m",
@@ -96,7 +99,9 @@ def convert(input_path: Path, output_path: Path) -> int:
         {
             "drone_model": "Custom FPV / JWAIO",
             "start_time": first_time.isoformat() if first_time else "",
-            "notes": "Journal converti par JWAIO V0.2.1",
+            "notes": "Journal JWAIO converti ; throttle en pourcentage 0-100. "
+                     "La tension pack peut etre estimee depuis la cellule et le nombre de cellules. "
+                     "Consulter pack_estimated dans le CSV source.",
             "tags": [{"tag": "FPV", "tag_type": "manual"}],
         },
         ensure_ascii=False,
@@ -111,6 +116,10 @@ def convert(input_path: Path, output_path: Path) -> int:
         for index, row in enumerate(rows):
             timestamp = parse_datetime(row)
             elapsed = (timestamp - first_time).total_seconds() if timestamp and first_time else None
+            # Alpha ajoute une horloge monotone : ne pas dependre d'un reglage
+            # de date/heure pendant le vol. Les journaux historiques restent acceptes.
+            if number(row.get("elapsed_s", "")) is not None:
+                elapsed = number(row["elapsed_s"])
             altitude = number(row.get("altitude", ""))
             relative_altitude = (
                 altitude - first_altitude
@@ -129,6 +138,9 @@ def convert(input_path: Path, output_path: Path) -> int:
                     "speed_ms": text_number(speed_kmh / 3.6, 3) if speed_kmh is not None else "",
                     "satellites": text_number(number(row.get("sats", "")), 0),
                     "rc_signal": text_number(number(row.get("lq", "")), 0),
+                    "battery_voltage_v": text_number(number(row.get("pack_v", "")), 2),
+                    "rc_throttle": text_number(number(row.get("throttle_pct", "")), 0),
+                    "flight_mode": row.get("flight_mode", ""),
                     "jwaio_cell_v": text_number(number(row.get("cell_v", "")), 2),
                     "jwaio_total_distance_m": text_number(number(row.get("distance_total_m", "")), 1),
                     "jwaio_max_distance_m": text_number(number(row.get("distance_max_m", "")), 1),
@@ -163,4 +175,3 @@ def main(argv: list[str]) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main(sys.argv))
-

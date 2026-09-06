@@ -3,7 +3,7 @@
 -- Copyright 2026 DrJeckyllMrHyde
 -- SPDX-License-Identifier: Apache-2.0
 -- Fichier : lib/util.lua
--- Version : 0.2.1
+-- Version : 0.3.0
 -- Role    : petites fonctions communes sans etat propre.
 -- ============================================================================
 

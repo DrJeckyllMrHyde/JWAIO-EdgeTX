@@ -1,279 +1,123 @@
-# JWAIO — Jeckyll Widget All in One
+# JWAIO 0.3_Alpha
 
-JWAIO est un widget Lua FPV plein écran, également utilisable en mode application,
-conçu exclusivement pour la **RadioMaster TX15 Max** sous **EdgeTX 2.12.x**.
+**Jeckyll Widget All in One** — widget Lua FPV plein écran pour **RadioMaster TX15 Max / EdgeTX 2.12.x**.
 
-Il regroupe les contrôles avant décollage, les alertes sonores essentielles, le
-suivi GPS et le **Qwad Finder**, basé sur la puissance du signal reçu.
+Vos informations avant décollage, vos alertes en vol et votre aide à la recherche du quad, réunies sur la radio. Cette version alpha reprend le correctif de télémétrie validé sur la radio du créateur ; les retours de la communauté restent essentiels.
 
-Version actuelle : **0.2.1 — version de test**.
+## Télécharger et installer
 
-### Mise à jour du 6 septembre 2026 — dernière révision 0.2.1
+[⬇️ **Télécharger JWAIO 0.3_Alpha**](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/v0.3-alpha)
 
-- Alertes batterie corrigées pour éviter les répétitions incessantes.
-- Alerte altitude basée sur la valeur du capteur Alt au-delà de 120 m, moteurs armés.
-- Qwad Finder plus réactif, avec des bips rapprochés et prioritaires pendant la recherche.
-- Sons allégés et meilleure gestion des données absentes dans l'affichage et les CSV.
+Dans les fichiers de la release, choisissez **JWAIO 0.3_Alpha.zip**, pas « Source code ».
 
-Le numéro **0.2.1**, le menu et le design restent inchangés.
-Pour mettre à jour, sauvegardez vos fichiers, puis remplacez les fichiers du widget
-et les sons avec le ZIP ci-dessous. Conservez vos journaux et votre logo personnalisé
-(`/WIDGETS/JWAIO/img/logo.png`), puis redémarrez la radio.
-Pendant la recherche, les autres annonces JWAIO sont différées ; un son déjà commencé se termine normalement.
+1. Sauvegardez le stockage et le modèle de votre radio, ainsi que vos logos et journaux.
+2. Radio allumée, branchez le port USB de données et choisissez **USB Storage**.
+3. Copiez le contenu du ZIP **à la racine du stockage EdgeTX utilisé par la radio**. Fusionnez les dossiers, remplacez les fichiers JWAIO, sans formater ni supprimer les autres dossiers.
+4. Éjectez proprement le lecteur, puis redémarrez la radio.
+5. Hélices retirées, découvrez les capteurs du modèle, puis ajoutez JWAIO dans une zone plein écran et vérifiez ses réglages.
 
-## Télécharger JWAIO
+Les dossiers `WIDGETS/JWAIO`, `SOUNDS/fr/JWAIO` et `LOGS/JWAIO` doivent se trouver directement à la racine, sans dossier intermédiaire.
 
-[⬇️ **Télécharger JWAIO v0.2.1 — version de test**](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.2.1/JWAIO-v0.2.1.zip)
+**Mise à jour :** si votre ancien menu n'avait pas l'option Skin, retirez l'instance de la page puis ajoutez-la à nouveau. Vérifiez tous les switches : l'ordre des options a changé. Depuis une alpha avec Skin, conservez l'instance et ses réglages.
 
-Le ZIP d'installation est prêt à être extrait directement à la racine de la
-mémoire de stockage EdgeTX de la radio.
+[Mode d'emploi simple](MODE_EMPLOI.txt) · [Installation et désinstallation](docs/INSTALLATION.md) · [Créer son skin](docs/SKINS.md)
 
-[Voir les notes de version et télécharger la sauvegarde source](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/v0.2.1)
+> JWAIO ne commande pas le drone : les options de switches indiquent au widget les fonctions déjà configurées dans votre modèle. Il ne remplace ni l'OSD, ni les contrôles de sécurité, ni une balise autonome.
 
-![Interface finale de JWAIO sur RadioMaster TX15 Max](docs/assets/jwaio-tx15-interface-final.jpg)
+## Ce que propose JWAIO
 
-> JWAIO assiste le pilote, mais ne remplace ni les vérifications de sécurité,
-> ni l'OSD vidéo, ni un dispositif de localisation autonome.
+- États **Ready / Pre-Arm / Arm**, modes **ANGLE / ACRO / RTH**.
+- Throttle en pourcentage, cinq jauges PNG et alerte à partir de trois secondes à 95 % ou plus.
+- **Fly Time = TIMER 1**, remis à zéro au désarmement ; **Fly Total = TIMER 2**, non remis à zéro par JWAIO.
+- Batteries **LiPo, LiIon, LiHv**, de 1 à 8 cellules, avec annonces pleine/faible/critique et filtrage des creux brefs de tension.
+- Liaison **ELRS ou TBS_CF** : LQ et RSSI, plus alerte de qualité de liaison.
+- GPS, satellites, dernière position, vitesse au sol, altitude et distances estimées.
+- **Qwad Finder** : jauge de signal et bips rapprochés quand le signal devient plus fort.
+- **Skins** sélectionnables dans le menu : fond, logo et couleurs personnalisables, sans toucher aux fonctions.
+- CSV de vol enrichis et journal d'événements pour analyser les essais.
 
-## Installation en 5 minutes
+### Correctif de télémétrie
 
-Cette section suffit pour installer et lancer le widget. Les explications
-complémentaires se trouvent plus bas dans le README et dans la documentation.
+Une mesure encore valide reste affichée entre deux réceptions : l'absence de nouvelle valeur « fraîche » n'est plus confondue avec un capteur perdu. Une véritable perte signalée par EdgeTX reste affichée `NO_DATA`. Les données absentes ne sont pas transformées en faux zéros.
 
-La TX15 Max utilise sa mémoire flash interne par défaut. Si une carte microSD est
-installée, EdgeTX utilise celle-ci à la place. Dans ce guide, l'expression
-**mémoire de stockage EdgeTX** désigne donc le support actuellement utilisé par la
-radio.
+### Qwad Finder : fonctionnement et limites
 
-### 1. Télécharger
+Il s'active avec **Beeper, Flip ou RTH**, et se libère lorsque les trois sont inactifs. Le RSSI est utilisé en priorité, avec repli sur LQ. Les bips visent une période de **1,2 s à 0,20 s**, selon le signal et le rythme d'appel d'EdgeTX.
 
-Cliquez sur le bouton **Télécharger JWAIO** situé en haut de cette page.
+**Pendant la recherche, les autres annonces JWAIO, y compris batterie critique, sont différées.** Un son déjà commencé se termine. Les sons configurés ailleurs dans EdgeTX ne sont pas contrôlés par JWAIO.
 
-### 2. Sauvegarder la mémoire de la radio
+La jauge ne donne ni une distance en mètres ni une direction garantie : les obstacles, l'orientation des antennes et la puissance dynamique influencent le signal.
 
-Avant toute modification, copiez tout le contenu de la mémoire de stockage EdgeTX
-sur votre ordinateur. Vous pouvez également sauvegarder la configuration de la
-radio avec [EdgeTX Buddy](https://buddy.edgetx.org/).
+## Les dix réglages
 
-### 3a. Installer les fichiers dans la mémoire de la radio
+| Option | Fonction |
+|---|---|
+| Skin | Identité visuelle installée ; JWAIO fourni |
+| BatType | LiPo par défaut, LiIon ou LiHv |
+| Cells | 1 à 8, valeur initiale 6 |
+| LinkType | ELRS par défaut ou TBS_CF |
+| ARM | Position du switch d'armement |
+| PreArm | Position du switch de pré-armement |
+| Beeper | Position d'activation du beeper |
+| Flip | Position d'activation du flip après crash |
+| RTH | Position d'activation du retour |
+| Thr | Voie des gaz, CH3 par défaut |
 
-1. Allumez la radio.
-2. Reliez le port USB-C de données de la radio à l'ordinateur.
-3. Lorsque EdgeTX demande le mode USB, choisissez **USB Storage**.
-4. Ouvrez le lecteur de stockage de la radio affiché sur l'ordinateur.
-5. Ouvrez le fichier ZIP téléchargé.
-6. Copiez tout son contenu à la racine du lecteur de la radio.
-7. Acceptez la fusion des dossiers si votre ordinateur la propose.
+**RQly est lu directement**, sans option LQ supplémentaire. Les noms de capteurs se règlent au besoin dans `/WIDGETS/JWAIO/config.lua`.
 
-Le lecteur affiché correspond à la mémoire interne par défaut, ou à la carte
-microSD lorsqu'une carte est installée.
-
-**Attention :** ne formatez pas le lecteur, ne supprimez pas ses dossiers
-existants et ne placez pas le contenu dans un sous-dossier supplémentaire. À la
-fin, les dossiers suivants doivent être visibles à la racine :
-
-~~~text
-/WIDGETS/JWAIO/
-/SOUNDS/fr/JWAIO/
-/LOGS/JWAIO/
-~~~
-
-### 3b. Supprimer le widget
-
-Avant la suppression, sauvegardez les journaux de vol que vous souhaitez
-conserver. Si JWAIO est utilisé par plusieurs modèles, retirez-le de chaque écran
-concerné.
-
-1. Sur la radio, ouvrez les réglages d'affichage de chaque modèle utilisant
-   JWAIO.
-2. Retirez le widget de ses pages ou remplacez-le par un autre widget.
-3. Allumez la radio et reliez son port USB-C de données à l'ordinateur.
-4. Lorsque EdgeTX demande le mode USB, choisissez **USB Storage**.
-5. Ouvrez le lecteur correspondant à la mémoire de stockage EdgeTX.
-6. Supprimez uniquement les dossiers suivants :
-
-~~~text
-/WIDGETS/JWAIO/
-/SOUNDS/fr/JWAIO/
-~~~
-
-Le dossier suivant contient les journaux de vol, la dernière position GPS et les
-distances sauvegardées. Supprimez-le seulement si vous ne souhaitez pas conserver
-ces données :
-
-~~~text
-/LOGS/JWAIO/
-~~~
-
-Vous pouvez également supprimer le fichier `/JWAIO_README.txt` s'il est présent
-à la racine.
-
-**Attention :** ne supprimez pas les dossiers parents `/WIDGETS/`,
-`/SOUNDS/` ou `/LOGS/`, car ils peuvent contenir des fichiers utilisés par
-EdgeTX ou par d'autres scripts.
-
-7. Éjectez proprement le lecteur depuis l'ordinateur.
-8. Débranchez le câble USB, puis redémarrez la radio.
-
-JWAIO est alors supprimé. Les réglages généraux d'EdgeTX et les autres widgets ne
-sont pas modifiés.
-
-### 4. Découvrir les capteurs
-
-1. Attendez la fin de la copie, puis éjectez proprement le lecteur depuis
-   l'ordinateur.
-2. Débranchez le câble USB et redémarrez la radio.
-3. Sélectionnez le modèle concerné.
-4. Alimentez le drone, hélices retirées.
-5. Ouvrez la page de télémétrie du modèle.
-6. Lancez la découverte des nouveaux capteurs.
-7. Attendez que les capteurs apparaissent, puis arrêtez la découverte.
-
-### 5. Ajouter et régler JWAIO
-
-1. Ajoutez **JWAIO** sur une page plein écran ou comme application.
-2. Ouvrez les réglages du widget.
-3. Choisissez le type de batterie et le nombre de cellules.
-4. Affectez les interrupteurs Arm, PreArm, Beeper, Flip et RTH.
-5. Vérifiez la voie du Throttle et le type de liaison radio.
-6. Testez les informations et les sons avec les hélices retirées.
-
-JWAIO est maintenant prêt pour un premier essai au sol.
-
-## Vérification rapide avant le vol
-
-- La tension par cellule est affichée et correspond à la batterie branchée.
-- Le nombre de satellites évolue lorsque le GPS reçoit un signal.
-- Les états Ready, Pre-Arm et Arm réagissent aux bons interrupteurs.
-- Le Throttle reste proche de 0 % au repos.
-- La qualité de liaison et le RSSI sont affichés.
-- Aucun message NO_DATA inattendu ne reste visible.
-- Les alertes sonores ne sont pas déjà configurées une seconde fois dans EdgeTX.
-
-Si un capteur reste sur NO_DATA, recommencez sa découverte avant de modifier le
-script.
-
-## Fonctions principales
-
-- Modes de vol ANGLE, ACRO et RTH.
-- États Ready, Pre-Arm et Arm.
-- Alertes sonores lors de l'activation des modes et des fonctions principales.
-- Throttle affiché en pourcentage avec cinq états graphiques PNG.
-- Alerte de protection si le Throttle reste très élevé pendant plus de trois secondes.
-- Fly Time lu depuis TIMER 1 et Fly Total lu depuis TIMER 2.
-- Batteries LiPo, LiIon et LiHv avec tension par cellule.
-- Alertes de batterie pleine, faible et critique adaptées au type de batterie.
-- Position GPS, nombre de satellites, vitesse et altitude.
-- Alerte lorsque le GPS obtient suffisamment de satellites.
-- Liaison ELRS ou TBS Crossfire avec LQ, RSSI et jauge de qualité.
-- Alerte lorsque la qualité de liaison descend sous 70 %.
-- Distance au point de départ, distance maximale et trajet total estimé.
-- Sauvegarde de la dernière position GPS et des distances du dernier vol valide.
-- Création d'un journal CSV à une fréquence de 1 Hz.
-- Qwad Finder activé uniquement lorsque Beeper, Flip ou RTH est actif.
-- Bips du Qwad Finder de plus en plus rapprochés à l'approche du drone.
-
-## Capteurs attendus
-
-Plusieurs capteurs sont lus directement par leur nom afin de respecter la limite
-des réglages du menu EdgeTX.
-
-| Donnée | Nom EdgeTX attendu |
+| Donnée | Capteur attendu |
 |---|---|
 | Batterie | RxBt |
-| GPS | GPS |
+| Qualité de liaison | RQly |
+| RSSI | 1RSS |
+| Position | GPS |
 | Altitude | Alt |
 | Vitesse au sol | GSpd |
 | Satellites | Sats |
-| Qualité de liaison | RQly |
-| RSSI du Qwad Finder | 1RSS |
 
-Ces noms peuvent être modifiés dans
-sdcard/WIDGETS/JWAIO/config.lua si votre installation utilise d'autres noms.
+Sans GPS en freestyle, batterie et liaison restent utilisables. Altitude et vitesse sont affichées si leurs propres capteurs sont valides ; aucune trajectoire ni distance n'est inventée.
 
-## Réglages du widget
+## Système de skins
 
-| Réglage | Utilisation |
-|---|---|
-| BatType | Choix LiPo, LiIon ou LiHv |
-| Cells | Nombre de cellules de la batterie |
-| LinkType | Choix ELRS ou TBS_CF |
-| LQ | Source de qualité de liaison |
-| Arm | Interrupteur d'armement des moteurs |
-| PreArm | Interrupteur de pré-armement |
-| Beeper | Interrupteur du beeper |
-| Flip | Interrupteur du Flip Over After Crash |
-| RTH | Interrupteur du Return to Home |
-| Throttle | Voie des gaz, CH3 par défaut |
+Le paquet contient le skin **JWAIO**. Chaque skin est un dossier dans `/WIDGETS/JWAIO/skins/` comprenant :
 
-## Timers EdgeTX
+- `background.png` : **480 × 320 px**, PNG RGB opaque recommandé ;
+- `logo.png` : **216 × 132 px**, PNG RGBA avec transparence ;
+- `skin.lua` : identité, numéro d'emplacement et palette.
 
-- **TIMER 1** alimente l'affichage Fly Time.
-- **TIMER 2** alimente l'affichage Fly Total.
+Les skins sont découverts au chargement. Après ajout d'un dossier, redémarrez EdgeTX puis choisissez **Skin** dans les options. Le changement entre skins déjà découverts ne nécessite pas de remplacer les fichiers.
 
-Configurez leur déclenchement dans le modèle EdgeTX selon votre utilisation.
-Fly Time doit repartir de zéro lorsque les moteurs sont désarmés.
+➡️ [Guide complet : créer, installer et dépanner un skin](docs/SKINS.md).
 
-## Journaux et Open Drone Log
+N'installez que des skins de confiance : `skin.lua` est un fichier Lua exécuté par la radio. Respectez les droits des images utilisées.
 
-Les journaux sont enregistrés au format CSV. Ils peuvent être ouverts dans Excel
-ou LibreOffice Calc.
+## Journaux de vol et Open Drone Log
 
-Le convertisseur fourni crée une copie compatible avec les colonnes attendues par
-Open Drone Log sans modifier le fichier original :
+Dans `/LOGS/JWAIO/` :
 
-~~~text
-python tools/jwaio_to_opendronelog.py "F260903_112000.csv"
-~~~
+- `F*.csv` : un fichier par armement, environ une ligne par seconde et une dernière ligne au désarmement ;
+- `E*.csv` : états et événements audio, y compris la recherche au sol ;
+- `lastpos.txt` : dernière latitude/longitude exploitable ;
+- `lastdistance.txt` : distance maximale et trajet total sauvegardés.
 
-Consultez le guide
-[Utiliser JWAIO avec Open Drone Log](docs/OPEN_DRONE_LOG.md).
+Les distances repartent pour un nouveau vol uniquement lorsque **ARM est actif et le throttle dépasse 5 %**. Un contrôle moteur à faible gaz ne réinitialise pas les résultats du dernier vrai vol.
 
-[Open Drone Log](https://opendronelog.com/) est un projet gratuit et open source,
-indépendant de JWAIO.
+Les CSV s'ouvrent dans Excel ou LibreOffice. Pour Open Drone Log, utilisez le [convertisseur et son guide](docs/OPEN_DRONE_LOG.md) : le fichier brut n'est pas son format d'import standard. Les diagnostics restent dans le fichier original ; sans GPS, aucune carte de trajet ne peut être reconstruite.
 
-## Personnaliser le logo affiché sur la radio
+Les fichiers contiennent des positions : vérifiez-les avant tout partage public.
 
-Remplacez le fichier sdcard/WIDGETS/JWAIO/img/logo.png par une image :
+## Tester et signaler un problème
 
-- nommée exactement logo.png ;
-- au format PNG RGBA avec transparence ;
-- mesurant exactement **216 × 132 pixels**.
+Effectuez les premiers contrôles **au sol, hélices retirées**. Vérifiez les valeurs, les switches, la perte/reprise de télémétrie et les sons avant le vol. Évitez de configurer une deuxième fois les mêmes alertes dans EdgeTX.
 
-Effectuez le remplacement lorsque la radio est éteinte, puis redémarrez EdgeTX ou
-rechargez complètement le widget. Chaque utilisateur reste responsable des droits
-du visuel qu'il emploie.
+Pour un retour utile : modèle de radio, version EdgeTX, type de batterie, nombre de cellules, skin, description du problème, puis CSV F et E correspondants. Ne publiez pas vos coordonnées personnelles dans une issue.
 
-## Documentation
+## Documentation et licences
 
-- [Mode d'emploi rapide](MODE_EMPLOI.txt)
-- [Mode d'emploi détaillé](docs/MODE_EMPLOI.md)
-- [Guide d'installation](docs/INSTALLATION.md)
-- [Présentation synthétique au format PDF](output/pdf/JWAIO-Presentation-v0.2.1.pdf)
+- [Mode d'emploi](docs/MODE_EMPLOI.md)
+- [Créer un skin](docs/SKINS.md)
 - [Notes de version](CHANGELOG.md)
+- Code : [Apache 2.0](LICENSE) ; documents et médias concernés : [CC BY 4.0](LICENSE-ASSETS.md).
+- [Auteurs](AUTHORS.md), [NOTICE](NOTICE) et [composants tiers](sdcard/THIRD_PARTY_NOTICES.txt).
 
-## Développement et vérification
-
-Les outils de construction se trouvent dans le dossier tools. Le projet vérifie
-notamment la structure du paquet d'installation EdgeTX, les dix réglages du menu,
-les sons WAV, les images PNG et la syntaxe des modules Lua.
-
-Le test du convertisseur Open Drone Log s'exécute avec :
-
-~~~text
-python tests/test_opendronelog_converter.py
-~~~
-
-## Licences et attribution
-
-- Code source : [Apache License 2.0](LICENSE).
-- Documentation, logo du projet et sons originaux :
-  [Creative Commons Attribution 4.0](LICENSE-ASSETS.md).
-- Crédits : [AUTHORS.md](AUTHORS.md) et [NOTICE](NOTICE).
-- Composants tiers :
-  [sdcard/THIRD_PARTY_NOTICES.txt](sdcard/THIRD_PARTY_NOTICES.txt).
-
-Copyright © 2026 **DrJeckyllMrHyde**.
-
-- [Facebook](https://www.facebook.com/)
-- [YouTube — JeckyllHydeFpv](https://www.youtube.com/@JeckyllHydeFpv)
+© 2026 **DrJeckyllMrHyde** — [YouTube JeckyllHydeFpv](https://www.youtube.com/@JeckyllHydeFpv)

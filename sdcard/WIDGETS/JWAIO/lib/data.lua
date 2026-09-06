@@ -3,7 +3,7 @@
 -- Copyright 2026 DrJeckyllMrHyde
 -- SPDX-License-Identifier: Apache-2.0
 -- Fichier : lib/data.lua
--- Version : 0.2.1
+-- Version : 0.3.0
 -- Role    : acquisition et normalisation des commandes et de la telemetrie.
 -- ============================================================================
 
@@ -20,11 +20,17 @@ return function(config, util)
     if getSourceValue then
       local ok, value, current, fresh = pcall(getSourceValue, source)
       if ok then
-        -- getSourceValue peut renvoyer une ancienne valeur meme sans capteur
-        -- actif. Fresh signifie recemment recu, pas "valeur qui a change".
-        local valid = current == true and fresh == true and value ~= nil
+        -- current : mesure encore valide selon le delai Sensor Lost d'EdgeTX.
+        -- fresh : reception recente, qui peut repasser a false entre paquets.
+        -- Ne pas confondre absence de nouveau paquet et capteur perdu : exiger
+        -- fresh ici faisait clignoter NO_DATA et re-declenchait les annonces.
+        -- On lit toujours la valeur du firmware, sans cache valable indéfiniment.
+        local valid = current == true and value ~= nil
         return valid and value or nil, valid, fresh == true
       end
+      -- Sur notre cible 2.12, une erreur de l'API ne doit pas se transformer
+      -- en ancienne mesure presentee comme valide via le repli getValue.
+      return nil, false, false
     end
 
     local ok, value = pcall(getValue, source)
@@ -36,9 +42,7 @@ return function(config, util)
   local function numericSource(source)
     local value, valid, fresh = sourceValue(source)
     if not valid or type(value) ~= "number" or value ~= value or
-       value == math.huge or value == -math.huge then
-      return nil, false, fresh
-    end
+       value == math.huge or value == -math.huge then return nil, false, fresh end
     return value, valid, fresh
   end
 
@@ -58,9 +62,11 @@ return function(config, util)
   end
 
   local function readThrottle(source)
+    if not source or source == 0 then return 0, false end
     local ok, value = pcall(getValue, source)
-    if not ok or type(value) ~= "number" then return 0 end
-    return util.clamp(util.round((value + 1024) * 100 / 2048), 0, 100)
+    if not ok or type(value) ~= "number" or value ~= value or
+       value == math.huge or value == -math.huge then return 0, false end
+    return util.clamp(util.round((value + 1024) * 100 / 2048), 0, 100), true
   end
 
   -- TIMER 1 et TIMER 2 restent les compteurs natifs du modele EdgeTX. Le widget
@@ -160,6 +166,7 @@ return function(config, util)
         altitude = util.sourceIndex(config.altitudeSource),
         speed = util.sourceIndex(config.speedSource),
         satellites = util.sourceIndex(config.satellitesSource),
+        lq = util.sourceIndex(config.lqSource),
         rssi = util.sourceIndex(config.rssiSource)
       },
       linkType = "ELRS"
@@ -170,7 +177,7 @@ return function(config, util)
     -- Les commandes et donnees rapides sont relues a chaque cycle du widget.
     state.now = getTime() / 100
     state.navigationUpdated = false
-    state.throttle = readThrottle(util.option(options, "Thr", 0))
+    state.throttle, state.throttleValid = readThrottle(util.option(options, "Thr", 0))
 
     local profileIndex = util.clamp(util.option(options, "BatType", 1), 1, 3)
     state.batteryProfile = config.batteryProfiles[profileIndex] or config.batteryProfiles[1]
@@ -197,7 +204,9 @@ return function(config, util)
     end
 
     local pack, packValid = numericSource(state.sources.battery)
-    local cells = math.max(1, util.option(options, "Cells", 6))
+    local cells = util.clamp(util.option(options, "Cells", 6), 1, 8)
+    state.cells = cells
+    state.batteryRaw = packValid and pack or nil
     if packValid and pack and pack > 0 then
       if pack <= config.perCellAutoMax then
         state.battery = pack
@@ -205,14 +214,22 @@ return function(config, util)
         state.battery = pack / cells
       end
       state.batteryValid = true
+      -- Si RxBt est deja par cellule, pack_v est une estimation explicite.
+      state.packEstimated = pack <= config.perCellAutoMax and cells > 1
+      state.packVoltage = state.packEstimated and pack * cells or pack
     else
       state.battery = nil
       state.batteryValid = false
+      state.packVoltage = nil
+      state.packEstimated = false
     end
 
-    state.lq, state.lqValid = numericSource(util.option(options, "LQ", 0))
+    -- RQly est fixe dans config.lua afin de liberer une place pour le skin
+    -- dans le menu EdgeTX. Sa source est resolue une seule fois au demarrage.
+    state.lq, state.lqValid = numericSource(state.sources.lq)
     state.rssi, state.rssiValid = numericSource(state.sources.rssi)
-    -- Lire Alt avant les alertes, sans attendre le prochain echantillon GPS.
+    -- Alt reste rapide pour saisir le front ARM et ne pas manquer un bref
+    -- franchissement des 120 m. Le journal conserve sa cadence d'une seconde.
     state.altitude, state.altitudeValid = numericSource(state.sources.altitude)
 
     -- La navigation est echantillonnee a 1 Hz, sur la meme base de temps que
@@ -220,11 +237,14 @@ return function(config, util)
     if state.now >= state.nextNavigationUpdate then
       state.nextNavigationUpdate = state.now + (config.navigationPeriodSeconds or 1.0)
       state.navigationUpdated = true
+      state.navigationAt = state.now
       state.sats, state.satsValid = numericSource(state.sources.satellites)
 
       local gps, gpsCurrent = sourceValue(state.sources.gps)
       state.gpsValid = gpsCurrent and type(gps) == "table" and
         type(gps.lat) == "number" and type(gps.lon) == "number" and
+        gps.lat == gps.lat and gps.lon == gps.lon and
+        math.abs(gps.lat) <= 90 and math.abs(gps.lon) <= 180 and
         not (gps.lat == 0 and gps.lon == 0)
 
       if state.gpsValid then

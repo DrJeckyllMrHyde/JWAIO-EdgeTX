@@ -3,7 +3,7 @@
 -- Copyright 2026 DrJeckyllMrHyde
 -- SPDX-License-Identifier: Apache-2.0
 -- Fichier : lib/distance.lua
--- Version : 0.2.1
+-- Version : 0.3.0
 -- Cible   : RadioMaster TX15 Max / EdgeTX 2.12.x
 -- Role    : distance au point Home, maximum et trajet total du vol courant.
 -- ============================================================================

@@ -3,7 +3,7 @@
 -- Copyright 2026 DrJeckyllMrHyde
 -- SPDX-License-Identifier: Apache-2.0
 -- Fichier : lib/audio.lua
--- Version : 0.2.1
+-- Version : 0.3.0
 -- Role    : alertes vocales prioritaires et arbitrage des bips Qwad Finder.
 -- ============================================================================
 
@@ -59,10 +59,18 @@ return function(config)
   local function request(audio, kind)
     -- Une annonce deja en attente n'est jamais ajoutee une seconde fois. Le tri
     -- maintient les alertes critiques devant les confirmations de switches.
-    if audio.finderActive and confirmations[kind] then return end
+    if audio.finderActive and confirmations[kind] then
+      if audio.emit then audio.emit("suppressed", kind, "finder_priority") end
+      return
+    end
     if not priorities[kind] or not fileFor(kind) or audio.queued[kind] then return end
     audio.queue[#audio.queue + 1] = kind
     audio.queued[kind] = true
+    if audio.emit then audio.emit("requested", kind, "") end
+    if audio.finderActive and audio.emit then
+      audio.emit("deferred", kind, "finder_priority")
+      audio.deferred[kind] = true
+    end
     table.sort(audio.queue, function(left, right)
       return priorities[left] < priorities[right]
     end)
@@ -77,6 +85,8 @@ return function(config)
       end
     end
     audio.queued[kind] = nil
+    audio.deferred[kind] = nil
+    if audio.emit then audio.emit("cancelled", kind, "condition_ended") end
   end
 
   local function rising(previous, current)
@@ -133,14 +143,18 @@ return function(config)
     if audio.finderActive or #audio.queue == 0 or now < audio.nextPlay then return end
     local kind = table.remove(audio.queue, 1)
     audio.queued[kind] = nil
+    audio.deferred[kind] = nil
     local path = fileFor(kind)
     if not path or not playFile then return end
     local ok, result = pcall(playFile, path)
     if not ok or result == false then
+      if audio.emit then audio.emit("failed", kind, "playFile") end
       request(audio, kind)
       audio.nextPlay = now + 1
       return
     end
+    -- "submitted" signifie appel accepte, pas preuve que le son a ete entendu.
+    if audio.emit then audio.emit("submitted", kind, "playFile") end
     -- Une alerte en attente n'est pas encore annoncee. Cela permet au Finder
     -- de la differer sans perdre le franchissement, notamment celui des 120 m.
     if kind == "batteryLow" then audio.batteryLow.announced = true end
@@ -182,8 +196,10 @@ return function(config)
     end
   end
 
-  function M.new()
+  function M.new(emit)
     return {
+      emit = emit,
+      deferred = {},
       queue = {},
       queued = {},
       nextPlay = 0,
@@ -276,7 +292,6 @@ return function(config)
       end
     end
     local altitudeForAlert = nil
-    -- Ne pas annoncer plus tard une mesure devenue invalide pendant l'attente.
     if not state.altitudeValid then cancel(audio, "altitude") end
     if state.altitudeValid then
       if config.altitudeReference == "sensor" then
@@ -315,6 +330,14 @@ return function(config)
     if not gpsLost then cancel(audio, "gps") end
     if not highThrottle then cancel(audio, "throttle") end
 
+    -- Un seul evenement de report par annonce, jamais une ligne par tick.
+    for _, kind in ipairs(audio.queue) do
+      if not audio.deferred[kind] and (audio.finderActive or now < audio.nextPlay) then
+        audio.deferred[kind] = true
+        if audio.emit then audio.emit("deferred", kind,
+          audio.finderActive and "finder_priority" or "audio_busy") end
+      end
+    end
     playNext(audio, now)
   end
 
@@ -331,6 +354,7 @@ return function(config)
     -- Reserve seulement la duree approximative du petit bip, contrairement aux
     -- annonces vocales qui utilisent l'espacement general plus long.
     audio.nextPlay = now + (config.finderAudioReserveSeconds or 0.20)
+    if audio.emit then audio.emit("submitted", "finderBip", "playFile") end
     return true
   end
 

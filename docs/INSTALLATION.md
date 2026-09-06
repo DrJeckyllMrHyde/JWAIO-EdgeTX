@@ -1,166 +1,45 @@
-# Installation et premier essai sur TX15 Max
-
-## Préparation
-
-- RadioMaster TX15 Max
-- EdgeTX 2.12.x
-- carte SD montée et accessible
-- modèle configuré avec télémétrie découverte
-
-La dalle réelle de la TX15 Max est de 480 x 320 pixels. Le widget utilise cette
-base et adapte automatiquement le layout à la zone fournie par EdgeTX.
+# Installer ou supprimer JWAIO 0.3_Alpha
 
 ## Installation
 
-1. Sauvegarder le contenu actuel de la carte SD.
-2. Extraire `JWAIO-v0.2.1.zip` à la racine de la carte.
-3. Vérifier la présence de :
+1. Sauvegardez le contenu du stockage de la radio, le modèle EdgeTX, vos images et vos journaux.
+2. Téléchargez le ZIP d'installation depuis la [release](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/v0.3-alpha).
+3. Radio allumée, branchez le port USB de données et choisissez **USB Storage**.
+4. Copiez le contenu de l'archive à la racine du stockage EdgeTX utilisé par la radio : mémoire interne ou microSD selon votre configuration.
+5. Acceptez la fusion et le remplacement des fichiers JWAIO, sans formater ni supprimer les autres dossiers.
+6. Éjectez proprement le lecteur et redémarrez EdgeTX.
+7. Hélices retirées, découvrez les capteurs, ajoutez JWAIO dans une zone plein écran et vérifiez ses options.
 
-   ```text
-   /WIDGETS/JWAIO/main.lua
-   /SOUNDS/fr/JWAIO/
-   /LOGS/JWAIO/
-   ```
+Si l'ancien menu ne proposait pas Skin, retirez l'instance de la page et ajoutez-la à nouveau. Sinon, conservez vos réglages. Vérifiez toujours les affectations ARM, PreArm, Beeper, Flip et RTH après une mise à jour.
 
-4. Redémarrer la radio.
-5. Sur l'écran d'accueil, créer une page plein écran et sélectionner **JWAIO**.
-
-## Réglages du widget
-
-Le menu natif EdgeTX expose dix réglages :
-
-| Réglage | Fonction | Valeur conseillée |
-|---|---|---|
-| BatType | Chimie de la batterie | LiPo, LiIon ou LiHv |
-| Cells | Nombre de cellules | 6 par défaut, choix 1 à 8 |
-| LinkType | Protocole affiché | ELRS ou TBS_CF |
-| LQ | Qualité de liaison | RQly par défaut ou autre capteur |
-| ARM | Switch d'armement | position active de SE |
-| PreArm | Switch de pré-armement | position active de SF |
-| Beeper | Switch Beeper | selon le modèle |
-| Flip | Switch Flip over crash | selon le modèle |
-| RTH | Switch Return To Home | selon le modèle |
-| Thr | Source throttle | CH3 par défaut, modifiable |
-
-Avant d'ajouter le widget, lancer **Découvrir de nouveaux capteurs** dans EdgeTX.
-Le Lua utilise directement les noms suivants :
-
-| Donnée | Nom attendu |
-|---|---|
-| Batterie | RxBt |
-| Coordonnées | GPS |
-| Altitude | Alt |
-| Vitesse | GSpd |
-| Satellites | Sats |
-
-Si le modèle emploie un autre nom, il faut le renommer dans EdgeTX ou modifier la
-valeur correspondante dans `/WIDGETS/JWAIO/config.lua` avant d'ajouter le widget.
-La valeur `GSpd` est déjà fournie en km/h sur le modèle testé.
-
-Le bloc GPS utilise les couleurs suivantes :
-
-- 0 satellite ou capteur absent : `NO_DATA` gris ;
-- 1 à 4 satellites : rouge ;
-- 5 à 7 satellites : orange ;
-- 8 satellites et plus : vert.
-
-GPS, Alt, GSpd et Sats sont actualisés une fois par seconde. Les coordonnées sont
-affichées dans `DERNIERE POSITION` dès que le GPS est valide avec au moins cinq
-satellites, puis conservées si le signal disparaît.
-
-Si un capteur est absent ou mal sélectionné, le widget doit afficher `NO_DATA`.
-Une valeur nulle ne doit pas être présentée comme une batterie faible.
-
-Les profils LiPo et LiHv avertissent sous 3,60 V/cellule et passent en critique
-sous 3,40 V. Le profil LiIon avertit sous 3,00 V/cellule et passe en critique
-sous 2,80 V.
-
-Au branchement, une LiPo ou LiIon au-dessus de 4,10 V/cellule déclenche
-`Lipo_Liion_Full.wav`. Une LiHv au-dessus de 4,20 V/cellule déclenche
-`Lihv_Full.wav`; sa tension pleine attendue peut atteindre 4,35 V/cellule.
-
-## Réglages avancés V0.1
-
-Les choix suivants sont centralisés dans `/WIDGETS/JWAIO/config.lua` :
-
-- source du mode de vol, CH5 par défaut ;
-- sources GPS, satellites et RSSI secondaire ;
-- seuils batterie et LQ ;
-- durée de protection throttle ;
-- noms et extension des fichiers audio ;
-- sources altitude et vitesse, ainsi que calcul des distances GPS ;
-- mode de démonstration.
-
-Le mode ANGLE/ACRO utilise la source définie dans `config.lua`. Le switch RTH du
-menu reste prioritaire :
+Chemins attendus à la racine :
 
 ```text
-valeur basse       -> ANGLE
-autre valeur       -> ACRO
-switch RTH actif   -> RTH
+/WIDGETS/JWAIO/
+/SOUNDS/fr/JWAIO/
+/LOGS/JWAIO/
 ```
 
-## Séquence de test recommandée
+Ne copiez pas le dossier englobant le ZIP : `WIDGETS` doit être directement à la racine.
 
-1. Démarrer sans le drone : vérifier `NO_DATA` pour batterie, liaison, GPS,
-   vitesse et altitude, sans fausse alerte.
-2. Allumer le drone : vérifier l'arrivée de RxBt, LQ et GPS.
-3. Tester chaque position du mode de vol.
-4. Vérifier Beeper et Flip sans hélices.
-5. Armer sans hélices : un fichier CSV doit apparaître dans `/LOGS/JWAIO/`.
-6. Régler TIMER 1 et TIMER 2 dans le modèle EdgeTX, puis vérifier leurs valeurs.
-7. Relâcher ARM : Fly Time/TIMER 1 doit revenir à `00:00`, Fly Total/TIMER 2 ne
-   doit pas être remis à zéro.
-8. Passer entre LiPo, LiIon et LiHv : vérifier le titre, les seuils et les couleurs.
-9. Passer de ELRS à TBS_CF : vérifier le titre du bloc et l'absence de superposition.
-10. Activer RTH : le bloc mode de vol doit afficher `RTH`.
-11. Vérifier les deux colonnes centrales : Speed/Dist à gauche et Alt/Total à droite.
-12. Armer avec un throttle inférieur ou égal à 5 %, puis désarmer : les distances
-    du dernier vol ne doivent pas être remises à zéro.
-13. Armer et dépasser 5 % : un nouveau calcul doit commencer à zéro.
+## 3b. Supprimer le widget
 
-## Audio
+1. Sauvegardez les CSV et vos skins.
+2. Sur la radio, retirez JWAIO de toutes les pages et de tous les modèles concernés.
+3. Branchez la radio en **USB Storage**.
+4. Supprimez uniquement `/WIDGETS/JWAIO/` et `/SOUNDS/fr/JWAIO/`.
+5. Gardez `/LOGS/JWAIO/` pour conserver les vols, dernières coordonnées et distances. Ne le supprimez que si vous acceptez de perdre ces données.
+6. Retirez éventuellement `/JWAIO_README.txt`.
+7. Éjectez proprement puis redémarrez la radio.
 
-Les 17 fichiers fournis sont des WAV PCM mono, 32 kHz, 16 bits. Les annonces
-suivantes sont intégrées : ACRO, ANGLE, ARM, PRE-ARM, RTH, Beeper, Flip, fix GPS,
-altitude, batterie pleine, batterie faible, batterie critique, liaison, perte GPS
-et throttle. `finder_bip.wav` est utilisé par Qwad Finder.
+**Ne supprimez jamais les dossiers parents `/WIDGETS/`, `/SOUNDS/` ou `/LOGS/`.** Ils peuvent contenir les données d'autres widgets.
 
-Qwad Finder s'active si Beeper, Flip ou RTH est actif. Il affiche `1RSS` en dBm,
-avec `RQly` comme repli, puis réduit l'intervalle entre les bips lorsque la force
-reçue augmente. Pendant la recherche, les autres annonces JWAIO sont différées.
-Un son déjà commencé se termine ; les alertes internes EdgeTX restent actives.
+## Vérification au sol
 
-L'annonce d'altitude est jouée une fois par armement lorsque `Alt` valide dépasse
-strictement 120 m, moteurs armés. Vérifiez la référence de ce capteur : il ne
-s'agit pas nécessairement de la hauteur au-dessus du sol.
+- Les valeurs restent visibles entre deux réceptions.
+- Les vrais capteurs perdus passent à NO_DATA après le délai géré par EdgeTX.
+- Après reconnexion du drone, les valeurs reviennent sans recharger JWAIO.
+- Les switches affichés et les gaz correspondent au modèle.
+- Les sons ne sont pas doublés par d'autres alertes EdgeTX.
 
-## Journaux
-
-Un CSV est créé à chaque armement :
-
-```text
-date,time,lat,lon,altitude,speed,cell_v,distance_home_m,distance_total_m,distance_max_m,lq,sats
-```
-
-La dernière position valide est aussi conservée dans `lastpos.txt`. Une perte GPS
-ou une coordonnée `0,0` ne doit jamais écraser cette position.
-
-`lastdistance.txt` conserve la distance maximale au Home et la distance totale
-du dernier vrai vol. Il est actualisé chaque seconde en vol, au désarmement et
-avant la remise à zéro déclenchée par le prochain dépassement de 5 % de throttle.
-
-Les fichiers sont enregistrés dans :
-
-```text
-/LOGS/JWAIO/FYYMMDD_HHMMSS.csv
-/LOGS/JWAIO/lastpos.txt
-/LOGS/JWAIO/lastdistance.txt
-```
-
-Si deux armements ont lieu dans la même seconde, le second fichier reçoit un
-suffixe (`_01`, `_02`, etc.) afin de ne pas écraser le vol précédent.
-
-La V0.2.1 utilise l'API fichier simplifiée d'EdgeTX (`io.write`, `io.read` et
-`io.close`). Cette correction remplace les méthodes Lua standard non disponibles
-sur la radio et supprime l'erreur observée lors de l'armement.
+Voir le [mode d'emploi](MODE_EMPLOI.md) et le [guide des skins](SKINS.md).

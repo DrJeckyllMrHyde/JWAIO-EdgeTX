@@ -1,104 +1,63 @@
-JWAIO V0.2.1 - MODE D'EMPLOI RAPIDE
-==================================
+JWAIO 0.3_Alpha - Jeckyll Widget All in One
+RadioMaster TX15 Max / EdgeTX 2.12.x
 
-Compatibilite
--------------
-RadioMaster TX15 Max avec EdgeTX 2.12.x, page d'accueil plein ecran.
+INSTALLER
+1. Sauvegardez le stockage, le modele, vos images et vos journaux.
+2. Radio allumee : branchez le port USB de donnees, choisissez USB Storage.
+3. Copiez le contenu de JWAIO 0.3_Alpha.zip a la racine du stockage EdgeTX.
+   Fusionnez les dossiers et remplacez les fichiers JWAIO, sans formater.
+4. Ejectez proprement le lecteur et redemarrez la radio.
+5. Helices retirees, decouvrez les capteurs puis ajoutez JWAIO en plein ecran.
+   Si l'ancien menu n'avait pas Skin, retirez l'instance et ajoutez-la a nouveau.
+   Sinon, conservez l'instance existante.
+6. Verifiez les dix options : Skin, BatType, Cells, LinkType, ARM, PreArm,
+   Beeper, Flip, RTH, Thr. Thr=CH3, Cells=6 par defaut.
+Les switches doivent correspondre aux fonctions deja configurees dans le modele.
 
-Derniere revision 0.2.1 : 06/09/2026
------------------------------------
-Alertes batterie sans repetition incessante, alerte Alt > 120 m corrigee,
-Qwad Finder plus reactif et prioritaire, sons alleges et donnees invalides
-ecartees des CSV. Le menu et le design restent identiques.
-Pour mettre a jour, sauvegardez puis remplacez les fichiers et les sons.
-Preservez vos journaux et votre logo personnalise WIDGETS/JWAIO/img/logo.png.
-Ne supprimez pas le widget du modele pour cette mise a jour ; redemarrez la radio.
+CAPTEURS
+RxBt : batterie ; RQly : LQ ; 1RSS : RSSI.
+GPS : position ; Alt : altitude ; GSpd : vitesse au sol ; Sats : satellites.
+Sans GPS, les donnees absentes restent NO_DATA. Alt/Speed fonctionnent si leurs
+propres capteurs existent. Noms modifiables dans /WIDGETS/JWAIO/config.lua.
 
-Avant l'installation
----------------------
-1. Retirez les helices du drone pour les premiers essais.
-2. Sauvegardez la carte SD de la radio.
-3. Allumez le drone puis, dans EdgeTX, lancez la decouverte des capteurs.
-4. Les noms attendus sont : RxBt, GPS, Alt, GSpd, Sats et 1RSS.
+BATTERIE ET ALERTES
+LiPo/LiHv : faible < 3.60 V, critique < 3.40 V par cellule.
+LiIon : faible < 3.00 V, critique < 2.80 V par cellule.
+Le filtrage des creux brefs de tension ne remplace pas la surveillance du pilote.
+Altitude : valeur du capteur Alt > 120 m, une fois par armement.
+TIMER 1 : Fly Time, remis a zero au desarmement. TIMER 2 : Fly Total, conserve.
+Configurez les modes des deux timers dans EdgeTX.
 
-Installation
-------------
-1. Telechargez JWAIO-v0.2.1.zip.
-2. Extrayez son contenu a la racine de la carte SD.
-3. Verifiez la presence de :
-   /WIDGETS/JWAIO/
-   /SOUNDS/fr/JWAIO/
-   /LOGS/JWAIO/
-4. Remettez la carte SD, redemarrez EdgeTX et ajoutez JWAIO sur une page
-   plein ecran.
+QWAD FINDER
+Actif avec Beeper OU Flip OU RTH. Les bips suivent la force du signal.
+Pendant la recherche, les autres voix JWAIO, meme batterie critique, attendent.
+Les sons deja lances finissent. Le RSSI ne mesure pas une distance reelle.
 
-Reglages du menu
-----------------
-BatType  : LiPo, LiIon ou LiHv.
-Cells    : nombre de cellules, de 1S a 8S (6S par defaut).
-LinkType : ELRS ou TBS_CF.
-LQ       : capteur de qualite de liaison (RQly par defaut).
-ARM      : switch d'armement.
-PreArm   : switch de pre-armement.
-Beeper   : switch du beeper.
-Flip     : switch Flip After Crash.
-RTH      : switch Return To Home.
-Thr      : voie du throttle (CH3 par defaut).
+SKINS
+Le skin JWAIO est inclus. Un skin = un dossier dans /WIDGETS/JWAIO/skins/
+avec background.png (480x320), logo.png (216x132) et skin.lua.
+Apres ajout, redemarrez EdgeTX puis selectionnez Skin dans le menu.
+Voir docs/SKINS.md sur GitHub pour le modele et les instructions completes.
+Conservez le dossier jwaio comme solution de repli.
+Installez uniquement des fichiers Lua de confiance.
 
-Lecture de l'ecran
-------------------
-- Fly Time utilise TIMER 1 de la radio et revient a zero au desarmement.
-- Fly Total utilise TIMER 2 et n'est jamais remis a zero par le widget.
-- La zone GPS indique NO_DATA, SAT 1 a 4 en rouge, SAT 5 a 7 en orange,
-  puis SAT 8 et plus en vert.
-- Speed et Alt utilisent GSpd et Alt.
-- Dist indique l'eloignement du point Home.
-- Total indique la distance totale estimee depuis le debut du vrai vol.
-- Qwad Finder apparait seulement lorsque Beeper, Flip ou RTH est actif.
+JOURNAUX
+/LOGS/JWAIO/F*.csv : donnees de vol.
+/LOGS/JWAIO/E*.csv : evenements de diagnostic et bips, y compris au sol.
+/LOGS/JWAIO/lastpos.txt : derniere latitude/longitude.
+/LOGS/JWAIO/lastdistance.txt : distance max et trajet total sauvegardes.
+Un vrai nouveau vol commence avec ARM et throttle > 5 %.
+Pour Open Drone Log, utilisez le convertisseur PC explique dans docs/OPEN_DRONE_LOG.md.
+Avant de partager un CSV, pensez aux coordonnees GPS qu'il contient.
 
-Batteries et alertes
---------------------
-LiPo/LiHv : alerte a 3,60 V/cellule, critique a 3,40 V/cellule.
-LiIon     : alerte a 3,00 V/cellule, critique a 2,80 V/cellule.
-Une LiHv pleine peut atteindre 4,35 V/cellule.
-NO_DATA signifie qu'aucune donnee valide n'est recue ; ce n'est pas une
-alerte de batterie faible.
-Chaque niveau est annonce une fois par episode, puis rearme apres cinq secondes
-de recuperation stable. La temporisation anti-sag reste active.
-Altitude : Alt valide strictement superieur a 120 m, une fois par armement.
-Il ne s'agit pas necessairement de la hauteur au-dessus du sol : verifiez Alt.
-Pendant Beeper, Flip ou RTH, le Finder differe les autres annonces JWAIO.
-Un son deja commence se termine normalement. Les alertes internes EdgeTX
-ne sont pas desactivees. Desactivez la recherche pour retrouver les annonces.
+SUPPRIMER PROPREMENT
+1. Sauvegardez vos journaux et skins.
+2. Retirez JWAIO de toutes les pages de tous les modeles qui l'utilisent.
+3. En USB Storage, supprimez uniquement /WIDGETS/JWAIO/ et /SOUNDS/fr/JWAIO/.
+4. Conservez /LOGS/JWAIO/ ou supprimez-le uniquement si vous ne voulez plus ses donnees.
+5. JWAIO_README.txt peut aussi etre retire.
+6. Ne supprimez jamais les dossiers parents WIDGETS, SOUNDS ou LOGS.
+7. Ejectez proprement et redemarrez.
 
-Journaux de vol
----------------
-Un fichier CSV est cree a chaque armement dans /LOGS/JWAIO/. Une ligne est
-ecrite chaque seconde. La derniere position est conservee dans lastpos.txt et
-les distances du dernier vol dans lastdistance.txt.
-Les capteurs invalides ou perimes produisent des champs CSV vides, pas des
-anciennes valeurs. Un capteur Alt valide reste utilisable meme sans GPS.
-
-Le calcul d'un nouveau vol commence uniquement avec ARM actif ET un throttle
-strictement superieur a 5 %. Un controle moteur a 5 % ou moins ne remet donc
-pas les distances precedentes a zero.
-
-Les CSV s'ouvrent directement dans Excel, LibreOffice Calc ou un tableur
-equivalent. Pour Open Drone Log, utilisez le convertisseur fourni :
-  python tools/jwaio_to_opendronelog.py FICHIER_JWAIO.csv
-Il cree un fichier termine par -opendronelog.csv au format attendu par le site.
-Site officiel gratuit et open source : https://opendronelog.com/
-
-Personnaliser le logo de l'ecran radio
---------------------------------------
-1. Preparez un PNG RGBA avec transparence de 216 x 132 pixels.
-2. Nommez-le exactement logo.png.
-3. Radio eteinte, remplacez : /WIDGETS/JWAIO/img/logo.png
-4. Redemarrez EdgeTX ou rechargez completement le widget.
-
-En cas de NO_DATA
------------------
-Refaites la decouverte des capteurs avec le drone alimente, verifiez leur nom
-exact, puis rechargez le widget. Ne retirez jamais la carte SD radio allumee.
-
-Documentation detaillee : docs/MODE_EMPLOI.md
+Cette alpha reste une version d'essai. Controle au sol, helices retirees, avant vol.
+Depot : https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX

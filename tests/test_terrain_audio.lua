@@ -1,4 +1,4 @@
--- JWAIO 0.2.1 - regressions du retour terrain : scenarios et horloge simules.
+-- JWAIO 0.3.0 - regressions du retour terrain : scenarios et horloge simules.
 -- Executer a la racine : fengari tests/test_terrain_audio.lua (ou Lua 5.2+).
 local configFactory = assert(loadfile("sdcard/WIDGETS/JWAIO/config.lua"))
 local audioFactory = assert(loadfile("sdcard/WIDGETS/JWAIO/lib/audio.lua"))()
@@ -214,7 +214,7 @@ do
 end
 print("Terrain audio/finder tests OK")
 
--- Annulations des annonces differees si les capteurs deviennent invalides.
+-- Annulation d'une annonce en attente lorsque sa mesure devient invalide.
 do
   local c,m,a,s,step,run,count=rig()
   a.nextPlay=s.now+20
@@ -228,3 +228,19 @@ do
   assert(count('Altitude.wav')==1)
 end
 print('Invalid deferred alerts tests OK')
+
+-- Le diagnostic suit le cycle d'une voix, sans annoncer un son annule.
+do
+  local c,m,a,s,step,run,count=rig()
+  local events={}
+  a.emit=function(event,kind) events[#events+1]=event..':'..kind end
+  a.nextPlay=s.now+20
+  s.armed=true; s.altitude=121; run(2)
+  s.altitudeValid=false; run(1)
+  local joined=table.concat(events,'|')
+  assert(joined:find('requested:altitude') and joined:find('deferred:altitude'))
+  assert(joined:find('cancelled:altitude') and not joined:find('submitted:altitude'))
+  a.nextPlay=s.now; s.altitudeValid=true; run(5)
+  assert(table.concat(events,'|'):find('submitted:altitude'))
+end
+print('Audio diagnostic lifecycle tests OK')

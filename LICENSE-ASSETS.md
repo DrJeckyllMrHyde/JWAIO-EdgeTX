@@ -16,7 +16,8 @@ Toute réutilisation doit conserver une attribution raisonnable, par exemple :
 
 ## Exception importante : logo affiché dans le widget
 
-`sdcard/WIDGETS/JWAIO/img/logo.png` est un emplacement personnalisable. Le
+`sdcard/WIDGETS/JWAIO/skins/<skin>/logo.png` est un emplacement personnalisable.
+`sdcard/WIDGETS/JWAIO/img/logo.png` est le logo de secours. Le
 visuel qui y est installé peut appartenir à l'utilisateur ou à un tiers et
 n'est pas automatiquement placé sous CC BY 4.0. Avant toute redistribution,
 remplacez-le par un visuel dont vous possédez les droits ou obtenez l'autorisation
@@ -24,4 +25,3 @@ de son auteur.
 
 Les composants tiers restent soumis aux avis indiqués dans
 `sdcard/THIRD_PARTY_NOTICES.txt`.
-

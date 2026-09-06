@@ -3,7 +3,7 @@
 -- Copyright 2026 DrJeckyllMrHyde
 -- SPDX-License-Identifier: Apache-2.0
 -- Fichier : lib/flight.lua
--- Version : 0.2.1
+-- Version : 0.3.0
 -- Role    : transitions ARM, remise a zero TIMER 1 et cycle du journal GPS.
 -- ============================================================================
 
@@ -54,7 +54,7 @@ return function(config, loggerModule)
     if not state.armed and flight.previousArmed then
       -- Le front descendant ferme le vol et force une derniere sauvegarde de
       -- la position valide connue avant de remettre l'etat de vol a zero.
-      loggerModule.stop(logger)
+      loggerModule.finish(logger)
       loggerModule.saveLastPosition(state)
       flight.flying = false
     end

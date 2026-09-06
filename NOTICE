@@ -10,10 +10,10 @@ sont distribues sous licence Creative Commons Attribution 4.0 International
   "JWAIO - Jeckyll Widget All in One, par DrJeckyllMrHyde"
 
 Le fichier /WIDGETS/JWAIO/img/logo.png est un emplacement personnalisable.
+Les skins utilisent /WIDGETS/JWAIO/skins/<skin>/logo.png et background.png.
 Chaque utilisateur doit disposer des droits necessaires sur le visuel qu'il y
 installe. Les marques et visuels tiers ne sont pas couverts par les licences
 JWAIO.
 
 Les avis des composants tiers sont conserves dans
 sdcard/THIRD_PARTY_NOTICES.txt.
-

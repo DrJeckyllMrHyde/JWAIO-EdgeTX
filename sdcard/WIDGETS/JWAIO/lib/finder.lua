@@ -3,7 +3,7 @@
 -- Copyright 2026 DrJeckyllMrHyde
 -- SPDX-License-Identifier: Apache-2.0
 -- Fichier : lib/finder.lua
--- Version : 0.2.1
+-- Version : 0.3.0
 -- Cible   : RadioMaster TX15 Max / EdgeTX 2.12.x
 -- Role    : Qwad Finder directionnel base sur la puissance du signal recu.
 --
@@ -46,6 +46,7 @@ return function(config, util)
     self.nextBeep = now
     self.lastBeep = nil
     self.lastUpdate = nil
+    self.period = nil
   end
 
   local function readSignal(state)
@@ -106,6 +107,7 @@ return function(config, util)
     -- signal raccourcit immediatement l'attente programmee lorsque l'on etait
     -- loin. Aucun rattrapage en rafale si EdgeTX appelle le widget moins vite.
     local period = beepPeriod(self.strength)
+    self.period = period
     self.nextBeep = self.lastBeep and (self.lastBeep + period) or now
     if now >= self.nextBeep and tryBeep and tryBeep() then
       self.lastBeep = now

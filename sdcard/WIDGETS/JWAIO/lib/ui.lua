@@ -3,7 +3,7 @@
 -- Copyright 2026 DrJeckyllMrHyde
 -- SPDX-License-Identifier: Apache-2.0
 -- Fichier : lib/ui.lua
--- Version : 0.2.1
+-- Version : 0.3.0
 -- Role    : rendu plein ecran 480x320 et mise a l'echelle de la zone EdgeTX.
 -- ============================================================================
 
@@ -17,16 +17,29 @@ return function(config, util)
   -- la TX15 et faisait partir NO_DATA vers la droite de chaque colonne.
   local RIGHT_ALIGN = RIGHT
 
+  local palette = config.palette or {}
+
+  local function themeColor(name, fallback)
+    local value = palette[name]
+    if type(value) == "table" and #value >= 3 then
+      return lcd.RGB(value[1], value[2], value[3])
+    end
+    return lcd.RGB(fallback[1], fallback[2], fallback[3])
+  end
+
+  -- Les couleurs de fonction conservent des noms stables dans tout le rendu.
+  -- Chaque manifeste peut ainsi changer l'identite visuelle sans modifier la
+  -- logique d'alerte, les seuils ou les positions des informations.
   local C = {
-    black = lcd.RGB(0, 0, 0),
-    panel = lcd.RGB(9, 11, 14),
-    line = lcd.RGB(48, 54, 61),
-    white = lcd.RGB(244, 246, 248),
-    grey = lcd.RGB(135, 143, 153),
-    orange = lcd.RGB(255, 132, 28),
-    green = lcd.RGB(126, 190, 38),
-    red = lcd.RGB(255, 55, 55),
-    blue = lcd.RGB(75, 142, 255)
+    black = themeColor("black", {0, 0, 0}),
+    panel = themeColor("panel", {9, 11, 14}),
+    line = themeColor("line", {48, 54, 61}),
+    white = themeColor("white", {244, 246, 248}),
+    grey = themeColor("grey", {135, 143, 153}),
+    orange = themeColor("orange", {255, 132, 28}),
+    green = themeColor("green", {126, 190, 38}),
+    red = themeColor("red", {255, 55, 55}),
+    blue = themeColor("blue", {75, 142, 255})
   }
 
   local function transform(zone)
@@ -47,7 +60,11 @@ return function(config, util)
   end
 
   local function panel(t, x, y, w, h, title, accent)
-    lcd.drawFilledRectangle(t.x(x), t.y(y), t.w(w), t.h(h), C.panel)
+    -- Certains skins integrent leurs aplats noirs directement dans le PNG :
+    -- eviter alors un second remplissage opaque qui masquerait le decor.
+    if not config.backgroundIncludesPanels then
+      lcd.drawFilledRectangle(t.x(x), t.y(y), t.w(w), t.h(h), C.panel)
+    end
     lcd.drawRectangle(t.x(x), t.y(y), t.w(w), t.h(h), C.line, 1)
     lcd.drawText(t.x(x + 6), t.y(y + 5), title, XSMSIZE + accent)
   end
@@ -68,21 +85,46 @@ return function(config, util)
   local function openBitmap(path)
     if not Bitmap or not Bitmap.open then return nil end
     local ok, bitmap = pcall(Bitmap.open, path)
-    if not ok then return nil end
+    if not ok or not bitmap then return nil end
     if Bitmap.getSize then
-      local w, h = Bitmap.getSize(bitmap)
-      if not w or w == 0 or not h or h == 0 then return nil end
+      local sized, w, h = pcall(Bitmap.getSize, bitmap)
+      if not sized or not w or w == 0 or not h or h == 0 then return nil end
     end
     return bitmap
   end
 
   function M.loadImages()
-    -- Seul le logo est charge au demarrage. Les cinq images de throttle sont
-    -- chargees a la demande, lors de leur premiere utilisation.
+    -- Seuls le fond et le logo du skin actif sont charges. Les cinq images de
+    -- throttle partagees restent chargees a la demande.
+    local skinPath = config.skinPath or (config.basePath .. "/img")
+    local logo = openBitmap(skinPath .. "/" .. (config.logoImage or "logo.png"))
+    local background = openBitmap(skinPath .. "/" .. (config.backgroundImage or "background.png"))
     return {
-      logo = openBitmap(config.basePath .. "/img/logo.png"),
+      logo = logo,
+      background = background,
+      -- Bitmap.open renvoie un bitmap 0x0 en cas de fichier invalide ou de
+      -- memoire insuffisante. openBitmap le convertit en nil et ce drapeau
+      -- rend enfin le probleme visible a l'ecran.
+      backgroundError = background == nil,
       throttle = {}
     }
+  end
+
+  local function drawBackground(t, widget)
+    local image = widget.images.background
+    -- Nettoyer toute la zone garantit un rendu propre meme si EdgeTX fournit
+    -- exceptionnellement une zone dont le ratio differe du plein ecran.
+    lcd.drawFilledRectangle(widget.zone.x, widget.zone.y, widget.zone.w, widget.zone.h, C.black)
+    if not image then
+      return
+    end
+
+    local scale = math.floor(t.scale * 100 + 0.5)
+    if scale == 100 then
+      lcd.drawBitmap(image, widget.zone.x, widget.zone.y)
+    else
+      lcd.drawBitmap(image, widget.zone.x, widget.zone.y, scale)
+    end
   end
 
   local function drawLogo(t, images)
@@ -95,15 +137,15 @@ return function(config, util)
         lcd.drawBitmap(images.logo, x, t.y(4), scale)
       end
     else
-      centered(t, 241, 40, "JWAIO", BOLD, C.white)
+      centered(t, 241, 40, config.skinName or "JWAIO", BOLD, C.white)
       centered(t, 241, 62, "FPV", MIDSIZE, C.white)
     end
   end
 
   local function drawThrottle(t, images, percent)
     local index = throttleIndex(percent)
-    if not images.throttle[index] then
-      images.throttle[index] = openBitmap(config.basePath .. "/img/thr" .. tostring(index - 1) .. ".png")
+    if images.throttle[index] == nil then
+      images.throttle[index] = openBitmap(config.basePath .. "/img/thr" .. tostring(index - 1) .. ".png") or false
     end
     centered(t, 241, 227, "THROTTLE", XSMSIZE, C.orange)
     centered(t, 241, 242, tostring(percent) .. "%", BOLD, C.white)
@@ -163,10 +205,8 @@ return function(config, util)
   end
 
   local function drawFlightMetrics(t, state)
-    -- Une perte de mesure change sa presentation, sans effacer les compteurs.
+    -- Chaque capteur a sa propre validite. Seules les distances exigent le GPS.
     local gpsReady = state.gpsState == "GPS OK"
-    -- Alt peut provenir d'un capteur independant du GPS. Chaque mesure exige
-    -- sa propre validite ; seules les distances exigent une position GPS.
     local speedValid = state.speedValid
     local altitudeValid = state.altitudeValid
     local distanceValid = gpsReady and state.distanceValid
@@ -246,10 +286,10 @@ return function(config, util)
     local state = widget.data
     local flight = widget.flight
 
-    lcd.drawFilledRectangle(zone.x, zone.y, zone.w, zone.h, C.black)
+    drawBackground(t, widget)
 
     if zone.w < 360 or zone.h < 220 then
-      centered(t, 240, 135, "JWAIO", BOLD, C.orange)
+      centered(t, 240, 135, config.skinName or "JWAIO", BOLD, C.orange)
       centered(t, 240, 160, "UTILISER UNE ZONE PLEIN ECRAN", XSMSIZE, C.white)
       return
     end
@@ -300,10 +340,14 @@ return function(config, util)
     drawLogo(t, widget.images)
     drawThrottle(t, widget.images, state.throttle)
 
-    if widget.logger.active then
+    if widget.diagnostics and widget.diagnostics.error then
+      centered(t, 241, 143, widget.diagnostics.error, XSMSIZE, C.red)
+    elseif widget.logger.active then
       centered(t, 241, 143, "REC", XSMSIZE, C.red)
     elseif widget.logger.error then
       centered(t, 241, 143, widget.logger.error, XSMSIZE, C.red)
+    elseif widget.images.backgroundError then
+      centered(t, 241, 143, "SKIN ERROR", XSMSIZE, C.red)
     end
 
     -- RTH/Pre-Arm/Arm restent independants du Qwad Finder : l'etat central

@@ -27,7 +27,7 @@ Il contient les correspondances suivantes :
 
 | JWAIO | Open Drone Log | Conversion |
 |---|---|---|
-| date + time | time_s | secondes écoulées depuis la première ligne |
+| elapsed_s (ou date + time) | time_s | secondes écoulées ; horloge monotone en priorité |
 | lat | lat | degrés décimaux |
 | lon | lng | degrés décimaux |
 | altitude | alt_m | altitude ramenée au point de départ |
@@ -35,10 +35,20 @@ Il contient les correspondances suivantes :
 | speed | speed_ms | km/h divisés par 3,6 |
 | sats | satellites | valeur directe |
 | lq | rc_signal | valeur directe |
+| pack_v | battery_voltage_v | tension du pack ; voir pack_estimated dans le journal brut |
+| throttle_pct | rc_throttle | pourcentage de 0 à 100 |
+| flight_mode | flight_mode | nom du mode |
 
 `cell_v` est une tension **par cellule**. Elle est conservée dans une colonne
 JWAIO dédiée, mais n'est pas déclarée comme tension totale de batterie afin de
-ne pas fausser les graphiques d'Open Drone Log.
+ne pas fausser les graphiques d'Open Drone Log. La colonne séparée
+`pack_v` alimente la tension totale ; elle peut être estimée à partir de la
+tension cellule et du nombre de cellules configuré.
+
+Dans cette alpha, les journaux de vol portent le préfixe **F**. Les journaux
+**E** contiennent les événements de diagnostic et ne se convertissent pas en
+trace de vol. Les colonnes supplémentaires du journal F ne bloquent pas le
+convertisseur. Sans GPS, aucune trajectoire ne peut être reconstituée.
 
 ## Limites
 
@@ -52,4 +62,3 @@ Références officielles :
 
 - [Open Drone Log](https://opendronelog.com/)
 - [Guide des parseurs personnalisés et format CSV cible](https://github.com/arpanghosh8453/open-dronelog/blob/main/docs/custom_parsers.md)
-
