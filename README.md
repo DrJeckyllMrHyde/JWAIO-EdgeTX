@@ -6,9 +6,10 @@ Vos informations avant décollage, vos alertes en vol et votre aide à la recher
 
 ## Télécharger et installer
 
-[⬇️ **Télécharger JWAIO 0.3_Alpha**](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/v0.3-alpha)
+[⬇️ **Télécharger JWAIO 0.3_Alpha**](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.3-alpha/JWAIO.0.3_Alpha.zip)
 
-Dans les fichiers de la release, choisissez **JWAIO 0.3_Alpha.zip**, pas « Source code ».
+Le bouton télécharge directement le ZIP d'installation. GitHub remplace l'espace
+du nom par un point : **JWAIO.0.3_Alpha.zip**. Ne choisissez pas « Source code ».
 
 1. Sauvegardez le stockage et le modèle de votre radio, ainsi que vos logos et journaux.
 2. Radio allumée, branchez le port USB de données et choisissez **USB Storage**.
