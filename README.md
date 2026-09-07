@@ -6,7 +6,7 @@ Vos informations avant décollage, vos alertes en vol et votre aide à la recher
 
 ## Télécharger et installer
 
-[⬇️ **Télécharger JWAIO 0.3_Alpha**](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.3-alpha/JWAIO.0.3_Alpha.zip)
+[⬇️ **Télécharger JWAIO 0.3_Alpha**](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.3-alpha/JWAIO-v0.3.0-alpha.zip)
 
 Le bouton télécharge directement le ZIP d'installation. GitHub remplace l'espace
 du nom par un point : **JWAIO.0.3_Alpha.zip**. Ne choisissez pas « Source code ».
