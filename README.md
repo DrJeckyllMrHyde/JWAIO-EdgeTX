@@ -1,6 +1,7 @@
 # JWAIO 0.3_Alpha
 
-**Jeckyll Widget All in One** — widget Lua FPV plein écran pour **RadioMaster TX15 Max / EdgeTX 2.12.x**.
+**Jeckyll Widget All in One** — widget Lua FPV plein écran pour **RadioMaster TX15 - TX15 Max - TX16 Mk1 à Mk3 / EdgeTX 2.12.x**.
+
 
 Vos informations avant décollage, vos alertes en vol et votre aide à la recherche du quad, réunies sur la radio. Cette version alpha reprend le correctif de télémétrie validé sur la radio du créateur ; les retours de la communauté restent essentiels.
 
