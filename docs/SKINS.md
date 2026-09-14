@@ -3,6 +3,10 @@
 Un skin change le fond, le logo et les couleurs. Il ne modifie ni les capteurs,
 ni les alertes, ni le fonctionnement du widget. Le skin officiel **JWAIO** est inclus.
 
+## Affichage selon la radio en v0.3.1
+
+Les trois ZIP fournissent le même fond 480 × 320 et le même logo 216 × 132. Le code adapte leur affichage à la radio : TX15 480 × 320, Mk1/Mk2 480 × 272 (fond centré et recadré), Mk3 800 × 480 (mise à l'échelle). Vérifiez donc la lisibilité et le cadrage sur votre radio ; la Mk3 reste sans validation physique. Les effets LED optionnels sont désactivés par défaut et dépendent de l'équipement et du firmware.
+
 ## Installer et choisir un skin
 
 1. Sauvegardez la mémoire de stockage utilisée par la radio.
@@ -100,6 +104,5 @@ n'installez que des fichiers provenant d'une source de confiance.** Le chargemen
 protégé contre les erreurs n'est pas une protection contre du code malveillant.
 
 Ne partagez que les visuels et sons dont vous détenez les droits. Les sons restent
-communs au widget dans `/SOUNDS/fr/JWAIO/` : cette alpha ne choisit pas un pack
+communs au widget dans `/SOUNDS/fr/JWAIO/` : cette version ne choisit pas un pack
 audio différent selon le skin.
-

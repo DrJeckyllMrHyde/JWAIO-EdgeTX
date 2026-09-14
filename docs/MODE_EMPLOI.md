@@ -1,70 +1,92 @@
-# Utiliser JWAIO 0.3_Alpha
+# Utiliser JWAIO v0.3.1
 
-Le [guide d'installation](INSTALLATION.md) et le [mode d'emploi simple](../MODE_EMPLOI.txt) décrivent la mise en place et la suppression.
+Pour la première installation, suivez le [guide débutant](INSTALLATION.md). Les [statuts par radio](COMPATIBILITE.md) distinguent TX15/Mk1/Mk2 testés et Mk3 sans essai physique.
 
-## Réglages
+## Régler les dix options
 
-Le menu contient dix options : **Skin, BatType, Cells, LinkType, ARM, PreArm, Beeper, Flip, RTH, Thr**.
-Les capteurs sont lus par leur nom dans `config.lua` : RxBt, RQly, 1RSS, GPS, Alt, GSpd, Sats.
-Découvrez-les dans EdgeTX avant de charger le widget. Pour le freestyle sans GPS, les champs correspondants restent indisponibles sans bloquer batterie et liaison.
+Ouvrez les options de l'instance JWAIO dans la configuration de l'écran EdgeTX.
 
-JWAIO ne configure pas les fonctions du contrôleur de vol : il surveille les commandes configurées dans votre modèle. Le mode ANGLE est lu sur la position basse de CH5 par défaut, ACRO sinon ; le switch RTH choisi prend priorité.
+| Option | Réglage conseillé pour commencer |
+|---|---|
+| Skin | JWAIO, l'apparence fournie |
+| BatType | La chimie du pack du véhicule : LiPo, LiIon ou LiHv |
+| Cells | Son nombre réel de cellules ; 6 par défaut, de 1 à 8 |
+| LinkType | ELRS ou TBS_CF selon votre liaison |
+| ARM | La position d'interrupteur qui arme déjà votre modèle |
+| PreArm | La position de pré-armement si votre modèle en utilise une |
+| Beeper | La position qui active le beeper, sinon désactivée |
+| Flip | La position du retournement après crash, sinon désactivée |
+| RTH | La position du retour GPS déjà configuré, sinon désactivée |
+| Thr | La voie des gaz réelle ; CH3 est proposée par défaut |
 
-## Batteries
+ARM recherche SE bas et PreArm SF bas par défaut : vérifiez les affectations réelles, particulièrement sur les panneaux modulaires Mk3. Beeper, Flip et RTH sont initialement désactivés. Les options indiquent au widget les commandes existantes ; elles n'ajoutent aucune fonction au drone.
 
-| Profil | Alerte basse | Critique | Annonce pleine |
+**Modes :** les trois paquets lisent SA par défaut : SA bas affiche ANGLE, haut/milieu ACRO. RTH est prioritaire. Pour une autre commande, ajustez `modeSource` et `modeAnglePosition` dans `/WIDGETS/JWAIO/config.lua`, puis redémarrez. Ce sont des indications de commande, pas une confirmation du mode réel du contrôleur de vol.
+
+## Capteurs et unités
+
+| Donnée | Nom attendu | À vérifier |
+|---|---|---|
+| Batterie | RxBt | Tension du véhicule, pas une autre alimentation |
+| Qualité de liaison | RQly | LQ disponible et cohérente |
+| Puissance reçue | 1RSS | RSSI disponible |
+| Position | GPS | GPS du véhicule |
+| Altitude | Alt | Valeur en mètres |
+| Vitesse au sol | GSpd | Valeur en km/h ; `speedMultiplier = 1.0` par défaut |
+| Satellites | Sats | Nombre fourni par la télémétrie |
+
+Découvrez les capteurs dans EdgeTX avant de charger JWAIO. Le choix LinkType change le libellé de liaison, sans adapter automatiquement les noms de capteurs. En cas de noms différents, modifiez les champs `batterySource`, `lqSource`, `rssiSource`, `gpsSource`, `altitudeSource`, `speedSource` et `satellitesSource` de `config.lua` pour correspondre aux capteurs de votre modèle. Redémarrez après modification. Adaptez `speedMultiplier` si la vitesse est fournie dans une autre unité.
+
+Une mesure valide reste affichée entre deux réceptions. Les données absentes ou invalides restent `NO_DATA`. Sans GPS, les mesures batterie et liaison continuent si leurs capteurs sont disponibles ; aucune position n'est inventée.
+
+## Batterie et alertes
+
+| Profil | Seuil bas par cellule | Seuil critique par cellule | Seuil d'annonce pleine |
 |---|---:|---:|---:|
-| LiPo | < 3,60 V | < 3,40 V | > 4,10 V |
-| LiIon | < 3,00 V | < 2,80 V | > 4,10 V |
-| LiHv | < 3,60 V | < 3,40 V | > 4,20 V |
+| LiPo | 3,60 V | 3,40 V | 4,10 V |
+| LiIon | 3,00 V | 2,80 V | 4,10 V |
+| LiHv | 3,60 V | 3,40 V | 4,20 V |
 
-Valeurs par cellule. LiHv accepte une tension de charge de 4,35 V par cellule.
-La tension affichée est normalisée d'après RxBt et le nombre de cellules ; ce n'est pas une mesure de la cellule individuelle la plus faible.
+Ces valeurs sont les réglages fournis. La tension par cellule est calculée ou normalisée depuis RxBt et Cells ; ce n'est pas une mesure individuelle de la cellule la plus faible. Une brève chute de tension est filtrée : environ 1,2 s pour l'alerte basse, 1 s pour la critique. Une récupération stable permet le réarmement des annonces. Les réglages avancés sont dans `config.lua`.
 
-Le seuil bas doit durer environ 1,2 s, le critique 1 s. Une annonce par épisode et niveau évite les boucles. Une récupération stable de 5 s est nécessaire pour réarmer : seuil bas + 0,08 V, ou seuil critique + 0,08 V. Une perte de télémétrie ne compte pas comme une recharge.
+L'alerte de gaz vise au moins 95 % pendant trois secondes, moteurs armés. L'alerte de liaison utilise un seuil LQ de 70 % et un délai de deux secondes. L'alerte d'altitude utilise Alt au-dessus de 120 m, moteurs armés : il s'agit par défaut de la référence du capteur, pas d'une hauteur automatiquement calculée depuis le décollage.
 
-## Alertes et timers
+Évitez de programmer les mêmes annonces deux fois dans EdgeTX et JWAIO.
 
-- Alt : strictement au-dessus de 120 m **selon le capteur Alt**, moteurs armés, une annonce par armement. Ce n'est pas le gain depuis le décollage.
-- Throttle : 95 % ou plus pendant trois secondes, moteurs armés.
-- LQ : sous 70 % pendant deux secondes, moteurs armés.
-- Satellite : passage à GPS OK, avec coordonnées valides et au moins cinq satellites.
-- TIMER 1 fournit Fly Time et se remet à zéro au désarmement ; TIMER 2 fournit Fly Total sans être réinitialisé.
-- Les annonces de modes et de switches suivent leurs changements d'état.
+## Minuteries : Fly Time et Fly Total
 
-Ne configurez pas les mêmes annonces en double dans EdgeTX.
+**Fly Time utilise TIMER 1.** Dans les paramètres du modèle EdgeTX, configurez un compteur montant à partir de zéro et une condition de marche adaptée à votre modèle, par exemple l'interrupteur d'armement. JWAIO remet ce compteur à zéro au démarrage désarmé puis au désarmement.
 
-## GPS et distances
+**Fly Total utilise TIMER 2.** Configurez sa condition de marche et, si vous souhaitez garder le cumul après extinction, sa persistance dans EdgeTX. JWAIO ne remet pas TIMER 2 à zéro et ne définit pas la condition de marche des compteurs.
 
-Satellites : 0/absent = NO_DATA ; 1–4 rouge ; 5–7 orange ; 8 et plus vert, selon la palette du skin.
-GPS, Sats et GSpd sont acquis environ une fois par seconde ; Alt et RSSI à chaque cycle du widget.
+## Satellites, GPS et distances
 
-Le premier point GPS utilisable du vrai vol devient le Home. Le vrai vol commence avec ARM et throttle > 5 %. Le trajet total combine vitesse au sol et positions, avec rejet de sauts GPS aberrants : il reste une estimation. Un contrôle moteur à 5 % ou moins préserve les résultats sauvegardés.
+Pour une valeur Sats valide : **0 à 4 rouge**, **5 à 6 orange**, **7 ou plus vert**. Une donnée absente ou périmée reste `NO_DATA`.
+
+Après environ deux secondes d'état stable, les annonces satellites dépendent du contexte : au sol, orange et vert ont leurs annonces ; en vol, rouge et orange signalent les niveaux correspondants. Aucune annonce satellite n'est déclenchée dans l'état armé avec gaz à 5 % ou moins. Ces seuils d'affichage ne prouvent pas que le retour GPS du contrôleur de vol est prêt.
+
+Un nouveau calcul de distances débute quand ARM est actif et les gaz dépassent 5 %. Le premier point GPS exploitable du vrai vol devient le point de départ Home. La distance maximale et le trajet restent des estimations ; les sauts GPS sont filtrés. Un contrôle moteur à 5 % ou moins conserve les résultats du dernier vol.
 
 ## Qwad Finder
 
-Actif avec Beeper, Flip ou RTH, libéré lorsque ces fonctions sont inactives. RSSI prioritaire, repli sur LQ si nécessaire. Sans signal valable, pas de faux bip de proximité.
+Activez l'une des commandes Beeper, Flip ou RTH affectées au widget pour lancer la recherche. Mettez les trois commandes sur leur position inactive pour l'arrêter. Le RSSI est utilisé en priorité, puis la LQ si nécessaire. Sans signal valide, le widget ne produit pas de fausse indication de proximité.
 
-**Les autres voix JWAIO, y compris batterie critique, attendent pendant la recherche.** Un son déjà lancé finit sa lecture. Les sons d'autres fonctions EdgeTX restent indépendants.
+Plus le signal est fort, plus les bips sont rapprochés. La cadence visée va d'environ 1,2 s à 0,20 s. Les obstacles, l'orientation des antennes et la puissance dynamique influencent le résultat : ce n'est ni une distance en mètres ni une direction garantie.
 
-Une force de signal plus élevée rapproche les bips, sans fournir une mesure réelle de distance. La puissance dynamique et les obstacles peuvent tromper l'estimation.
+**Pendant le Finder, les autres annonces JWAIO, y compris batterie critique, sont différées ou supprimées selon leur état.** Les confirmations Beeper/Flip/RTH restent autorisées. Un son commencé se termine. Les annonces extérieures à JWAIO ne sont pas contrôlées par le widget ; ne comptez pas sur la lecture ultérieure systématique d'une alerte passée.
 
-## Skins
+## Apparence et effets lumineux
 
-Le [guide des skins](SKINS.md) couvre création, ajout, sélection et retrait. Les skins modifient les images et couleurs, pas les seuils ni les commandes.
+Le skin JWAIO est fourni dans les trois variantes. Pour ajouter une apparence, consultez le [guide des skins](SKINS.md). Les images livrées sont communes ; leur placement et leur adaptation dépendent de la radio.
 
-## Journaux et diagnostic
+Les effets lumineux sont optionnels et désactivés par défaut. Sur Mk3, leur adaptation vise les 20 LED des anneaux lorsqu'ils sont présents, sans les six LED de boutons ; leur fonctionnement réel reste à tester. Conservez le réglage désactivé pour une première installation.
 
-Dans `/LOGS/JWAIO/`, un `F*.csv` est ouvert à chaque armement. L'écriture est d'environ 1 Hz, avec une ligne finale au désarmement. Les douze colonnes historiques sont complétées par états, tensions, validités, RSSI et Finder.
+## Journaux et aide au diagnostic
 
-- `cell_min_v / cell_max_v` : extrêmes observés entre deux lignes, utiles pour le sag ;
-- `pack_estimated` : 1 si la tension pack est calculée depuis une valeur par cellule ;
-- `samples` : cycles d'acquisition du widget, pas nombre de paquets radio ;
-- `nav_age_s` : âge de la lecture navigation par le widget.
+Dans `/LOGS/JWAIO/`, `F*.csv` enregistre les vols à partir de l'armement, environ une ligne par seconde et une dernière ligne au désarmement. `E*.csv` enregistre les états et événements audio. `lastpos.txt` conserve une dernière position exploitable ; `lastdistance.txt` les dernières distances.
 
-Les `E*.csv` enregistrent changements d'état et événements audio, y compris pendant une recherche au sol. `submitted` signifie appel accepté par le lecteur audio, pas preuve qu'un son a été entendu. Les écritures sont groupées ; une coupure peut perdre le dernier lot d'environ une seconde. Un tampon borné limite la mémoire.
+Dans les diagnostics, `submitted` signifie qu'un appel audio a été accepté, pas qu'un son a été entendu. Une coupure peut perdre le dernier lot d'écritures. `diagnosticsEnabled = false` dans `config.lua` désactive les journaux d'événements E.
 
-`diagnosticsEnabled = false` dans config.lua désactive les journaux E.
-`lastpos.txt` et `lastdistance.txt` conservent les dernières informations utiles.
+Les CSV s'ouvrent dans un tableur. Le [convertisseur Open Drone Log](OPEN_DRONE_LOG.md) adapte les journaux au format d'import ; gardez le fichier original pour les diagnostics. Avant partage, retirez les coordonnées que vous souhaitez garder privées.
 
-Pour l'import, consultez [Open Drone Log](OPEN_DRONE_LOG.md). Les fichiers bruts contiennent des coordonnées personnelles : ne les publiez pas sans vérification.
+Pour signaler un problème dans les [Issues](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/issues), indiquez la radio exacte, la version complète d'EdgeTX, le paquet utilisé, les options, les capteurs concernés, le résultat attendu et observé. Les retours Mk3 peuvent suivre la [fiche dédiée](TESTS_TX16_MK3.md).

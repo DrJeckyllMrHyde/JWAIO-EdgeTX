@@ -1,63 +1,90 @@
-JWAIO 0.3_Alpha - Jeckyll Widget All in One
-RadioMaster TX15 Max / EdgeTX 2.12.x
+JWAIO v0.3.1 — PREMIÈRE INSTALLATION
+
+Téléchargements :
+https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/tree/main/releases/v0.3.1
+
+CHOISIR UNE SEULE VARIANTE
+TX15/TX15 Max ; TX16S Mk1/Mk2 ; ou TX16S Mk3.
+TX15 et Mk1/Mk2 ont été testés et sont fonctionnels pour tous les usages selon
+le créateur. Des correctifs mineurs et optimisations restent possibles.
+Le créateur ne possède pas de Mk3 : adaptation aux spécifications matérielles
+RadioMaster, sans essai physique. EdgeTX 2.12.0 ou supérieur requis ; testeurs
+Mk3 recherchés. La série visée est 2.12.x, sans garantie de chaque version future.
+La mention 3.0.0 dans les notices originales Mk3 est clarifiée ici :
+https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/blob/main/docs/COMPATIBILITE.md
 
 INSTALLER
-1. Sauvegardez le stockage, le modele, vos images et vos journaux.
-2. Radio allumee : branchez le port USB de donnees, choisissez USB Storage.
-3. Copiez le contenu de JWAIO 0.3_Alpha.zip a la racine du stockage EdgeTX.
-   Fusionnez les dossiers et remplacez les fichiers JWAIO, sans formater.
-4. Ejectez proprement le lecteur et redemarrez la radio.
-5. Helices retirees, decouvrez les capteurs puis ajoutez JWAIO en plein ecran.
-   Si l'ancien menu n'avait pas Skin, retirez l'instance et ajoutez-la a nouveau.
-   Sinon, conservez l'instance existante.
-6. Verifiez les dix options : Skin, BatType, Cells, LinkType, ARM, PreArm,
-   Beeper, Flip, RTH, Thr. Thr=CH3, Cells=6 par defaut.
-Les switches doivent correspondre aux fonctions deja configurees dans le modele.
+1. Sauvegarder le stockage, le modèle EdgeTX, les réglages JWAIO et les journaux.
+2. Décompresser le ZIP de votre radio sur l'ordinateur.
+3. Mk1/Mk2 : ouvrir JWAIO-v0.3.1_TX16S-Mk1-Mk2 pour voir WIDGETS, SOUNDS, LOGS.
+   TX15 et Mk3 : ces trois dossiers sont directement dans le paquet extrait.
+4. Brancher le port USB de données de la radio et choisir Stockage USB.
+5. Copier WIDGETS, SOUNDS et LOGS à la racine du volume utilisé par EdgeTX.
+   Fusionner les dossiers ; remplacer les fichiers JWAIO après sauvegarde.
+   Ne pas formater ni supprimer les fichiers des autres widgets.
+6. Vérifier : /WIDGETS/JWAIO/main.lua, /SOUNDS/fr/JWAIO/, /LOGS/JWAIO/.
+   Aucun dossier portant le nom du ZIP ne doit entourer WIDGETS sur la radio.
+7. Éjecter le volume proprement puis redémarrer la radio.
+8. Sélectionner le modèle ; véhicule connecté, hélices retirées, découvrir ses
+   capteurs dans la page Télémétrie puis arrêter la découverte.
+9. Configurer un écran à une seule grande zone ; choisir le widget JWAIO.
+   Une seule instance par modèle. Privilégier le plein écran.
+10. Régler les dix options et vérifier le fonctionnement au sol.
 
-CAPTEURS
-RxBt : batterie ; RQly : LQ ; 1RSS : RSSI.
-GPS : position ; Alt : altitude ; GSpd : vitesse au sol ; Sats : satellites.
-Sans GPS, les donnees absentes restent NO_DATA. Alt/Speed fonctionnent si leurs
-propres capteurs existent. Noms modifiables dans /WIDGETS/JWAIO/config.lua.
+LES DIX OPTIONS
+Skin : JWAIO fourni.
+BatType : batterie du véhicule, LiPo, LiIon ou LiHv.
+Cells : nombre réel de cellules (1 à 8 ; 6 par défaut).
+LinkType : ELRS ou TBS_CF ; ne renomme pas automatiquement les capteurs.
+ARM : position qui arme déjà votre modèle.
+PreArm : position du pré-armement si utilisé.
+Beeper : position d'activation du beeper, sinon désactivée.
+Flip : position du retournement après crash, sinon désactivée.
+RTH : position du retour GPS déjà configuré, sinon désactivée.
+Thr : voie des gaz réelle ; CH3 proposée par défaut.
 
-BATTERIE ET ALERTES
-LiPo/LiHv : faible < 3.60 V, critique < 3.40 V par cellule.
-LiIon : faible < 3.00 V, critique < 2.80 V par cellule.
-Le filtrage des creux brefs de tension ne remplace pas la surveillance du pilote.
-Altitude : valeur du capteur Alt > 120 m, une fois par armement.
-TIMER 1 : Fly Time, remis a zero au desarmement. TIMER 2 : Fly Total, conserve.
-Configurez les modes des deux timers dans EdgeTX.
+Vérifier les commandes : ARM recherche SE bas, PreArm SF bas. SA bas affiche
+ANGLE, SA haut/milieu ACRO ; RTH est prioritaire. Ces indications suivent les
+commandes, pas une confirmation du contrôleur de vol. JWAIO ne configure pas
+l'armement, le beeper ou le retour GPS du drone.
 
-QWAD FINDER
-Actif avec Beeper OU Flip OU RTH. Les bips suivent la force du signal.
-Pendant la recherche, les autres voix JWAIO, meme batterie critique, attendent.
-Les sons deja lances finissent. Le RSSI ne mesure pas une distance reelle.
+CAPTEURS ET MINUTERIES
+RxBt : batterie ; RQly : LQ ; 1RSS : RSSI ; GPS : position du véhicule ;
+Alt : altitude en mètres ; GSpd : vitesse en km/h ; Sats : satellites.
+Les noms et speedMultiplier sont ajustables dans /WIDGETS/JWAIO/config.lua.
+Redémarrer après une modification des capteurs ou de la configuration.
+Sans GPS, batterie et liaison restent utilisables ; NO_DATA signifie une donnée
+absente ou invalide. Satellites valides : 0–4 rouge, 5–6 orange, 7+ vert.
+TIMER 1 : compteur montant de vol, remis à zéro désarmé par JWAIO.
+TIMER 2 : cumul conservé par JWAIO ; configurer la persistance dans EdgeTX.
+Configurer la condition de marche de chaque minuterie dans le modèle EdgeTX.
 
-SKINS
-Le skin JWAIO est inclus. Un skin = un dossier dans /WIDGETS/JWAIO/skins/
-avec background.png (480x320), logo.png (216x132) et skin.lua.
-Apres ajout, redemarrez EdgeTX puis selectionnez Skin dans le menu.
-Voir docs/SKINS.md sur GitHub pour le modele et les instructions completes.
-Conservez le dossier jwaio comme solution de repli.
-Installez uniquement des fichiers Lua de confiance.
+FINDER ET SONS
+Beeper, Flip ou RTH active le Finder ; les trois doivent être inactifs pour
+l'arrêter. Les bips suivent la force du signal, sans distance/direction garantie.
+Pendant la recherche, les autres annonces JWAIO, y compris batterie critique,
+sont différées ou supprimées selon leur état. Les confirmations Beeper/Flip/RTH
+restent autorisées. Ne pas compter sur une relecture systématique des alertes.
+Éviter les doublons avec les annonces configurées dans EdgeTX.
 
-JOURNAUX
-/LOGS/JWAIO/F*.csv : donnees de vol.
-/LOGS/JWAIO/E*.csv : evenements de diagnostic et bips, y compris au sol.
-/LOGS/JWAIO/lastpos.txt : derniere latitude/longitude.
-/LOGS/JWAIO/lastdistance.txt : distance max et trajet total sauvegardes.
-Un vrai nouveau vol commence avec ARM et throttle > 5 %.
-Pour Open Drone Log, utilisez le convertisseur PC explique dans docs/OPEN_DRONE_LOG.md.
-Avant de partager un CSV, pensez aux coordonnees GPS qu'il contient.
+MISE À JOUR ET DÉPANNAGE
+Si l'ancien menu n'avait pas Skin, retirer puis recréer l'instance JWAIO.
+Toujours vérifier toutes les options. Reporter les personnalisations dans le
+nouveau config.lua plutôt que le remplacer par l'ancien fichier complet.
+Widget absent : vérifier le chemin et le volume, puis redémarrer.
+NO_DATA : vérifier connexion, découverte et noms des capteurs.
+Pas de sons : vérifier volume, dossier SOUNDS/fr/JWAIO et Finder inactif.
+Temps immobile : vérifier la condition de marche des minuteries EdgeTX.
+Conserver les journaux /LOGS/JWAIO/ ; retirer les coordonnées avant partage.
+Les effets LED sont optionnels, désactivés par défaut ; commencer ainsi.
 
-SUPPRIMER PROPREMENT
-1. Sauvegardez vos journaux et skins.
-2. Retirez JWAIO de toutes les pages de tous les modeles qui l'utilisent.
-3. En USB Storage, supprimez uniquement /WIDGETS/JWAIO/ et /SOUNDS/fr/JWAIO/.
-4. Conservez /LOGS/JWAIO/ ou supprimez-le uniquement si vous ne voulez plus ses donnees.
-5. JWAIO_README.txt peut aussi etre retire.
-6. Ne supprimez jamais les dossiers parents WIDGETS, SOUNDS ou LOGS.
-7. Ejectez proprement et redemarrez.
+GUIDES COMPLETS
+Installation, dépannage, désinstallation :
+https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/blob/main/docs/INSTALLATION.md
+Utilisation et alertes :
+https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/blob/main/docs/MODE_EMPLOI.md
+Essais Mk3 :
+https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/blob/main/docs/TESTS_TX16_MK3.md
 
-Cette alpha reste une version d'essai. Controle au sol, helices retirees, avant vol.
-Depot : https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX
+Le dossier sdcard et les outils/tests historiques du dépôt restent ceux de
+0.3.0-alpha. Utiliser les ZIP v0.3.1 pour installer cette version.

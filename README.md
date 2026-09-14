@@ -1,125 +1,83 @@
-# JWAIO 0.3.1_Preview
+# JWAIO v0.3.1
 
-**Jeckyll Widget All in One** — widget Lua FPV plein écran pour **RadioMaster TX15 - TX15 Max - TX16 Mk1 à Mk3 / EdgeTX 2.12.x**.
+**Jeckyll Widget All in One** rassemble les informations FPV, les alertes vocales et une aide à la recherche du quad sur l'écran de votre radio RadioMaster. Trois archives distinctes sont proposées pour **TX15/TX15 Max**, **TX16S Mk1/Mk2** et **TX16S Mk3**, avec EdgeTX 2.12.x.
 
+## Choisir et télécharger sa version
 
-Vos informations avant décollage, vos alertes en vol et votre aide à la recherche du quad, réunies sur la radio. Cette version alpha reprend le correctif de télémétrie validé sur la radio du créateur ; les retours de la communauté restent essentiels.
+| Votre radio | Archive v0.3.1 | État des essais |
+|---|---|---|
+| TX15 / TX15 Max | [Télécharger TX15](releases/v0.3.1/JWAIO_v0.3.1_TX15_EdgeTx%202.12.x.zip?raw=true) | Testée, fonctionnelle pour tous les usages selon le créateur |
+| TX16S Mk1 / Mk2 | [Télécharger Mk1/Mk2](releases/v0.3.1/JWAIO_v0.3.1_TX16MK1_MK2_EdgeTx%202.12.x.zip?raw=true) | Testée, fonctionnelle pour tous les usages selon le créateur |
+| TX16S Mk3 | [Télécharger Mk3](releases/v0.3.1/JWAIO_v0.3.1_TX16MK3_EdgeTx%202.12.x.zip?raw=true) | Adaptation disponible ; essais physiques à réaliser |
 
-## Télécharger et installer
+**TX15 et TX16S Mk1/Mk2 :** les scripts ont été testés et sont fonctionnels pour tous les usages. Seuls des correctifs mineurs et des optimisations restent possibles. Ce bilan est celui communiqué par le créateur.
 
-[⬇️ **Télécharger JWAIO 0.3_Alpha**](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.3-alpha/JWAIO-v0.3.0-alpha.zip)
+**TX16S Mk3 :** le créateur ne possède pas cette radio. Le widget a été adapté à partir des spécifications matérielles publiées par RadioMaster et **n'a pas été testé physiquement**. Il nécessite **EdgeTX 2.12.0 ou supérieur** ; le fonctionnement du widget sur le firmware exact installé reste à confirmer. **Des testeurs TX16S Mk3 sont recherchés** : [procédure et informations à transmettre](docs/TESTS_TX16_MK3.md).
 
-Le bouton télécharge directement le ZIP d'installation. GitHub remplace l'espace
-du nom par un point : **JWAIO.0.3_Alpha.zip**. Ne choisissez pas « Source code ».
+Les fichiers conservent leur nom et leur contenu d'origine, ainsi que l'identifiant interne « Preview ». La notice incluse dans le ZIP Mk3 mentionne encore EdgeTX 3.0.0 : consultez la [note de compatibilité](docs/COMPATIBILITE.md) avant installation. La prise en charge de la radio par EdgeTX ne constitue pas un essai physique du widget.
 
-1. Sauvegardez le stockage et le modèle de votre radio, ainsi que vos logos et journaux.
-2. Radio allumée, branchez le port USB de données et choisissez **USB Storage**.
-3. Copiez le contenu du ZIP **à la racine du stockage EdgeTX utilisé par la radio**. Fusionnez les dossiers, remplacez les fichiers JWAIO, sans formater ni supprimer les autres dossiers.
-4. Éjectez proprement le lecteur, puis redémarrez la radio.
-5. Hélices retirées, découvrez les capteurs du modèle, puis ajoutez JWAIO dans une zone plein écran et vérifiez ses réglages.
+[Guide débutant](docs/INSTALLATION.md) · [Mode d'emploi](docs/MODE_EMPLOI.md) · [Version texte](MODE_EMPLOI.txt) · [Notes de version](CHANGELOG.md)
 
-Les dossiers `WIDGETS/JWAIO`, `SOUNDS/fr/JWAIO` et `LOGS/JWAIO` doivent se trouver directement à la racine, sans dossier intermédiaire.
+## Installer en quelques étapes
 
-**Mise à jour :** si votre ancien menu n'avait pas l'option Skin, retirez l'instance de la page puis ajoutez-la à nouveau. Vérifiez tous les switches : l'ordre des options a changé. Depuis une alpha avec Skin, conservez l'instance et ses réglages.
+1. Téléchargez **uniquement l'archive de votre radio** dans le tableau ci-dessus. Le ZIP général « Code / Download ZIP » du dépôt n'est pas un paquet d'installation.
+2. Sauvegardez le stockage de la radio et votre modèle EdgeTX, y compris vos réglages JWAIO, skins et journaux.
+3. Décompressez l'archive sur l'ordinateur. **Pour Mk1/Mk2, ouvrez d'abord le dossier `JWAIO-v0.3.1_TX16S-Mk1-Mk2`.**
+4. Branchez le port USB de données de la radio, choisissez **USB Storage / Stockage USB**, puis ouvrez le volume utilisé par EdgeTX pour ses scripts.
+5. Copiez les dossiers **WIDGETS, SOUNDS et LOGS** à la racine de ce volume. Fusionnez les dossiers et remplacez uniquement les fichiers JWAIO concernés.
+6. Éjectez proprement le volume et redémarrez la radio. Découvrez les capteurs du modèle, ajoutez JWAIO dans une zone unique et vérifiez les dix options.
+7. Effectuez les premiers contrôles au sol, hélices retirées. Le [guide illustré par des chemins concrets](docs/INSTALLATION.md) détaille chaque étape et le dépannage.
 
-[Mode d'emploi simple](MODE_EMPLOI.txt) · [Installation et désinstallation](docs/INSTALLATION.md) · [Créer son skin](docs/SKINS.md)
+Le chemin final doit être `/WIDGETS/JWAIO/main.lua`, sans dossier d'archive intermédiaire. Une seule variante et une seule instance JWAIO par modèle : toutes utilisent les mêmes chemins.
 
-> JWAIO ne commande pas le drone : les options de switches indiquent au widget les fonctions déjà configurées dans votre modèle. Il ne remplace ni l'OSD, ni les contrôles de sécurité, ni une balise autonome.
+## Ce que propose le widget
 
-## Ce que propose JWAIO
+- États Ready / Pre-Arm / Arm, affichage des modes ANGLE / ACRO / RTH et des gaz.
+- Batterie LiPo, LiIon ou LiHv, de 1 à 8 cellules, avec alertes vocales filtrées.
+- Qualité de liaison LQ, RSSI, GPS du véhicule, satellites, altitude et vitesse au sol.
+- Temps de vol avec TIMER 1 et cumul avec TIMER 2, à configurer dans EdgeTX.
+- Dernière position, distance maximale et trajet estimé ; journaux CSV de vol et d'événements.
+- **Qwad Finder** : jauge et bips guidés par la force du signal.
+- Skin JWAIO fourni, fonds/logos/couleurs personnalisables et effets lumineux optionnels selon la radio.
 
-- États **Ready / Pre-Arm / Arm**, modes **ANGLE / ACRO / RTH**.
-- Throttle en pourcentage, cinq jauges PNG et alerte à partir de trois secondes à 95 % ou plus.
-- **Fly Time = TIMER 1**, remis à zéro au désarmement ; **Fly Total = TIMER 2**, non remis à zéro par JWAIO.
-- Batteries **LiPo, LiIon, LiHv**, de 1 à 8 cellules, avec annonces pleine/faible/critique et filtrage des creux brefs de tension.
-- Liaison **ELRS ou TBS_CF** : LQ et RSSI, plus alerte de qualité de liaison.
-- GPS, satellites, dernière position, vitesse au sol, altitude et distances estimées.
-- **Qwad Finder** : jauge de signal et bips rapprochés quand le signal devient plus fort.
-- **Skins** sélectionnables dans le menu : fond, logo et couleurs personnalisables, sans toucher aux fonctions.
-- CSV de vol enrichis et journal d'événements pour analyser les essais.
+JWAIO affiche les commandes déjà configurées dans votre modèle : il ne configure ni l'armement, ni le retour GPS, ni le contrôleur de vol. Les états affichés ne sont pas une confirmation envoyée par le drone.
 
-### Correctif de télémétrie
+## Les dix options à vérifier
 
-Une mesure encore valide reste affichée entre deux réceptions : l'absence de nouvelle valeur « fraîche » n'est plus confondue avec un capteur perdu. Une véritable perte signalée par EdgeTX reste affichée `NO_DATA`. Les données absentes ne sont pas transformées en faux zéros.
-
-### Qwad Finder : fonctionnement et limites
-
-Il s'active avec **Beeper, Flip ou RTH**, et se libère lorsque les trois sont inactifs. Le RSSI est utilisé en priorité, avec repli sur LQ. Les bips visent une période de **1,2 s à 0,20 s**, selon le signal et le rythme d'appel d'EdgeTX.
-
-**Pendant la recherche, les autres annonces JWAIO, y compris batterie critique, sont différées.** Un son déjà commencé se termine. Les sons configurés ailleurs dans EdgeTX ne sont pas contrôlés par JWAIO.
-
-La jauge ne donne ni une distance en mètres ni une direction garantie : les obstacles, l'orientation des antennes et la puissance dynamique influencent le signal.
-
-## Les dix réglages
-
-| Option | Fonction |
+| Option | Ce que vous choisissez |
 |---|---|
-| Skin | Identité visuelle installée ; JWAIO fourni |
-| BatType | LiPo par défaut, LiIon ou LiHv |
-| Cells | 1 à 8, valeur initiale 6 |
-| LinkType | ELRS par défaut ou TBS_CF |
-| ARM | Position du switch d'armement |
-| PreArm | Position du switch de pré-armement |
-| Beeper | Position d'activation du beeper |
-| Flip | Position d'activation du flip après crash |
-| RTH | Position d'activation du retour |
-| Thr | Voie des gaz, CH3 par défaut |
+| Skin | Apparence ; JWAIO est fourni |
+| BatType | Chimie de la batterie du véhicule : LiPo, LiIon ou LiHv |
+| Cells | Nombre réel de cellules, de 1 à 8 ; défaut 6 |
+| LinkType | ELRS ou TBS_CF ; les noms de capteurs ne sont pas remappés automatiquement |
+| ARM | Position de l'interrupteur qui arme déjà votre modèle |
+| PreArm | Position de pré-armement, si utilisée |
+| Beeper | Position qui active déjà le beeper |
+| Flip | Position du retournement après crash |
+| RTH | Position de retour GPS, si configuré |
+| Thr | Voie des gaz ; CH3 par défaut, à vérifier |
 
-**RQly est lu directement**, sans option LQ supplémentaire. Les noms de capteurs se règlent au besoin dans `/WIDGETS/JWAIO/config.lua`.
+Les capteurs attendus sont **RxBt, RQly, 1RSS, GPS, Alt, GSpd et Sats**. Leurs noms sont ajustables dans `/WIDGETS/JWAIO/config.lua`. Sans GPS, batterie et liaison restent utilisables si leurs capteurs sont disponibles. Une donnée indisponible s'affiche `NO_DATA`.
 
-| Donnée | Capteur attendu |
-|---|---|
-| Batterie | RxBt |
-| Qualité de liaison | RQly |
-| RSSI | 1RSS |
-| Position | GPS |
-| Altitude | Alt |
-| Vitesse au sol | GSpd |
-| Satellites | Sats |
+## Recherche du quad et journaux
 
-Sans GPS en freestyle, batterie et liaison restent utilisables. Altitude et vitesse sont affichées si leurs propres capteurs sont valides ; aucune trajectoire ni distance n'est inventée.
+Le Finder s'active avec Beeper, Flip ou RTH ; il s'arrête quand ces trois commandes sont inactives. Le RSSI est prioritaire, avec repli sur LQ. **Pendant la recherche, les autres alertes vocales JWAIO, y compris batterie critique, sont différées ou supprimées selon leur état ; les confirmations Beeper/Flip/RTH restent autorisées.** Un son déjà lancé se termine. Les alertes configurées ailleurs dans EdgeTX sont indépendantes.
 
-## Système de skins
+La jauge indique une force de signal, pas une distance ni une direction garantie. Les obstacles et la puissance dynamique influencent le résultat.
 
-Le paquet contient le skin **JWAIO**. Chaque skin est un dossier dans `/WIDGETS/JWAIO/skins/` comprenant :
+Les fichiers `F*.csv`, `E*.csv`, `lastpos.txt` et `lastdistance.txt` sont enregistrés dans `/LOGS/JWAIO/`. Les distances démarrent pour un nouveau vol lorsque ARM est actif et les gaz dépassent 5 %. Pour importer les CSV dans Open Drone Log, utilisez le [convertisseur et son guide](docs/OPEN_DRONE_LOG.md). Vérifiez les coordonnées contenues dans les journaux avant de les partager.
 
-- `background.png` : **480 × 320 px**, PNG RGB opaque recommandé ;
-- `logo.png` : **216 × 132 px**, PNG RGBA avec transparence ;
-- `skin.lua` : identité, numéro d'emplacement et palette.
+## Documentation, archives et licences
 
-Les skins sont découverts au chargement. Après ajout d'un dossier, redémarrez EdgeTX puis choisissez **Skin** dans les options. Le changement entre skins déjà découverts ne nécessite pas de remplacer les fichiers.
+- [Installation, mise à jour, dépannage et désinstallation](docs/INSTALLATION.md)
+- [Utilisation, alertes, capteurs et minuteries](docs/MODE_EMPLOI.md)
+- [Compatibilité et état des essais](docs/COMPATIBILITE.md)
+- [Appel aux testeurs Mk3](docs/TESTS_TX16_MK3.md)
+- [Personnaliser les skins](docs/SKINS.md)
+- [Archives originales v0.3.1 et empreintes SHA-256](releases/v0.3.1/README.md)
 
-➡️ [Guide complet : créer, installer et dépanner un skin](docs/SKINS.md).
+Le dossier `sdcard/`, les outils de construction et les tests historiques concernent encore la base 0.3.0-alpha. **Pour installer v0.3.1, utilisez les trois archives ci-dessus.** L'ancienne archive et la release alpha restent disponibles pour l'historique.
 
-N'installez que des skins de confiance : `skin.lua` est un fichier Lua exécuté par la radio. Respectez les droits des images utilisées.
-
-## Journaux de vol et Open Drone Log
-
-Dans `/LOGS/JWAIO/` :
-
-- `F*.csv` : un fichier par armement, environ une ligne par seconde et une dernière ligne au désarmement ;
-- `E*.csv` : états et événements audio, y compris la recherche au sol ;
-- `lastpos.txt` : dernière latitude/longitude exploitable ;
-- `lastdistance.txt` : distance maximale et trajet total sauvegardés.
-
-Les distances repartent pour un nouveau vol uniquement lorsque **ARM est actif et le throttle dépasse 5 %**. Un contrôle moteur à faible gaz ne réinitialise pas les résultats du dernier vrai vol.
-
-Les CSV s'ouvrent dans Excel ou LibreOffice. Pour Open Drone Log, utilisez le [convertisseur et son guide](docs/OPEN_DRONE_LOG.md) : le fichier brut n'est pas son format d'import standard. Les diagnostics restent dans le fichier original ; sans GPS, aucune carte de trajet ne peut être reconstruite.
-
-Les fichiers contiennent des positions : vérifiez-les avant tout partage public.
-
-## Tester et signaler un problème
-
-Effectuez les premiers contrôles **au sol, hélices retirées**. Vérifiez les valeurs, les switches, la perte/reprise de télémétrie et les sons avant le vol. Évitez de configurer une deuxième fois les mêmes alertes dans EdgeTX.
-
-Pour un retour utile : modèle de radio, version EdgeTX, type de batterie, nombre de cellules, skin, description du problème, puis CSV F et E correspondants. Ne publiez pas vos coordonnées personnelles dans une issue.
-
-## Documentation et licences
-
-- [Mode d'emploi](docs/MODE_EMPLOI.md)
-- [Créer un skin](docs/SKINS.md)
-- [Notes de version](CHANGELOG.md)
-- Code : [Apache 2.0](LICENSE) ; documents et médias concernés : [CC BY 4.0](LICENSE-ASSETS.md).
-- [Auteurs](AUTHORS.md), [NOTICE](NOTICE) et [composants tiers](sdcard/THIRD_PARTY_NOTICES.txt).
+Code : [Apache 2.0](LICENSE). Documents et médias concernés : [licence des ressources](LICENSE-ASSETS.md). [Auteurs](AUTHORS.md), [NOTICE](NOTICE), [composants tiers](sdcard/THIRD_PARTY_NOTICES.txt).
 
 © 2026 **DrJeckyllMrHyde** — [YouTube JeckyllHydeFpv](https://www.youtube.com/@JeckyllHydeFpv)
