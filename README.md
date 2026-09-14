@@ -24,9 +24,10 @@ Les fichiers conservent leur nom et leur contenu d'origine, ainsi que l'identifi
 2. Sauvegardez le stockage de la radio et votre modèle EdgeTX, y compris vos réglages JWAIO, skins et journaux.
 3. Décompressez l'archive sur l'ordinateur. **Pour Mk1/Mk2, ouvrez d'abord le dossier `JWAIO-v0.3.1_TX16S-Mk1-Mk2`.**
 4. Branchez le port USB de données de la radio, choisissez **USB Storage / Stockage USB**, puis ouvrez le volume utilisé par EdgeTX pour ses scripts.
-5. Copiez les dossiers **WIDGETS, SOUNDS et LOGS** à la racine de ce volume. Fusionnez les dossiers et remplacez uniquement les fichiers JWAIO concernés.
+5. Copiez les dossiers **WIDGETS, SOUNDS, SCRIPTS et LOGS** à la racine de ce volume. Fusionnez les dossiers et remplacez uniquement les fichiers JWAIO concernés.
 6. Éjectez proprement le volume et redémarrez la radio. Découvrez les capteurs du modèle, ajoutez JWAIO dans une zone unique et vérifiez les dix options.
 7. Effectuez les premiers contrôles au sol, hélices retirées. Le [guide illustré par des chemins concrets](docs/INSTALLATION.md) détaille chaque étape et le dépannage.
+8. NOTE : Pour la version TX16 -> Une fois le widget sur votre écran d'accueil, il faudra le mettre manuellement en plein écran pour bénéficié de l'affichage.
 
 Le chemin final doit être `/WIDGETS/JWAIO/main.lua`, sans dossier d'archive intermédiaire. Une seule variante et une seule instance JWAIO par modèle : toutes utilisent les mêmes chemins.
 
