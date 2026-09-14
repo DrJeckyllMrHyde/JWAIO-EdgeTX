@@ -47,7 +47,7 @@ JWAIO affiche les commandes déjà configurées dans votre modèle : il ne confi
 | Option | Ce que vous choisissez |
 |---|---|
 | Skin | Apparence ; JWAIO est fourni |
-| BatType | Chimie de la batterie du véhicule : LiPo, LiIon ou LiHv |
+| BatType | Type batterie de la machine : LiPo, LiIon ou LiHv |
 | Cells | Nombre réel de cellules, de 1 à 8 ; défaut 6 |
 | LinkType | ELRS ou TBS_CF ; les noms de capteurs ne sont pas remappés automatiquement |
 | ARM | Position de l'interrupteur qui arme déjà votre modèle |
