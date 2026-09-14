@@ -10,9 +10,9 @@
 | TX16S Mk1 / Mk2 | [Télécharger Mk1/Mk2](releases/v0.3.1/JWAIO_v0.3.1_TX16MK1_MK2_EdgeTx%202.12.x.zip?raw=true) | Testée, fonctionnelle pour tous les usages selon le créateur |
 | TX16S Mk3 | [Télécharger Mk3](releases/v0.3.1/JWAIO_v0.3.1_TX16MK3_EdgeTx%202.12.x.zip?raw=true) | Adaptation disponible ; essais physiques à réaliser |
 
-**TX15 et TX16S Mk1/Mk2 :** les scripts ont été testés et sont fonctionnels pour tous les usages. Seuls des correctifs mineurs et des optimisations restent possibles. Ce bilan est celui communiqué par le créateur.
+**TX15 et TX16S Mk1/Mk2 :** les scripts ont été testés et sont fonctionnels pour tous les usages. Seuls des correctifs mineurs et des optimisations restent possibles.
 
-**TX16S Mk3 :** le créateur ne possède pas cette radio. Le widget a été adapté à partir des spécifications matérielles publiées par RadioMaster et **n'a pas été testé physiquement**. Il nécessite **EdgeTX 2.12.0 ou supérieur** ; le fonctionnement du widget sur le firmware exact installé reste à confirmer. **Des testeurs TX16S Mk3 sont recherchés** : [procédure et informations à transmettre](docs/TESTS_TX16_MK3.md).
+**TX16S Mk3 :** Je ne possède pas cette radio. Le widget a été adapté à partir des spécifications matérielles publiées par RadioMaster et **n'a pas été testé physiquement**. Il nécessite **EdgeTX 2.12.0 ou supérieur** ; le fonctionnement du widget sur le firmware exact installé reste à confirmer. **Des testeurs TX16S Mk3 sont recherchés** : [procédure et informations à transmettre](docs/TESTS_TX16_MK3.md).
 
 Les fichiers conservent leur nom et leur contenu d'origine, ainsi que l'identifiant interne « Preview ». La notice incluse dans le ZIP Mk3 mentionne encore EdgeTX 3.0.0 : consultez la [note de compatibilité](docs/COMPATIBILITE.md) avant installation. La prise en charge de la radio par EdgeTX ne constitue pas un essai physique du widget.
 
