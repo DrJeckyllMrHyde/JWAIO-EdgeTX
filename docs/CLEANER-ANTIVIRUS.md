@@ -73,4 +73,24 @@ Les procédures de réexamen sont notamment documentées par [Malwarebytes](http
 
 Faire examiner le fichier exact par les éditeurs concernés avant d'affirmer qu'il s'agit de faux positifs. Chaque nouvel EXE, y compris une recompilation, nécessite sa propre empreinte et ses propres rapports. Aucune attestation d'innocuité n'est émise ici.
 
+## Diagnostic complémentaire et possibilités de correction
+
+Contrôle du fichier original du 15 septembre 2026 : SHA-256 inchangé, signature Authenticode absente, champs FileDescription, CompanyName et ProductName vides, FileVersion et ProductVersion à `0.0.0.0`. La version annoncée « 0.1 Preview » n'est donc pas renseignée dans les propriétés Windows de cet EXE.
+
+### Ce que les alertes permettent de conclure
+
+- **Malwarebytes** : selon sa [documentation officielle](https://www.malwarebytes.com/blog/detections/machinelearning-anomalous-100), la famille MachineLearning/Anomalous mesure un écart par rapport aux fichiers légitimes du jeu d'entraînement. Le « 96 % » observé ne doit pas être présenté comme une probabilité de 96 % que Cleaner soit un virus. Les caractéristiques précises responsables de ce score ne sont pas publiées pour ce fichier.
+- **Arctic Wolf, Elastic, MaxSecure et SecureAge** : les libellés du rapport ne désignent ni une ligne de code à corriger ni une preuve exploitable de compromission. Le mot Trojan dans un libellé générique ne permet pas, seul, d'attribuer une famille ou un comportement précis.
+- **Indicateur CAPA** : l'encodage Base64 a une fonction légitime vérifiée dans le code (comparaison d'empreintes SHA-256). Remplacer cet encodage ne constituerait pas une correction de sécurité démontrée et ne garantirait pas de lever les cinq alertes.
+- **Événement LSASS** : l'attribution reste ouverte comme indiqué plus haut. Il ne faut ni l'imputer à Cleaner sans preuve ni l'écarter comme instrumentation de sandbox sans confirmation.
+
+### Corrections possibles, avec leurs limites
+
+1. **Renseigner l'identité du produit et sa version dans la compilation suivante.** C'est une amélioration concrète de traçabilité pour Windows et les analystes ; aucun lien causal avec les cinq verdicts n'est établi. Ce changement n'a pas été appliqué au binaire analysé.
+2. **Signer la future release avec une identité vérifiée.** Cela permet d'identifier l'éditeur et de vérifier l'intégrité. Cela nécessite un certificat ou service de signature et une validation d'identité ; aucune signature n'a été ajoutée. [Microsoft](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/smartscreen-reputation) précise que même un EXE signé peut encore présenter un avertissement SmartScreen. SmartScreen et les cinq détections VirusTotal sont des mécanismes distincts.
+3. **Demander le réexamen du fichier exact aux cinq éditeurs.** C'est la voie pertinente pour faire corriger un faux positif confirmé. [VirusTotal](https://docs.virustotal.com/docs/false-positive) agrège les verdicts et renvoie leur correction aux éditeurs concernés. Leur transmettre l'empreinte, les libellés, le rapport public et les sources ; signaler également l'événement LSASS dont l'attribution reste incertaine. Aucune demande n'a été envoyée aux éditeurs pendant cet examen.
+4. **Vérifier ensuite la décision et le binaire destiné à la diffusion.** Après réponse des éditeurs, relancer l'analyse du fichier exact. Toute modification ou signature crée un nouveau fichier à analyser séparément.
+
+**Bilan de cet examen :** des faux positifs sont possibles, mais ils ne sont pas confirmés. Aucune cause précise commune aux cinq moteurs et aucun correctif de code levant leurs alertes n'ont été établis. Le binaire original est conservé sans modification et la décision de garder la release en brouillon reste applicable.
+
 [Guide Cleaner](CLEANER.md) · [Retour au widget JWAIO](../README.md)
