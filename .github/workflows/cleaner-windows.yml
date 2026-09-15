@@ -1,0 +1,24 @@
+name: JWAIO Cleaner - Windows
+on:
+  push:
+    paths: ['tools/JWAIO-Cleaner/**', '.github/workflows/cleaner-windows.yml']
+  pull_request:
+    paths: ['tools/JWAIO-Cleaner/**', '.github/workflows/cleaner-windows.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Compile the portable application
+        shell: pwsh
+        run: ./tools/JWAIO-Cleaner/build-windows.ps1
+      - name: Test on isolated fixtures
+        shell: pwsh
+        run: ./tools/JWAIO-Cleaner/test-windows.ps1
+      # No downloadable executable while antivirus alerts are under review.
