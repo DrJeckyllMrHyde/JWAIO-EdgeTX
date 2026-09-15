@@ -107,4 +107,6 @@ Si l'ancien menu ne contenait pas **Skin**, retirez l'instance JWAIO de la page 
 
 ## Désinstaller
 
+**Windows 10/11 :** [JWAIO Cleaner](CLEANER.md) est en préparation, avec conservation des skins et des logs et confirmation avant suppression. **La release reste en brouillon pendant l'examen des alertes antivirus** ; consultez les [rapports complets](CLEANER-ANTIVIRUS.md). Utilisez la procédure manuelle ci-dessous pour le moment.
+
 Sauvegardez vos skins et journaux, retirez JWAIO des écrans de chaque modèle concerné, puis supprimez uniquement `/WIDGETS/JWAIO/` et `/SOUNDS/fr/JWAIO/`. Vous pouvez conserver `/LOGS/JWAIO/` pour garder vos vols. Éjectez proprement le stockage et redémarrez. Ne supprimez pas les dossiers parents WIDGETS, SOUNDS ou LOGS, qui peuvent servir à d'autres fonctions.
