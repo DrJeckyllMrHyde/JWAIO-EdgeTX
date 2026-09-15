@@ -59,7 +59,15 @@ Les 45 assertions de tests du moteur ont passé localement. Les essais antérieu
 
 Dans l'onglet [Behavior de VirusTotal](https://www.virustotal.com/gui/file/e41575b496a3298df5b76de15e7e0dd58d3c65d6170d98295e2b08f23129d8b3/behavior), CAPA associe l'indicateur T1027 à `System.Convert::ToBase64String` (« encode data using Base64 »). Dans `Engine.cs`, cet appel sert uniquement à représenter l'empreinte SHA-256 calculée pour vérifier les copies et détecter les modifications. Il ne masque pas une charge exécutable. Ce rapprochement explique cet indicateur CAPA, pas les cinq verdicts antivirus dont les critères détaillés ne sont pas fournis.
 
-L'énumération des lecteurs et des dossiers correspond à la détection du stockage et à l'analyse ciblée. La présence de ces capacités ne suffit pas à qualifier le logiciel de malveillant. À la première consultation, les analyses dynamiques Zenbox et CAPE étaient encore en cours : aucune conclusion définitive n'en est tirée.
+L'énumération des lecteurs et des dossiers correspond à la détection du stockage et à l'analyse ciblée. La présence de ces capacités ne suffit pas à qualifier le logiciel de malveillant.
+
+Après disponibilité des rapports CAPE et Zenbox, le résumé affiche « NOT FOUND » pour les détections comportementales, les communications réseau et les fichiers déposés, mais comporte deux règles Sigma de niveau moyen. Cela ne vaut pas validation : des actions système et indicateurs supplémentaires sont présents.
+
+La règle « Unsigned Image Loaded Into LSASS Process » concerne `C:\13iiahz0\dll\JKUVuYr.dll`, chargé dans `C:\Windows\System32\lsass.exe`, avec le SHA-256 `0bf011593b5cff9f46909e5998786e30d98440bffe7251163570ca11cd38e07c`. Ce n'est pas l'empreinte de Cleaner. L'origine de cette DLL et le lien causal avec Cleaner ne sont pas établis par le résumé consulté. Elle peut relever de l'environnement d'analyse ; cette hypothèse reste à confirmer. La seconde règle est « Sysmon File Executable Creation Detected ». Les événements regroupés ne permettent pas de lever les cinq verdicts antivirus.
+
+Une comparaison locale, sans exécuter le fichier analysé, a confronté l'EXE original à une nouvelle compilation des sources : les empreintes des corps IL de **81 méthodes/constructeurs**, les **2 ressources intégrées** et les **5 références d'assemblages .NET** correspondent. Ce contrôle partiel confirme la concordance du code compilé inspecté et des images ; ce n'est ni une comparaison exhaustive de toutes les métadonnées ni une attestation d'innocuité.
+
+**Conclusion : alertes non résolues, release conservée en brouillon.** Le binaire publié dans le brouillon est strictement celui analysé ; son SHA-256 a été revérifié dans les pièces jointes GitHub. La compilation et les tests GitHub Actions ont également réussi. Aucun binaire n'est diffusé dans les artefacts publics des workflows.
 
 Les procédures de réexamen sont notamment documentées par [Malwarebytes](https://help.malwarebytes.com/hc/en-us/articles/31589211404571-Report-a-false-positive-to-Malwarebytes-Support), [Elastic](https://discuss.elastic.co/t/submitting-false-positives/232322) et [SecureAge](https://knowledgebase.secureage.com/secureaplus/en-us/Content/technical-information/reporting-false-positives-to-secureaplus.htm). Aucune réponse d'éditeur ni confirmation de faux positif n'a été obtenue.
 
