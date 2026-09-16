@@ -67,7 +67,7 @@ La règle « Unsigned Image Loaded Into LSASS Process » concerne `C:\13iiahz0\d
 
 Une comparaison locale, sans exécuter le fichier analysé, a confronté l'EXE original à une nouvelle compilation des sources : les empreintes des corps IL de **81 méthodes/constructeurs**, les **2 ressources intégrées** et les **5 références d'assemblages .NET** correspondent. Ce contrôle partiel confirme la concordance du code compilé inspecté et des images ; ce n'est ni une comparaison exhaustive de toutes les métadonnées ni une attestation d'innocuité.
 
-**Conclusion : alertes non résolues, release conservée en brouillon.** Le binaire publié dans le brouillon est strictement celui analysé ; son SHA-256 a été revérifié dans les pièces jointes GitHub. La compilation et les tests GitHub Actions ont également réussi. Aucun binaire n'est diffusé dans les artefacts publics des workflows.
+**État au 16 septembre 2026 : publication de la Preview autorisée par le mainteneur, malgré les alertes non résolues.** Le binaire de la release est strictement celui analysé ; son SHA-256 a été revérifié dans les pièces jointes GitHub. La compilation et les tests GitHub Actions ont également réussi. Aucun binaire n'est diffusé dans les artefacts publics des workflows.
 
 Les procédures de réexamen sont notamment documentées par [Malwarebytes](https://help.malwarebytes.com/hc/en-us/articles/31589211404571-Report-a-false-positive-to-Malwarebytes-Support), [Elastic](https://discuss.elastic.co/t/submitting-false-positives/232322) et [SecureAge](https://knowledgebase.secureage.com/secureaplus/en-us/Content/technical-information/reporting-false-positives-to-secureaplus.htm). Aucune réponse d'éditeur ni confirmation de faux positif n'a été obtenue.
 
@@ -91,6 +91,6 @@ Contrôle du fichier original du 15 septembre 2026 : SHA-256 inchangé, signatur
 3. **Demander le réexamen du fichier exact aux cinq éditeurs.** C'est la voie pertinente pour faire corriger un faux positif confirmé. [VirusTotal](https://docs.virustotal.com/docs/false-positive) agrège les verdicts et renvoie leur correction aux éditeurs concernés. Leur transmettre l'empreinte, les libellés, le rapport public et les sources ; signaler également l'événement LSASS dont l'attribution reste incertaine. Aucune demande n'a été envoyée aux éditeurs pendant cet examen.
 4. **Vérifier ensuite la décision et le binaire destiné à la diffusion.** Après réponse des éditeurs, relancer l'analyse du fichier exact. Toute modification ou signature crée un nouveau fichier à analyser séparément.
 
-**Bilan de cet examen :** des faux positifs sont possibles, mais ils ne sont pas confirmés. Aucune cause précise commune aux cinq moteurs et aucun correctif de code levant leurs alertes n'ont été établis. Le binaire original est conservé sans modification et la décision de garder la release en brouillon reste applicable.
+**Bilan de cet examen :** des faux positifs sont possibles, mais ils ne sont pas confirmés. Aucune cause précise commune aux cinq moteurs et aucun correctif de code levant leurs alertes n'ont été établis. Le binaire original est conservé sans modification. Le 16 septembre 2026, le mainteneur a autorisé sa publication en Preview avec ces résultats explicitement indiqués ; cette décision ne lève pas les alertes.
 
 [Guide Cleaner](CLEANER.md) · [Retour au widget JWAIO](../README.md)

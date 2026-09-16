@@ -4,13 +4,35 @@ Version 0.1 Preview, Windows 10/11 uniquement. Linux est reporté.
 
 **Avant téléchargement : VirusTotal signale 5/69 détections, Jotti 0/13.** Consultez les [rapports complets et l'empreinte du fichier](CLEANER-ANTIVIRUS.md). Les alertes restent à examiner ; aucune garantie d'innocuité n'est revendiquée.
 
-**Distribution suspendue : la release `cleaner-v0.1.0-preview` reste en brouillon, visible uniquement par les mainteneurs. L'EXE n'est pas proposé au téléchargement public.**
+**Distribution : Preview publique autorisée le 16 septembre 2026, avec alertes antivirus non résolues.**
 
 [Code source](../tools/JWAIO-Cleaner/) · [Retour à JWAIO](../README.md)
 
 ![Interface JWAIO Cleaner](assets/cleaner-preview.png)
 
+## Télécharger et comprendre les avertissements
+
+**[Ouvrir la release JWAIO Cleaner v0.1.0 Preview](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/cleaner-v0.1.0-preview)**, puis déplier **Assets** et choisir **JWAIO-Cleaner.exe**. Les fichiers « Source code » servent aux développeurs : ils ne sont pas nécessaires pour utiliser Cleaner. L'EXE peut rester sur le Bureau ou une clé USB ; il n'y a rien à installer.
+
+« Preview » signifie première version de test : les essais sur radio physique restent à réaliser. Avant tout nettoyage, copiez le contenu du stockage de votre radio dans un dossier de sauvegarde sur votre ordinateur.
+
+### Mon antivirus affiche une alerte : que signifie-t-elle ?
+
+Une alerte est un signal à examiner. Un « faux positif » désigne un logiciel légitime classé à tort comme dangereux. **C'est une possibilité ici, pas une conclusion confirmée.** Les dernières analyses documentées du 15 septembre 2026 donnent **5/69 chez VirusTotal** et **0/13 chez Jotti**. Ces services consultent plusieurs moteurs ; leurs résultats peuvent différer et évoluer.
+
+Les cinq alertes sont : Arctic Wolf `Unsafe`, Elastic `Malicious (high Confidence)`, Malwarebytes `MachineLearning/Anomalous.96%`, MaxSecure `Trojan.Malware.300983.susgen` et SecureAge `Malicious`. Le « 96 % » de Malwarebytes mesure une anomalie par rapport à son apprentissage ; ce n'est pas une probabilité de 96 % que Cleaner soit un virus.
+
+L'examen a relié l'indicateur « obfuscation/Base64 » au contrôle des empreintes des fichiers. Cela n'explique pas les cinq verdicts antivirus. Un événement concernant le processus Windows LSASS reste d'origine incertaine. Aucun éditeur n'a confirmé de faux positif et aucune certification d'innocuité n'est revendiquée.
+
+**L'EXE n'est pas signé numériquement.** Windows peut donc afficher un éditeur inconnu ou un avertissement de réputation SmartScreen. Ce message est distinct d'une détection de menace par l'antivirus. Les propriétés Windows affichent aussi `0.0.0.0` : la version du produit n'a pas encore été renseignée dans cette compilation.
+
+**En cas de blocage :** fermez le lancement, gardez votre protection active et n'ajoutez pas d'exclusion. Vous pouvez utiliser la [désinstallation manuelle](INSTALLATION.md#désinstaller) ou attendre une version dont les alertes auront été clarifiées. Pour demander de l'aide, indiquez le nom de l'antivirus et le texte exact de l'alerte dans les [Issues](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/issues), sans joindre vos logs de vol ni vos données personnelles.
+
+[Rapport VirusTotal](https://www.virustotal.com/gui/file/e41575b496a3298df5b76de15e7e0dd58d3c65d6170d98295e2b08f23129d8b3/detection) · [Rapport Jotti](https://virusscan.jotti.org/fr-FR/filescanjob/5gc2mp87km) · [Examen détaillé et vérification du téléchargement](CLEANER-ANTIVIRUS.md)
+
 ## Utilisation
+
+Vous pouvez fermer l'application sans rien supprimer tant que vous n'avez pas confirmé le nettoyage.
 
 1. Lancez **JWAIO-Cleaner.exe**, depuis le Bureau ou une clé USB.
 2. Branchez la radio avec son port USB de données et choisissez **Stockage USB** sur la radio.
