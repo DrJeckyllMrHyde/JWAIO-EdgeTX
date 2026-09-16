@@ -33,6 +33,34 @@ Les fichiers conservent leur nom et leur contenu d'origine, ainsi que l'identifi
 
 Le chemin final doit être `/WIDGETS/JWAIO/main.lua`, sans dossier d'archive intermédiaire. Une seule variante et une seule instance JWAIO par modèle : toutes utilisent les mêmes chemins.
 
+## Supprimer le Widget
+
+**[Télécharger JWAIO Cleaner pour Windows 10/11](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/cleaner-v0.1.0-preview)** · [Mode d'emploi débutant](docs/CLEANER.md)
+
+JWAIO Cleaner vous accompagne pour retirer JWAIO et les anciennes versions SIXTY9 du stockage de votre radio. C'est un logiciel **portable** : téléchargez **JWAIO-Cleaner.exe** dans la rubrique **Assets** de la release, puis lancez-le depuis le Bureau ou une clé USB. Aucun installateur ni droit administrateur n'est nécessaire ; aucune dépendance n'est à ajouter sur un Windows 10/11 standard.
+
+[![Présentation de JWAIO Cleaner : sélection du stockage de la radio, conservation des skins et des logs, analyse avant suppression](docs/assets/cleaner-preview.png)](docs/CLEANER.md)
+
+### Ce que fait Cleaner
+
+- **Repère le stockage de la radio** et analyse les emplacements JWAIO/SIXTY9 reconnus, y compris certaines copies d'anciennes versions.
+- **Vous laisse choisir ce que vous gardez** : les skins (apparence personnalisée) et les logs (journaux de vol) sont conservés par défaut.
+- **Sauvegarde les skins sur la radio** dans `JWAIO-Sauvegardes/<date-identifiant>/`, avec vérification des copies avant suppression. Les logs conservés restent à leur emplacement d'origine.
+- **Affiche les fichiers concernés et demande confirmation** avant de retirer le widget et ses sons dédiés. L'analyse seule ne supprime rien.
+- **Cible les fichiers du widget** sans modifier les modèles EdgeTX ni les autres widgets. Il ne modifie pas le registre Windows et ne crée pas de cache ou de journal applicatif sur l'ordinateur.
+
+### Le nettoyage en quelques étapes
+
+1. Sauvegardez le contenu de votre radio sur votre ordinateur.
+2. Branchez la radio et choisissez **Stockage USB / USB Storage**.
+3. Lancez Cleaner, sélectionnez le lecteur de la radio et choisissez de conserver ou non vos skins et logs.
+4. Cliquez sur **Analyser la radio**, vérifiez la liste, puis sur **Vérifier et supprimer…** si tout correspond à vos choix.
+5. Attendez le bilan, éjectez le stockage avant de débrancher, puis retirez les instances JWAIO/SIXTY9 des écrans des modèles concernés dans EdgeTX.
+
+**La suppression est définitive, sans Corbeille.** Les archives ZIP et toutes les copies renommées ou profondément imbriquées ne sont pas recherchées. Le [guide complet](docs/CLEANER.md) précise le périmètre, la restauration des skins et la conduite à tenir en cas d'erreur.
+
+**À lire avant le lancement :** cette version est une **Preview**, sans essai sur radio physique à ce stade. L'EXE n'est pas signé. Les analyses documentées du 15 septembre 2026 donnent **5/69 détections VirusTotal** et **0/13 chez Jotti** : des faux positifs sont possibles, mais aucun éditeur ne les a confirmés. Le [guide explique les avertissements Windows et antivirus](docs/CLEANER.md#mon-antivirus-affiche-une-alerte--que-signifie-t-elle-) et le [rapport détaille les résultats](docs/CLEANER-ANTIVIRUS.md). En cas de blocage, gardez votre protection active et utilisez la [désinstallation manuelle](docs/INSTALLATION.md#désinstaller).
+
 ## Ce que propose le widget
 
 - États Ready / Pre-Arm / Arm, affichage des modes ANGLE / ACRO / RTH et des gaz.
