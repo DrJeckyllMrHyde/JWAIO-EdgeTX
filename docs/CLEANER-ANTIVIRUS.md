@@ -71,6 +71,12 @@ Une comparaison locale, sans exécuter le fichier analysé, a confronté l'EXE o
 
 Les procédures de réexamen sont notamment documentées par [Malwarebytes](https://help.malwarebytes.com/hc/en-us/articles/31589211404571-Report-a-false-positive-to-Malwarebytes-Support), [Elastic](https://discuss.elastic.co/t/submitting-false-positives/232322) et [SecureAge](https://knowledgebase.secureage.com/secureaplus/en-us/Content/technical-information/reporting-false-positives-to-secureaplus.htm). Aucune réponse d'éditeur ni confirmation de faux positif n'a été obtenue.
 
+### Demandes de réexamen envoyées
+
+Le 16 septembre 2026, le mainteneur a autorisé la transmission du fichier public, de ses empreintes, des sources et des éléments techniques aux cinq éditeurs concernés. Les demandes ont été envoyées à **Elastic**, **Malwarebytes**, **SecureAge**, **Arctic Wolf** et **MaxSecure**. Malwarebytes a créé le ticket privé **8601862** ; Elastic a confirmé l'enregistrement de son formulaire. Les trois autres demandes ont été transmises aux contacts d'analyse ou d'assistance publiés par VirusTotal ou les éditeurs.
+
+Ces accusés d'envoi ne constituent ni une réponse d'analyste, ni une confirmation de faux positif, ni une levée des détections. Les coordonnées personnelles du contact ne sont pas publiées dans ce rapport. La prochaine mise à jour devra consigner séparément chaque réponse et revérifier le rapport VirusTotal du même SHA-256.
+
 Faire examiner le fichier exact par les éditeurs concernés avant d'affirmer qu'il s'agit de faux positifs. Chaque nouvel EXE, y compris une recompilation, nécessite sa propre empreinte et ses propres rapports. Aucune attestation d'innocuité n'est émise ici.
 
 ## Diagnostic complémentaire et possibilités de correction
