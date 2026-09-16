@@ -37,13 +37,13 @@ Le chemin final doit être `/WIDGETS/JWAIO/main.lua`, sans dossier d'archive int
 
 **[Télécharger JWAIO Cleaner pour Windows 10/11](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/cleaner-v0.1.0-preview)** · [Mode d'emploi débutant](docs/CLEANER.md)
 
-JWAIO Cleaner vous accompagne pour retirer JWAIO et les anciennes versions SIXTY9 du stockage de votre radio. C'est un logiciel **portable** : téléchargez **JWAIO-Cleaner.exe** dans la rubrique **Assets** de la release, puis lancez-le depuis le Bureau ou une clé USB. Aucun installateur ni droit administrateur n'est nécessaire ; aucune dépendance n'est à ajouter sur un Windows 10/11 standard.
+JWAIO Cleaner vous accompagne pour retirer JWAIO et les anciennes versions du stockage de votre radio. C'est un logiciel **portable** : téléchargez **JWAIO-Cleaner.exe** dans la rubrique **Assets** de la release, puis lancez-le depuis le Bureau ou une clé USB. Aucun installateur ni droit administrateur n'est nécessaire ; aucune dépendance n'est à ajouter sur un Windows 10/11 standard.
 
 [![Présentation de JWAIO Cleaner : sélection du stockage de la radio, conservation des skins et des logs, analyse avant suppression](docs/assets/cleaner-preview.png)](docs/CLEANER.md)
 
 ### Ce que fait Cleaner
 
-- **Repère le stockage de la radio** et analyse les emplacements JWAIO/SIXTY9 reconnus, y compris certaines copies d'anciennes versions.
+- **Repère le stockage de la radio** et analyse les emplacements JWAIO reconnus, y compris certaines copies d'anciennes versions.
 - **Vous laisse choisir ce que vous gardez** : les skins (apparence personnalisée) et les logs (journaux de vol) sont conservés par défaut.
 - **Sauvegarde les skins sur la radio** dans `JWAIO-Sauvegardes/<date-identifiant>/`, avec vérification des copies avant suppression. Les logs conservés restent à leur emplacement d'origine.
 - **Affiche les fichiers concernés et demande confirmation** avant de retirer le widget et ses sons dédiés. L'analyse seule ne supprime rien.
