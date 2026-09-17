@@ -14,7 +14,7 @@ Version 0.1 Preview, Windows 10/11 uniquement. Linux est reporté.
 
 **[Ouvrir la release JWAIO Cleaner v0.1.0 Preview](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/cleaner-v0.1.0-preview)**, puis déplier **Assets** et choisir **JWAIO-Cleaner.exe**. Les fichiers « Source code » servent aux développeurs : ils ne sont pas nécessaires pour utiliser Cleaner. L'EXE peut rester sur le Bureau ou une clé USB ; il n'y a rien à installer.
 
-« Preview » signifie première version de test : les essais sur radio physique restent à réaliser. Avant tout nettoyage, copiez le contenu du stockage de votre radio dans un dossier de sauvegarde sur votre ordinateur.
+« Preview » signifie première version de test. Le mainteneur a testé Cleaner avec succès sur des radios physiques RadioMaster TX15 et TX16, sans problème constaté. Avant tout nettoyage, copiez le contenu du stockage de votre radio dans un dossier de sauvegarde sur votre ordinateur.
 
 ### Mon antivirus affiche une alerte : que signifie-t-elle ?
 
@@ -75,7 +75,7 @@ Les seules écritures normales sont les sauvegardes demandées et les suppressio
 
 11 copies d’archives réelles ont également été nettoyées avec vérification des sauvegardes : SIXTY9 0.1.0 à 0.1.6, JWAIO 0.3.0 alpha et les trois variantes JWAIO 0.3.1 (TX15, TX16 Mk1/Mk2, TX16 Mk3). Interface compilée, démarrée et contrôlée visuellement sur cette machine Windows.
 
-Cette Preview n’a pas été testée sur une radio physique ni sur des installations Windows 10 et Windows 11 distinctes. L’exécutable n’est pas signé numériquement. Une déconnexion, une panne de stockage ou une erreur d’accès pendant la suppression peut laisser un nettoyage partiel : le bilan l’indique ; les suppressions déjà effectuées ne sont pas annulées. Ne débranchez pas la radio pendant l’opération.
+Cette Preview a été testée avec succès sur des radios physiques RadioMaster TX15 et TX16, sans problème constaté. Elle n’a pas encore été validée sur des installations Windows 10 et Windows 11 distinctes. L’exécutable n’est pas signé numériquement. Une déconnexion, une panne de stockage ou une erreur d’accès pendant la suppression peut laisser un nettoyage partiel : le bilan l’indique ; les suppressions déjà effectuées ne sont pas annulées. Ne débranchez pas la radio pendant l’opération.
 
 ## Sources
 
