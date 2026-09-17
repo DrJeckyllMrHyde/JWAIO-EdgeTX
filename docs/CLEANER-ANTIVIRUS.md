@@ -51,7 +51,7 @@ Ne désactivez pas votre antivirus et n'ajoutez pas d'exclusion pour lancer le p
 
 Le [code source](../tools/JWAIO-Cleaner/) est disponible. Le programme est conçu pour analyser uniquement les dossiers JWAIO/SIXTY9 du stockage sélectionné, sauvegarder les skins demandés, puis supprimer les fichiers après confirmation. Il ne contient pas de fonction de téléchargement, d'installation, de modification du registre ou de désactivation d'antivirus. Ces observations sur le code ne remplacent pas une expertise indépendante du binaire.
 
-Les 45 assertions de tests du moteur ont passé localement. Les essais antérieurs sur 11 copies d'archives ont vérifié le nettoyage et les sauvegardes. Les essais sur radio physique restent à réaliser. La suppression autorisée par l'utilisateur est définitive et une interruption matérielle peut laisser un nettoyage partiel.
+Les 45 assertions de tests du moteur ont passé localement. Les essais antérieurs sur 11 copies d'archives ont vérifié le nettoyage et les sauvegardes. Le mainteneur a ensuite testé le logiciel avec succès sur des radios physiques **RadioMaster TX15 et TX16**, sans problème constaté. La suppression autorisée par l'utilisateur est définitive et une interruption matérielle peut laisser un nettoyage partiel.
 
 ## Suivi nécessaire
 
