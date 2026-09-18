@@ -12,7 +12,7 @@
 
 | Votre radio | Archive v0.3.1 | État des essais |
 |---|---|---|
-| TX15 / TX15 Max | [Télécharger TX15](releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX15.zip?raw=true) | Testée, fonctionnelle |
+| TX15 / TX15 Max | [Télécharger TX15](releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX15.zip) | Testée, fonctionnelle |
 | TX16S Mk1 / Mk2 | [Télécharger Mk1/Mk2](releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk1-Mk2.zip?raw=true) | Testée, fonctionnelle |
 | TX16S Mk3 | [Télécharger Mk3](releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk3.zip?raw=true) | Adaptation disponible ; essais physiques à réaliser par la communautée |
 
