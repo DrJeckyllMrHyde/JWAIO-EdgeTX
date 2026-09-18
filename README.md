@@ -10,11 +10,11 @@
 
 ## Choisir et télécharger sa version
 
-| Votre radio | Archive v0.3.1 | État des essais |
-|---|---|---|
-| TX15 / TX15 Max | [Télécharger TX15](releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX15.zip) | Testée, fonctionnelle |
-| TX16S Mk1 / Mk2 | [Télécharger Mk1/Mk2](releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk1-Mk2.zip) | Testée, fonctionnelle |
-| TX16S Mk3 | [Télécharger Mk3](releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk3.zip) | Adaptation possible ; essais physiques à réaliser par la communautée |
+| Radio | Archive v0.3.1 |
+|-------|----------------|
+| TX15 / TX15 Max | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.3.1/JWAIO-v0.3.1-Alpha-TX15.zip) |
+| TX16S Mk1 / Mk2 | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk1-Mk2.zip) |
+| TX16S Mk3 | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk3.zip) |
 
 **TX15 et TX16S Mk1/Mk2 :** les scripts ont été testés et sont fonctionnels pour tous les usages. Seuls des correctifs mineurs et des optimisations restent possibles.
 
