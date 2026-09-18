@@ -62,21 +62,36 @@ JWAIO Cleaner vous accompagne pour retirer JWAIO et les anciennes versions du st
 1. Sauvegardez le contenu de votre radio sur votre ordinateur.
 2. Branchez la radio et choisissez **Stockage USB / USB Storage**.
 3. Lancez Cleaner, sélectionnez le lecteur de la radio.
+
 ![JWAIO Cleaner 1](docs/assets/JWAIO-Cleaner_md1.jpg)
+
 4. Cliquez sur **Analyser la radio**.
+
 ![JWAIO Cleaner 2](docs/assets/JWAIO-Cleaner_md2.jpg)
+
 5. Attendez le bilan 
+
 ![JWAIO Cleaner 3](docs/assets/JWAIO-Cleaner_md3.jpg)
+
 6. Choisir si vous souhaitez garder vos skins et Logs de vol puis **Confirmer la suppression**
-![JWAIO Cleaner 4](docs/assets/JWAIO-Cleaner_md4.jpg)
+
+![JWAIO Cleaner 4](docs/assets/JWAIO-Cleaner_md4.jpg)  
+
 ![JWAIO Cleaner 5](docs/assets/JWAIO-Cleaner_md5.jpg)
+
 7. Attendre la fin du nettoyage puis eteignez votre radio.
+
 ![JWAIO Cleaner 6](docs/assets/JWAIO-Cleaner_md6.jpg)
+
 ![JWAIO Cleaner 7](docs/assets/JWAIO-Cleaner_md7.jpg)
 
 **La suppression est définitive, sans Corbeille.** Les archives ZIP et toutes les copies renommées ou profondément imbriquées ne sont pas recherchées. Le [guide complet](docs/CLEANER.md) précise le périmètre, la restauration des skins et la conduite à tenir en cas d'erreur.
 
-**À lire avant le lancement :** cette version est une **Preview** indépendante du widget Alpha. Le mainteneur rapporte des essais réussis sur radios TX15 et TX16. L'EXE n'est pas signé. Les analyses documentées du 15 septembre 2026 donnent **5/69 détections VirusTotal** et **0/13 chez Jotti** : des faux positifs sont possibles, mais aucun éditeur ne les a confirmés. Le [guide explique les avertissements Windows et antivirus](docs/CLEANER.md#mon-antivirus-affiche-une-alerte--que-signifie-t-elle-) et le [rapport détaille les résultats](docs/CLEANER-ANTIVIRUS.md). En cas de blocage, gardez votre protection active et utilisez la [désinstallation manuelle](docs/INSTALLATION.md#désinstaller).
+**À lire avant le lancement :** cette version est une **Preview** indépendante du widget Alpha. Tout les testes ont été réaliser avec succès sur tx15 et tx16. L'EXE n'est pas signé. 
+
+Les analyses documentées du 15 septembre 2026 donnent **5/69 détections VirusTotal** et **0/13 chez Jotti** : des faux positifs sont possibles, mais aucun éditeur ne les a confirmés. Le [guide explique les avertissements Windows et antivirus](docs/CLEANER.md#mon-antivirus-affiche-une-alerte--que-signifie-t-elle-) et le [rapport détaille les résultats](docs/CLEANER-ANTIVIRUS.md). En cas de blocage, gardez votre protection active et utilisez la [désinstallation manuelle](docs/INSTALLATION.md#désinstaller).
+
+L'envois du **Cleaner** a été envoyer vers divers éditeur ( Malwarebytes et autre ) pour démontrer que le logiciel est propre et supprimer les 5 faux positifs.
 
 ## Ce que propose le widget
 
