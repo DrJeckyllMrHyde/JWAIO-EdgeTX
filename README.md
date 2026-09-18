@@ -54,7 +54,7 @@ JWAIO Cleaner vous accompagne pour retirer JWAIO et les anciennes versions du st
 - **Cible les fichiers du widget** sans modifier les modèles EdgeTX ni les autres widgets. 
 
 **Rappel :**
-- Ce soft ne modifie en rien EdgeTx, Il surprime un Widget donc un Addon optionnel sans conséquence que le reste de votre radio.
+- Ce soft ne modifie en rien EdgeTx, Il supprime un Widget donc un Addon optionnel sans conséquence que le reste de votre radio.
 - Ce soft ne modifie pas le registre Windows et ne crée pas de cache ou de journal applicatif sur l'ordinateur.
 
 ### Le nettoyage en quelques étapes
