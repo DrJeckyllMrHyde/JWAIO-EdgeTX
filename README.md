@@ -10,11 +10,11 @@
 
 ## Choisir et télécharger sa version
 
-| Radio | Dernière Archive |
-|-------|------------------|
-| TX15 / TX15 Max | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/latest/download/JWAIO-v0.3.1-Alpha-TX15.zip) |
-| TX16S Mk1 / Mk2 | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/latest/download/JWAIO-v0.3.1-Alpha-TX16S-Mk1-Mk2.zip) |
-| TX16S Mk3 | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/latest/download/JWAIO-v0.3.1-Alpha-TX16S-Mk3.zip) |
+| Radio | Archive v0.3.1 |
+|-------|----------------|
+| TX15 / TX15 Max | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/raw/main/releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX15.zip) |
+| TX16S Mk1 / Mk2 | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/raw/main/releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk1-Mk2.zip) |
+| TX16S Mk3 | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/raw/main/releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk3.zip) |
 
 **TX15 et TX16S Mk1/Mk2 :** les scripts ont été testés et sont fonctionnels pour tous les usages. Seuls des correctifs mineurs et des optimisations restent possibles.
 
