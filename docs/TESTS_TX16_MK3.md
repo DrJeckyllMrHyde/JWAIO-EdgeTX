@@ -10,7 +10,7 @@ Sauvegardez votre modèle et votre stockage, installez uniquement l'archive Mk3 
 
 ## Contrôles à rapporter
 
-- Démarrage sans erreur Lua ; lecture de la version v0.3.1 Preview-TX16S-Mk3 dans les informations disponibles.
+- Démarrage sans erreur Lua ; lecture de la version v0.3.1 Alpha-TX16S-Mk3 dans les informations disponibles.
 - Interface lisible en plein écran 800 × 480 : textes, panneaux, logo et jauge des gaz.
 - ARM, PreArm, Beeper, Flip et RTH associés aux commandes réelles du modèle ; Thr suit la bonne voie.
 - Batterie, LQ, RSSI et données GPS cohérents avec les capteurs EdgeTX disponibles.

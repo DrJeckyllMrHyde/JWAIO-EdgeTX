@@ -8,6 +8,8 @@ Version 0.1 Preview, Windows 10/11 uniquement. Linux est reporté.
 
 [Code source](../tools/JWAIO-Cleaner/) · [Retour à JWAIO](../README.md)
 
+![JWAIO et JWAIO Cleaner : installez, volez, nettoyez](assets/JWAIO-0.3.1-et-Cleaner-Facebook.png)
+
 ![Interface JWAIO Cleaner](assets/cleaner-preview.png)
 
 ## Télécharger et comprendre les avertissements
@@ -73,7 +75,7 @@ Les seules écritures normales sont les sauvegardes demandées et les suppressio
 
 45 assertions automatisées ont passé : quatre combinaisons de conservation, préservation des autres données, sauvegarde vérifiée, détection de changements avant suppression, fichier en lecture seule, copies anciennes et refus d’une jonction vers un autre dossier.
 
-11 copies d’archives réelles ont également été nettoyées avec vérification des sauvegardes : SIXTY9 0.1.0 à 0.1.6, JWAIO 0.3.0 alpha et les trois variantes JWAIO 0.3.1 (TX15, TX16 Mk1/Mk2, TX16 Mk3). Interface compilée, démarrée et contrôlée visuellement sur cette machine Windows.
+11 copies d’archives réelles ont également été nettoyées avec vérification des sauvegardes : SIXTY9 0.1.0 à 0.1.6, une ancienne archive JWAIO et les trois variantes JWAIO 0.3.1 (TX15, TX16 Mk1/Mk2, TX16 Mk3). Interface compilée, démarrée et contrôlée visuellement sur cette machine Windows.
 
 Cette Preview a été testée avec succès sur des radios physiques RadioMaster TX15 et TX16, sans problème constaté. Elle n’a pas encore été validée sur des installations Windows 10 et Windows 11 distinctes. L’exécutable n’est pas signé numériquement. Une déconnexion, une panne de stockage ou une erreur d’accès pendant la suppression peut laisser un nettoyage partiel : le bilan l’indique ; les suppressions déjà effectuées ne sont pas annulées. Ne débranchez pas la radio pendant l’opération.
 

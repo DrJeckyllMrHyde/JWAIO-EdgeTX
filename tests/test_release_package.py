@@ -1,34 +1,46 @@
-"""Controle de l'archive publique JWAIO 0.3_Alpha."""
-import io
-import struct
-import wave
-import zipfile
+"""Validate radio-specific release payloads, metadata, media and checksums."""
+import importlib.util
 from pathlib import Path
+import re
+import tempfile
+import unittest
+import zipfile
 
-root = Path(__file__).resolve().parents[1]
-with zipfile.ZipFile(root / 'outputs/JWAIO 0.3_Alpha.zip') as archive:
-    names = archive.namelist()
-    assert len(names) == len(set(names))
-    assert archive.testzip() is None
-    assert not any(n.endswith(('.luac', '.csv', '.pyc')) for n in names)
-    assert not any('0.2.1' in n or 'PRIVATE' in n for n in names)
-    assert [n for n in names if n.startswith('LOGS/')] == ['LOGS/JWAIO/README.txt']
-    skins = {n.split('/')[3] for n in names if n.startswith('WIDGETS/JWAIO/skins/')}
-    assert skins == {'jwaio'}, skins
-    for image, size in [('background.png', (480, 320)), ('logo.png', (216, 132))]:
-        data = archive.read('WIDGETS/JWAIO/skins/jwaio/' + image)
-        assert data[:8] == b'\x89PNG\r\n\x1a\n'
-        assert struct.unpack('>II', data[16:24]) == size
-    assert len([n for n in names if n.endswith('.wav')]) == 17
-    for name in names:
-        if name.endswith('.wav'):
-            with wave.open(io.BytesIO(archive.read(name))) as audio:
-                assert audio.getcomptype() == 'NONE'
-                assert audio.getnframes() > 0
-    for name in ('WIDGETS/JWAIO/main.lua', 'WIDGETS/JWAIO/lib/data.lua',
-                 'WIDGETS/JWAIO/lib/skin.lua', 'WIDGETS/JWAIO/lib/diagnostics.lua',
-                 'MODE_EMPLOI.txt'):
-        assert name in names
-        if name.startswith('WIDGETS/'):
-            assert archive.read(name) == (root / 'sdcard' / name).read_bytes()
-print('Public release archive: OK')
+ROOT = Path(__file__).resolve().parents[1]
+spec = importlib.util.spec_from_file_location('builder', ROOT/'tools/build_release.py')
+builder = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(builder)
+
+class Packages(unittest.TestCase):
+    def test_three_radio_packages(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp)
+            builder.build(output)
+            for variant in builder.VARIANTS:
+                archive = output/f'JWAIO-v0.3.1-Alpha-{variant}.zip'
+                published = ROOT/'releases/v0.3.1'/archive.name
+                self.assertEqual(archive.read_bytes(), published.read_bytes())
+                with zipfile.ZipFile(archive) as z:
+                    self.assertIsNone(z.testzip())
+                    expected = builder.package_files(variant)
+                    self.assertEqual(set(z.namelist()), set(expected))
+                    self.assertEqual(len(z.namelist()), len(set(z.namelist())))
+                    self.assertEqual(sum(n.endswith('.lua') for n in z.namelist()), 17)
+                    self.assertEqual(sum(n.endswith('.wav') for n in z.namelist()), 20)
+                    self.assertEqual(sum(n.endswith('.png') for n in z.namelist()), 8)
+                    for name, source in expected.items():
+                        self.assertEqual(z.read(name), source.read_bytes())
+                        self.assertNotIn('..', Path(name).parts)
+                    config = z.read('WIDGETS/JWAIO/config.lua').decode('utf-8')
+                    self.assertRegex(config, r'version\s*=\s*"0\.3\.1"')
+                    self.assertRegex(config, r'iteration\s*=\s*"Alpha')
+                    for name in z.namelist():
+                        if name.endswith('.lua'):
+                            self.assertNotRegex(z.read(name).decode('utf-8'), r'Preview|0\.3\.0')
+                    for media in re.findall(r'"([^"\n]+\.wav)"', config):
+                        self.assertIn('SOUNDS/fr/JWAIO/'+media, z.namelist())
+            self.assertEqual((output/'SHA256SUMS.txt').read_bytes(),
+                             (ROOT/'releases/v0.3.1/SHA256SUMS.txt').read_bytes())
+
+if __name__ == '__main__':
+    unittest.main()

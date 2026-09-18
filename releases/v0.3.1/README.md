@@ -1,19 +1,17 @@
-# Archives originales JWAIO v0.3.1
+# JWAIO v0.3.1 Alpha
 
-Les trois ZIP ci-dessous sont conservés sans modification ni recompression.
+Alpha testée positivement sur TX15 et TX16S Mk1/Mk2. Fonctionnelle pour tous les usages selon le créateur ; des correctifs mineurs et optimisations restent possibles.
 
-| Radio | Téléchargement | Statut |
+| Radio | Archive | Validation |
 |---|---|---|
-| TX15 / TX15 Max | [ZIP TX15](JWAIO_v0.3.1_TX15_EdgeTx%202.12.x.zip?raw=true) | Testé, fonctionnel pour tous les usages selon le créateur |
-| TX16S Mk1 / Mk2 | [ZIP Mk1/Mk2](JWAIO_v0.3.1_TX16MK1_MK2_EdgeTx%202.12.x.zip?raw=true) | Testé, fonctionnel pour tous les usages selon le créateur |
-| TX16S Mk3 | [ZIP Mk3](JWAIO_v0.3.1_TX16MK3_EdgeTx%202.12.x.zip?raw=true) | Adaptation aux spécifications RadioMaster, sans essai physique |
+| TX15 | [Télécharger](JWAIO-v0.3.1-Alpha-TX15.zip?raw=true) | Testée positivement |
+| TX16S-Mk1-Mk2 | [Télécharger](JWAIO-v0.3.1-Alpha-TX16S-Mk1-Mk2.zip?raw=true) | Testée positivement |
+| TX16S-Mk3 | [Télécharger](JWAIO-v0.3.1-Alpha-TX16S-Mk3.zip?raw=true) | Sans essai physique ; testeurs recherchés |
 
-Des correctifs mineurs/optimisations restent possibles sur TX15 et Mk1/Mk2. Des testeurs Mk3 sont recherchés avec EdgeTX 2.12.0 ou supérieur.
+Mk3 : adaptation aux spécifications matérielles RadioMaster, sans radio physique. EdgeTX 2.12.0 ou supérieur requis ; série 2.12.x visée.
 
-**Installation :** [guide débutant](../../docs/INSTALLATION.md). Pour Mk1/Mk2, ouvrir le dossier intermédiaire du ZIP avant de copier WIDGETS, SOUNDS et LOGS. Toutes les variantes utilisent les mêmes chemins ; en installer une seule.
+Les trois ZIP sont reconstruits depuis `radios/`, avec les identifiants Alpha et les notices actualisées. La logique du widget est conservée par rapport aux paquets v0.3.1 fournis. Ce reconditionnement ne constitue pas un nouvel essai sur radio.
 
-**Notice Mk3 :** les mentions internes d'EdgeTX 3.0.0 sont clarifiées dans la [note de compatibilité](../../docs/COMPATIBILITE.md). Les identifiants internes Preview et les notices originales sont préservés.
+Copier WIDGETS, SOUNDS et LOGS, directement présents dans chaque ZIP, à la racine du stockage EdgeTX. Installer une seule variante. Les licences et le guide texte sont inclus.
 
-**Intégrité :** [SHA256SUMS.txt](SHA256SUMS.txt) contient les empreintes des trois fichiers. Le manifeste interne Mk3 comporte 56 fichiers vérifiés, sans divergence lors de la préparation. Les contrôles d'archives ne constituent pas un essai sur radio.
-
-Les licences du projet restent accessibles à la [racine du dépôt](../../README.md). Les archives TX15 et Mk1/Mk2 ne contiennent pas les notices de licence complètes ; consultez les documents du dépôt lors de leur redistribution.
+[Guide débutant](../../docs/INSTALLATION.md) · [SHA-256](SHA256SUMS.txt) · [Sources](../../radios/)

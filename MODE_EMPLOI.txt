@@ -1,4 +1,4 @@
-JWAIO v0.3.1 — PREMIÈRE INSTALLATION
+JWAIO v0.3.1 Alpha — PREMIÈRE INSTALLATION
 
 Téléchargements :
 https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/tree/main/releases/v0.3.1
@@ -10,14 +10,13 @@ le créateur. Des correctifs mineurs et optimisations restent possibles.
 Le créateur ne possède pas de Mk3 : adaptation aux spécifications matérielles
 RadioMaster, sans essai physique. EdgeTX 2.12.0 ou supérieur requis ; testeurs
 Mk3 recherchés. La série visée est 2.12.x, sans garantie de chaque version future.
-La mention 3.0.0 dans les notices originales Mk3 est clarifiée ici :
+Compatibilité et état des essais :
 https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/blob/main/docs/COMPATIBILITE.md
 
 INSTALLER
 1. Sauvegarder le stockage, le modèle EdgeTX, les réglages JWAIO et les journaux.
 2. Décompresser le ZIP de votre radio sur l'ordinateur.
-3. Mk1/Mk2 : ouvrir JWAIO-v0.3.1_TX16S-Mk1-Mk2 pour voir WIDGETS, SOUNDS, LOGS.
-   TX15 et Mk3 : ces trois dossiers sont directement dans le paquet extrait.
+3. Pour les trois radios, WIDGETS, SOUNDS et LOGS sont directement dans le ZIP.
 4. Brancher le port USB de données de la radio et choisir Stockage USB.
 5. Copier WIDGETS, SOUNDS et LOGS à la racine du volume utilisé par EdgeTX.
    Fusionner les dossiers ; remplacer les fichiers JWAIO après sauvegarde.
@@ -86,5 +85,5 @@ https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/blob/main/docs/MODE_EMPLOI.md
 Essais Mk3 :
 https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/blob/main/docs/TESTS_TX16_MK3.md
 
-Le dossier sdcard et les outils/tests historiques du dépôt restent ceux de
-0.3.0-alpha. Utiliser les ZIP v0.3.1 pour installer cette version.
+SOURCES : radios/TX15, radios/TX16S-Mk1-Mk2 et radios/TX16S-Mk3.
+Utiliser les ZIP v0.3.1 Alpha pour installer cette version.

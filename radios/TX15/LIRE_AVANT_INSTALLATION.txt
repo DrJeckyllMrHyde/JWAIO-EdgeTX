@@ -1,0 +1,11 @@
+JWAIO v0.3.1 Alpha — TX15
+
+Alpha testée positivement et fonctionnelle pour tous les usages selon le créateur. Correctifs mineurs et optimisations restant possibles.
+Série EdgeTX visée : 2.12.x.
+
+Lire MODE_EMPLOI.txt avant installation.
+Copier uniquement WIDGETS, SOUNDS et LOGS à la racine du stockage EdgeTX.
+Une seule variante et une seule instance par modèle. Sauvegarder avant mise à jour.
+Les notices et licences restent consultables sur l’ordinateur.
+
+Guide : https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/blob/main/docs/INSTALLATION.md

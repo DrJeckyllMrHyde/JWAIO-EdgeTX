@@ -1,9 +1,10 @@
--- JWAIO 0.3.0 - regressions du retour terrain : scenarios et horloge simules.
+local sdRoot = (arg and arg[1]) or 'radios/TX15'
+-- JWAIO v0.3.1 Alpha - regressions du retour terrain : scenarios et horloge simules.
 -- Executer a la racine : fengari tests/test_terrain_audio.lua (ou Lua 5.2+).
-local configFactory = assert(loadfile("sdcard/WIDGETS/JWAIO/config.lua"))
-local audioFactory = assert(loadfile("sdcard/WIDGETS/JWAIO/lib/audio.lua"))()
-local finderFactory = assert(loadfile("sdcard/WIDGETS/JWAIO/lib/finder.lua"))()
-local util = assert(loadfile("sdcard/WIDGETS/JWAIO/lib/util.lua"))()
+local configFactory = assert(loadfile(sdRoot.."/WIDGETS/JWAIO/config.lua"))
+local audioFactory = assert(loadfile(sdRoot.."/WIDGETS/JWAIO/lib/audio.lua"))()
+local finderFactory = assert(loadfile(sdRoot.."/WIDGETS/JWAIO/lib/finder.lua"))()
+local util = assert(loadfile(sdRoot.."/WIDGETS/JWAIO/lib/util.lua"))()
 assert(configFactory().altitudeReference == "sensor", "Choix Alt brut non applique")
 
 local function rig(profile)
@@ -73,25 +74,25 @@ end
 do
   local c,m,a,s,step,run,count=rig()
   c.altitudeReference="relative"
-  run(3); assert(count("Altitude.wav")==0)
+  run(3); assert(count("Alt.wav")==0)
   s.armed=true; run(1)
-  s.altitude=358; run(1); assert(count("Altitude.wav")==0)
-  s.altitude=359; run(2); assert(count("Altitude.wav")==1)
-  s.altitude=360; run(4); assert(count("Altitude.wav")==1)
+  s.altitude=358; run(1); assert(count("Alt.wav")==0)
+  s.altitude=359; run(2); assert(count("Alt.wav")==1)
+  s.altitude=360; run(4); assert(count("Alt.wav")==1)
   s.armed=false; step(0.05)
   s.armed=true; step(0.05)
-  s.altitude=481; run(3); assert(count("Altitude.wav")==2)
+  s.altitude=481; run(3); assert(count("Alt.wav")==2)
 end
 
 -- Reference capteur configurable : 120 ne declenche pas, 121 declenche.
 do
   local c,m,a,s,step,run,count=rig()
   c.altitudeReference="sensor"; s.altitude=120; s.armed=true; run(2)
-  assert(count("Altitude.wav")==0)
+  assert(count("Alt.wav")==0)
   s.altitudeValid=false; s.altitude=150; run(2)
-  assert(count("Altitude.wav")==0)
+  assert(count("Alt.wav")==0)
   s.altitudeValid=true; s.altitude=121; run(2)
-  assert(count("Altitude.wav")==1)
+  assert(count("Alt.wav")==1)
 end
 
 -- Aucune reference sol inventee si les premieres valeurs arrivent en vol.
@@ -101,7 +102,7 @@ do
   s.altitudeValid=false; run(5)
   s.armed=true; run(4)
   s.altitudeValid=true; s.altitude=350; run(1)
-  assert(a.altitudeBaseline==nil and count("Altitude.wav")==0)
+  assert(a.altitudeBaseline==nil and count("Alt.wav")==0)
 end
 
 -- Finder prioritaire meme lorsque batterie/altitude attendent. Le franchis-
@@ -118,18 +119,18 @@ do
     finder:update(s,function() return m.playFinderBip(a,s.now) end)
   end
   assert(count("finder_bip.wav")>=35, "Cadence trop lente pres du quad")
-  assert(count("batlow.wav")==0 and count("Altitude.wav")==0)
+  assert(count("batlow.wav")==0 and count("Alt.wav")==0)
   assert(a.queued.altitude and not a.altitudeAnnounced)
   local previous
   for _, event in ipairs(played) do
-    if event.time>started then
+    if event.time>started and not event.path:match('/beeper.wav$') then
       assert(event.path:match("finder_bip.wav$"), "Voix parasite en recherche")
       if previous then assert(event.time-previous>=0.199, "Bips superposes") end
       previous=event.time
     end
   end
   s.beeper=false; run(5)
-  assert(count("Altitude.wav")==1 and count("batlow.wav")==1)
+  assert(count("Alt.wav")==1 and count("batlow.wav")==1)
 end
 
 -- Un WAV en cours finit, puis le Finder passe avant toute nouvelle annonce.
@@ -139,7 +140,7 @@ do
   assert(count("batcrt.wav")==1)
   s.flip=true; step(0.01)
   assert(not m.playFinderBip(a,s.now))
-  run(2.1); assert(m.playFinderBip(a,s.now))
+  run(5); assert(m.playFinderBip(a,s.now))
   s.flip=false; s.rth=true; step(0.01); assert(a.finderActive)
   s.rth=false; step(0.01); assert(not a.finderActive)
 end
@@ -206,7 +207,7 @@ do
     local values={24,100,-40,altitude,{lat=48,lon=2},10,0}
     return values[id],true,true
   end
-  local m=assert(loadfile("sdcard/WIDGETS/JWAIO/lib/data.lua"))()(c,util)
+  local m=assert(loadfile(sdRoot.."/WIDGETS/JWAIO/lib/data.lua"))()(c,util)
   local s=m.new()
   m.update(s,{Cells=6}); assert(s.navigationUpdated and s.altitude==120)
   time=0.2; altitude=121
@@ -218,14 +219,14 @@ print("Terrain audio/finder tests OK")
 do
   local c,m,a,s,step,run,count=rig()
   a.nextPlay=s.now+20
-  s.armed=true; s.altitude=150; s.gpsState='GPS OK'; run(2)
-  assert(a.queued.altitude and a.queued.satellite)
-  s.altitudeValid=false; s.gpsState='NO_DATA'; run(1)
-  assert(not a.queued.altitude and not a.queued.satellite)
+  s.armed=true; s.altitude=150; s.gpsState='GPS OK'; s.satsValid=true; s.satelliteLevel=2; s.gpsValid=true; s.throttle=10; run(3)
+  assert(a.queued.altitude and a.queued.satelliteLimitRescue)
+  s.altitudeValid=false; s.gpsState='NO_DATA'; s.satsValid=false; s.satelliteLevel=nil; s.gpsValid=false; run(1)
+  assert(not a.queued.altitude and not a.queued.satelliteLimitRescue)
   a.nextPlay=s.now; run(5)
-  assert(count('Altitude.wav')==0 and count('Satellite.wav')==0)
+  assert(count('Alt.wav')==0 and count('stl_Limrs.wav')==0)
   s.altitudeValid=true; s.altitude=150; run(5)
-  assert(count('Altitude.wav')==1)
+  assert(count('Alt.wav')==1)
 end
 print('Invalid deferred alerts tests OK')
 

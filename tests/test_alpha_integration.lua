@@ -1,7 +1,8 @@
--- JWAIO 0.3 alpha - capteurs absents/perimes, CSV et menu skins.
+local sdRoot = (arg and arg[1]) or 'radios/TX15'
+-- JWAIO v0.3.1 Alpha - capteurs absents/perimes, CSV et menu skins.
 -- Lancer depuis la racine avec Lua 5.2+ ou Fengari.
-local config=assert(loadfile('sdcard/WIDGETS/JWAIO/config.lua'))()
-local util=assert(loadfile('sdcard/WIDGETS/JWAIO/lib/util.lua'))()
+local config=assert(loadfile(sdRoot..'/WIDGETS/JWAIO/config.lua'))()
+local util=assert(loadfile(sdRoot..'/WIDGETS/JWAIO/lib/util.lua'))()
 local ids={RxBt=1,RQly=2,['1RSS']=3,Alt=4,GPS=5,Sats=6,GSpd=7,ch3=8}
 local values={24,100,-60,213,{lat=48,lon=2},23,0.8}
 local current,fresh={},{}
@@ -13,7 +14,7 @@ getSwitchValue=function(id) return false end
 getTime=function() return time*100 end
 getValue=function(id) return id==8 and -1024 or 0 end
 getSourceValue=function(id) return values[id], current[id], fresh[id] end
-local dm=assert(loadfile('sdcard/WIDGETS/JWAIO/lib/data.lua'))()(config,util)
+local dm=assert(loadfile(sdRoot..'/WIDGETS/JWAIO/lib/data.lua'))()(config,util)
 local state=dm.new()
 local options={Cells=6,LQ=2,Thr=8}
 local function step()
@@ -51,7 +52,7 @@ local savedIo=io
 local written
 io={open=function() return {} end, close=function() end,
     write=function(handle,...) written=table.concat({...}); return true end}
-local lm=assert(loadfile('sdcard/WIDGETS/JWAIO/lib/logger.lua'))()(config,{
+local lm=assert(loadfile(sdRoot..'/WIDGETS/JWAIO/lib/logger.lua'))()(config,{
   dateText=function() return '2026-09-06' end,
   timeText=function() return '12:00:00' end})
 local log={active=true,filename='test.csv',nextWrite=0}
@@ -68,25 +69,28 @@ io=savedIo
 
 -- Skin remplace LQ sans depasser les dix options.
 CHOICE=1; VALUE=2; SOURCE=3; SWITCH=4
-SMLSIZE=1; MIDSIZE=2; BOLD=16; CENTER=32; RIGHT=64
+TINSIZE=0; XSMSIZE=0; SMLSIZE=1; MIDSIZE=2; DBLSIZE=4; BOLD=16; CENTER=32; RIGHT=64
 lcd={RGB=function() return 0 end}
-loadScript=function(path) return loadfile('sdcard'..path) end
-local main=assert(loadfile('sdcard/WIDGETS/JWAIO/main.lua'))()
+loadScript=function(path) return loadfile(sdRoot..path) end
+local main=assert(loadfile(sdRoot..'/WIDGETS/JWAIO/main.lua'))()
 local expected={'Skin','BatType','Cells','LinkType','ARM','PreArm','Beeper','Flip','RTH','Thr'}
 assert(#main.options==10)
 for i,name in ipairs(expected) do assert(main.options[i][1]==name) end
-assert(config.version=='0.3.0' and config.iteration=='alpha-2')
+assert(config.version=='0.3.1' and config.iteration:match('^Alpha'))
 print('Telemetry validity / CSV / menu tests OK')
 
 -- Cycle complet du widget : timers, armement, journal, distances et Finder.
 local memory={}
+local diskOpen,diskRead,diskClose=io.open,io.read,io.close
 io.open=function(path,mode)
+  if path:match('^/SOUNDS/') then return diskOpen(sdRoot..path,'rb') end
   if mode=='r' and not memory[path] then return nil end
   if mode=='w' then memory[path]='' end
   memory[path]=memory[path] or ''
   return {path=path}
 end
-io.close=function() return true end
+io.close=function(h) if type(h)=='userdata' then return diskClose(h) end return true end
+io.read=function(h,n) if type(h)=='userdata' then return h:read(n) end return memory[h.path] or '' end
 io.write=function(h,...) memory[h.path]=memory[h.path]..table.concat({...}); return h end
 getDateTime=function() return {year=2026,mon=9,day=6,hour=12,min=0,sec=0} end
 local timer1,timer2=15,999
@@ -105,7 +109,7 @@ getSwitchValue=function(id) return id==90 and arm or id==91 and beeper or false 
 local throttle=-1024
 getValue=function(id) return id==8 and throttle or 0 end
 options.ARM=90; options.Beeper=91
-local widget=main.create({x=0,y=0,w=480,h=320},options)
+local widget=main.create({x=0,y=0,w=800,h=480},options)
 time=time+1.1; main.refresh(widget)
 assert(timer1==0 and timer2==999 and texts['Ready'])
 arm=true; time=time+1.1; main.background(widget)
@@ -169,7 +173,7 @@ assert(last[col.cell_min_v]=='3.30' and last[col.cell_max_v]=='3.90')
 assert(last[col.pack_v]=='23.40' and last[col.pack_estimated]=='0')
 assert(last[col.lat]=='' and last[col.lon]=='' and last[col.gps_valid]=='0')
 assert(last[col.altitude]=='121.0' and last[col.alt_valid]=='1')
-assert(last[col.build]=='0.3.0-alpha-2')
+assert(last[col.build]==config.version..'-'..config.iteration)
 values[1]=3.9; time=time+1.1; main.background(widget)
 rows=csvRows(memory[filename]); last=rows[#rows]
 assert(last[col.pack_v]=='23.40' and last[col.pack_estimated]=='1')
@@ -188,13 +192,13 @@ assert(events:find('submitted,finderBip,RSSI=') and events:find('stop,session,')
 assert(events:find('state,armed,0'))
 
 -- Choix de skin stable, manifeste invalide ignore, repli sans images.
-local sm=assert(loadfile('sdcard/WIDGETS/JWAIO/lib/skin.lua'))()(config)
+local sm=assert(loadfile(sdRoot..'/WIDGETS/JWAIO/lib/skin.lua'))()(config)
 -- Un second skin virtuel teste le changement sans embarquer de visuel tiers.
 local originalLoadScript=loadScript
 loadScript=function(path)
   if path=='/WIDGETS/JWAIO/skins/example/skin.lua' then
     return function()
-      local example=assert(loadfile('sdcard/WIDGETS/JWAIO/skins/jwaio/skin.lua'))()
+      local example=assert(loadfile(sdRoot..'/WIDGETS/JWAIO/skins/jwaio/skin.lua'))()
       example.id='example'; example.name='Example'; example.slot=2
       return example
     end
@@ -209,10 +213,10 @@ local catalog=sm.discover()
 assert(catalog.choices[1]=='JWAIO' and catalog.choices[2]=='Example')
 assert(sm.resolve(catalog,2).id=='example')
 assert(sm.resolve(catalog,8).id=='jwaio')
-local mainSkins=assert(loadfile('sdcard/WIDGETS/JWAIO/main.lua'))()
+local mainSkins=assert(loadfile(sdRoot..'/WIDGETS/JWAIO/main.lua'))()
 -- Eviter les anciens fichiers GPS dans ce test de chargement de skin.
 io.read=function() return '' end
-local themed=mainSkins.create({x=0,y=0,w=480,h=320},options)
+local themed=mainSkins.create({x=0,y=0,w=800,h=480},options)
 for _=1,20 do
   options.Skin=2; mainSkins.update(themed,options); assert(themed.skin.id=='example')
   options.Skin=1; mainSkins.update(themed,options); assert(themed.skin.id=='jwaio')

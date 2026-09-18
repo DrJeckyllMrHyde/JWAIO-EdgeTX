@@ -1,6 +1,7 @@
--- JWAIO alpha-2 : validite et cadence sont deux notions distinctes.
+local sdRoot = (arg and arg[1]) or 'radios/TX15'
+-- JWAIO v0.3.1 Alpha : validite et cadence sont deux notions distinctes.
 -- Reproduit le clignotement observe sur la video, sans modifier le firmware.
-local root='sdcard/WIDGETS/JWAIO/'
+local root=sdRoot..'/WIDGETS/JWAIO/'
 local config=assert(loadfile(root..'config.lua'))()
 local util=assert(loadfile(root..'lib/util.lua'))()
 local ids={RxBt=1,RQly=2,['1RSS']=3,Alt=4,GPS=5,Sats=6,GSpd=7,ch3=8}
@@ -36,7 +37,7 @@ for i=1,240 do
   assert(state.gpsValid and state.satsValid and state.gpsState=='GPS OK')
   assert(state.altitudeValid and state.speedValid and state.speed==0)
 end
-assert(count('Lipo_Liion_Full.wav')==1 and count('Satellite.wav')==1)
+assert(count('LipLii_full.wav')==1 and count('stl_rs.wav')==1)
 assert(count('gps.wav')==0 and count('elrs.wav')==0)
 -- Un passage batterie basse reste detecte, sans fresh obligatoire ni repetition.
 values[1]=21

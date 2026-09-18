@@ -1,5 +1,6 @@
--- JWAIO 0.3 alpha : bornes memoire, I/O, cadence d'ecriture et noms uniques.
-local config=assert(loadfile('sdcard/WIDGETS/JWAIO/config.lua'))()
+local sdRoot = (arg and arg[1]) or 'radios/TX15'
+-- JWAIO v0.3.1 Alpha : bornes memoire, I/O, cadence d'ecriture et noms uniques.
+local config=assert(loadfile(sdRoot..'/WIDGETS/JWAIO/config.lua'))()
 local memory, appends={},0
 io={open=function(path,mode)
   if mode=='r' and not memory[path] then return nil end
@@ -9,8 +10,8 @@ io={open=function(path,mode)
 end, close=function() return true end,
 write=function(h,...) memory[h.path]=(memory[h.path] or '')..table.concat({...}); return true end}
 local util={fileStamp=function() return '260906_120000' end}
-local lm=assert(loadfile('sdcard/WIDGETS/JWAIO/lib/logger.lua'))()(config,util)
-local dm=assert(loadfile('sdcard/WIDGETS/JWAIO/lib/diagnostics.lua'))()(config,util,lm)
+local lm=assert(loadfile(sdRoot..'/WIDGETS/JWAIO/lib/logger.lua'))()(config,util)
+local dm=assert(loadfile(sdRoot..'/WIDGETS/JWAIO/lib/diagnostics.lua'))()(config,util,lm)
 local d=dm.new(); local s={now=0,armed=true}
 dm.beginTick(d,s,'flight.csv'); assert(d.active and not d.error)
 for i=1,1000 do dm.event(d,0.01,'test','bounded','x') end

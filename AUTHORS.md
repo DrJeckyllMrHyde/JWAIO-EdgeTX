@@ -7,5 +7,5 @@
 
 Le module Qwad Finder adapte une idée issue de `ELRS_Finder.lua` de Sunil
 Chahal. Sa licence MIT et son attribution sont conservées dans
-[`sdcard/THIRD_PARTY_NOTICES.txt`](sdcard/THIRD_PARTY_NOTICES.txt).
+[`THIRD_PARTY_NOTICES.txt`](THIRD_PARTY_NOTICES.txt).
 

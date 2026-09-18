@@ -1,0 +1,791 @@
+-- ============================================================================
+-- JWAIO - Jeckyll Widget All in One
+-- Copyright 2026 DrJeckyllMrHyde
+-- SPDX-License-Identifier: Apache-2.0
+-- Fichier : lib/audio.lua
+-- Version : 0.3.1 Alpha
+-- Role    : alertes vocales prioritaires et arbitrage des bips Qwad Finder.
+-- ============================================================================
+
+return function(config)
+  local M = {}
+
+  -- Plus la valeur est basse, plus l'annonce est prioritaire.
+  local priorities = {
+    batteryCritical = 1,
+    link = 2,
+    gps = 3,
+    satelliteNoRescue = 3,
+    satelliteLimitRescue = 3,
+    satelliteRescue = 9,
+    arm = 4,
+    rth = 5,
+    altitude = 6,
+    throttle = 7,
+    batteryLow = 8,
+    satellite = 9,
+    batteryFullLihv = 10,
+    batteryFullStandard = 10,
+    preArm = 11,
+    beeper = 12,
+    flip = 13,
+    angle = 14,
+    acro = 14
+  }
+
+  local confirmations = {
+    arm = true,
+    rth = true,
+    preArm = true,
+    beeper = true,
+    flip = true,
+    angle = true,
+    acro = true,
+    satellite = true,
+    satelliteRescue = true,
+    batteryFullLihv = true,
+    batteryFullStandard = true
+  }
+
+  -- Les confirmations Finder doivent pouvoir être jouées une fois
+  -- au moment de leur activation avant que les bips Finder prennent
+  -- complètement la priorité.
+  local finderConfirmations = {
+    beeper = true,
+    flip = true,
+    rth = true
+  }
+
+  local function fileFor(kind, audio)
+    -- Alpha livree sans faux sons de remplacement : ne pas essayer de lire
+    -- un fichier absent en boucle pendant les tests radio.
+    if (kind == "satelliteRescue" or kind == "satelliteNoRescue" or
+        kind == "satelliteLimitRescue") and not config.satelliteExtraSoundsReady then
+      return nil
+    end
+    local base = config.sounds[kind]
+    if not base then return nil end
+    if audio and audio.assets then
+      local asset=audio.assets[kind]
+      return asset and type(asset.path)=="string" and #asset.path<=36 and asset.path or nil
+    end
+    local path=config.soundPath .. "/" .. base .. config.audioExtension
+    return #path<=36 and path or nil
+  end
+
+  local function resetEpisode(episode)
+    episode.since = nil
+    episode.announced = false
+  end
+
+  local function updateEpisode(episode, active, now, hold)
+    if not active then
+      resetEpisode(episode)
+      return false
+    end
+
+    if not episode.since then
+      episode.since = now
+    end
+
+    return (now - episode.since) >= hold
+  end
+
+  local function request(audio, kind)
+
+    -- Quand le Finder est actif, les confirmations normales sont bloquées.
+    -- Beeper / Flip / RTH sont toutefois autorisés une fois au changement
+    -- de fonction.
+    if audio.finderActive
+       and confirmations[kind]
+       and not finderConfirmations[kind] then
+
+      if audio.emit then
+        audio.emit("suppressed", kind, "finder_priority")
+      end
+
+      return
+    end
+
+    if not priorities[kind]
+       or not fileFor(kind, audio)
+       or audio.queued[kind] then
+      return
+    end
+
+    audio.queue[#audio.queue + 1] = kind
+    audio.queued[kind] = true
+
+    if audio.emit then
+      audio.emit("requested", kind, "")
+    end
+
+    if audio.finderActive and audio.emit then
+      audio.emit("deferred", kind, "finder_priority")
+      audio.deferred[kind] = true
+    end
+
+    table.sort(audio.queue, function(left, right)
+      return priorities[left] < priorities[right]
+    end)
+  end
+
+  local function cancel(audio, kind)
+    if not audio.queued[kind] then
+      return
+    end
+
+    for index, queuedKind in ipairs(audio.queue) do
+      if queuedKind == kind then
+        table.remove(audio.queue, index)
+        break
+      end
+    end
+
+    audio.queued[kind] = nil
+    audio.deferred[kind] = nil
+
+    if audio.emit then
+      audio.emit("cancelled", kind, "condition_ended")
+    end
+  end
+
+  local function rising(previous, current)
+    return previous == false and current == true
+  end
+
+  local satelliteKinds = {"satellite", "satelliteRescue",
+    "satelliteNoRescue", "satelliteLimitRescue"}
+
+  -- Un etat stable produit au plus une annonce. Les annonces devenues fausses
+  -- sont retirees de la file, meme lorsqu'elles attendaient la fin du Finder.
+  -- ARM avec gaz <= 5 % est volontairement silencieux pour le controle moteur.
+  local function updateSatellites(audio, state, now)
+    local phase = not state.armed and "ground" or
+      ((state.throttleValid ~= false and (state.throttle or 0) > 5) and "flight" or "idle")
+    local level = state.satelliteLevel
+    local key = phase .. ":" .. tostring(level)
+    if audio.satelliteCandidate ~= key then
+      audio.satelliteCandidate = key
+      audio.satelliteSince = now
+    end
+    local kind
+    if level and phase == "ground" then
+      if level == 2 then kind = "satellite" end
+      if level == 3 then kind = "satelliteRescue" end
+    elseif level and phase == "flight" then
+      if level == 1 then kind = "satelliteNoRescue" end
+      if level == 2 then kind = "satelliteLimitRescue" end
+    end
+    for _, other in ipairs(satelliteKinds) do
+      if other ~= kind then cancel(audio, other) end
+    end
+    -- Une courte interruption de capteur ou un bref coup de gaz ne rearme pas
+    -- l'annonce precedente. Le nouvel etat doit persister avant validation.
+    if not level or phase == "idle" then return end
+    if now - audio.satelliteSince < (config.satelliteHoldSeconds or 2) then return end
+    if audio.satelliteStable ~= key then
+      audio.satelliteStable = key
+      audio.satelliteAnnounced = false
+    end
+    if kind and not audio.satelliteAnnounced then request(audio, kind) end
+  end
+
+  local function updateBatteryConnection(audio, state, profile, now)
+
+    -- Une disparition breve de la telemetrie est consideree comme une coupure
+    -- radio, pas comme le branchement d'une nouvelle batterie pleine.
+    if state.batteryValid then
+
+      if not audio.batteryConnected then
+        if profile.full and state.battery > profile.full then
+          request(audio, profile.fullSound)
+        end
+
+        audio.batteryConnected = true
+      end
+
+      audio.batteryMissingSince = nil
+      return
+    end
+
+    if not audio.batteryConnected then
+      return
+    end
+
+    if not audio.batteryMissingSince then
+      audio.batteryMissingSince = now
+
+    elseif (now - audio.batteryMissingSince) >= config.batteryReconnectSeconds then
+      audio.batteryConnected = false
+      audio.batteryMissingSince = nil
+    end
+  end
+
+  local function updateActivationSounds(audio, state)
+
+    if not audio.initialized then
+      audio.initialized = true
+
+    else
+
+      if state.mode ~= audio.previous.mode then
+
+        if state.mode == "ANGLE" then
+          request(audio, "angle")
+        end
+
+        if state.mode == "ACRO" then
+          request(audio, "acro")
+        end
+      end
+
+      if rising(audio.previous.armed, state.armed) then
+        request(audio, "arm")
+      end
+
+      if rising(audio.previous.prearmed, state.prearmed) then
+        request(audio, "preArm")
+      end
+
+      if rising(audio.previous.beeper, state.beeper) then
+        request(audio, "beeper")
+      end
+
+      if rising(audio.previous.flip, state.flip) then
+        request(audio, "flip")
+      end
+
+      if rising(audio.previous.rth, state.rth) then
+        request(audio, "rth")
+      end
+    end
+
+    audio.previous.mode = state.mode
+    audio.previous.armed = state.armed
+    audio.previous.prearmed = state.prearmed
+    audio.previous.beeper = state.beeper
+    audio.previous.flip = state.flip
+    audio.previous.rth = state.rth
+  end
+
+  local function playNext(audio, now)
+
+    if #audio.queue == 0 or now < audio.nextPlay then
+      return
+    end
+
+    local selected = 1
+
+    -- Quand le Finder est actif, seules les annonces Beeper / Flip / RTH
+    -- peuvent encore être jouées.
+    if audio.finderActive then
+      -- Une alerte differee en tete ne doit pas bloquer la confirmation
+      -- Beeper / Flip / RTH autorisee pendant la recherche.
+      selected = nil
+      for index, queuedKind in ipairs(audio.queue) do
+        if finderConfirmations[queuedKind] then selected = index; break end
+      end
+      if not selected then return end
+    end
+
+    local kind = table.remove(audio.queue, selected)
+
+    audio.queued[kind] = nil
+    audio.deferred[kind] = nil
+
+    local path = fileFor(kind, audio)
+
+    if not path or not playFile then
+      return
+    end
+
+    local ok, result = pcall(playFile, path)
+
+    if not ok or result == false then
+
+      if audio.emit then
+        audio.emit("failed", kind, "playFile")
+      end
+
+      request(audio, kind)
+      audio.nextPlay = now + 1
+
+      return
+    end
+
+    -- "submitted" signifie appel accepte, pas preuve que le son a ete entendu.
+    if audio.emit then
+      audio.emit("submitted", kind, "playFile")
+    end
+
+    -- Une alerte en attente n'est pas encore annoncee.
+    if kind == "batteryLow" then
+      audio.batteryLow.announced = true
+    end
+
+    if kind == "batteryCritical" then
+      audio.batteryCritical.announced = true
+      audio.batteryLow.announced = true
+    end
+
+    if kind == "altitude" then
+      audio.altitudeAnnounced = true
+    end
+    for _, satelliteKind in ipairs(satelliteKinds) do
+      if kind == satelliteKind then audio.satelliteAnnounced = true end
+    end
+
+    local duration =
+      config.soundDurations
+      and config.soundDurations[kind]
+    if audio.assets and audio.assets[kind] then duration=audio.assets[kind].duration end
+
+    audio.nextPlay =
+      now +
+      (
+        duration
+        and (
+          duration +
+          (config.audioPaddingSeconds or 0.08)
+        )
+        or
+        (config.audioGapSeconds or 3.2)
+      )
+  end
+
+  local function updateBatteryEpisode(
+      audio,
+      episode,
+      kind,
+      valid,
+      value,
+      threshold,
+      recover,
+      now,
+      hold)
+
+    if not valid then
+
+      -- Une perte de telemetrie n'est ni une batterie faible
+      -- ni une recharge.
+      episode.since = nil
+      episode.recoveredSince = nil
+
+      cancel(audio, kind)
+
+      return
+    end
+
+    if value >= recover then
+
+      episode.recoveredSince =
+        episode.recoveredSince or now
+
+      if now - episode.recoveredSince
+         >= (config.batteryRecoverySeconds or 5) then
+
+        resetEpisode(episode)
+      end
+
+    else
+
+      episode.recoveredSince = nil
+    end
+
+    if value < threshold then
+
+      episode.since =
+        episode.since or now
+
+      if not episode.announced
+         and now - episode.since >= hold then
+
+        request(audio, kind)
+      end
+
+    else
+
+      episode.since = nil
+      cancel(audio, kind)
+    end
+  end
+
+  function M.new(emit)
+
+    return {
+      emit = emit,
+
+      deferred = {},
+
+      queue = {},
+      queued = {},
+
+      nextPlay = 0,
+
+      finderActive = false,
+
+      batteryLow = {
+        since = nil,
+        announced = false
+      },
+
+      batteryCritical = {
+        since = nil,
+        announced = false
+      },
+
+      link = {
+        since = nil,
+        announced = false
+      },
+
+      gps = {
+        since = nil,
+        announced = false
+      },
+
+      throttle = {
+        since = nil,
+        announced = false
+      },
+
+      hadGpsFix = false,
+      gpsReady = false,
+
+      altitudeAnnounced = false,
+      altitudeBaseline = nil,
+      groundAltitude = nil,
+      groundAltitudeAt = nil,
+
+      batteryConnected = false,
+      batteryMissingSince = nil,
+
+      initialized = false,
+
+      previous = {
+        mode = nil,
+        armed = nil,
+        prearmed = nil,
+        beeper = nil,
+        flip = nil,
+        rth = nil
+      }
+    }
+  end
+
+  function M.update(audio, state)
+
+    local now = state.now
+    local inFlight = state.armed
+    local profile =
+      state.batteryProfile
+      or config.batteryProfiles[1]
+
+    local wasArmed = audio.previous.armed
+
+    audio.finderActive =
+      state.beeper
+      or state.flip
+      or state.rth
+      or false
+
+    if audio.finderActive then
+
+      -- Les confirmations générales n'ont plus d'intérêt après
+      -- l'activation du Finder.
+      --
+      -- Beeper / Flip / RTH sont toutefois conservés afin que
+      -- leur confirmation vocale puisse être jouée une seule fois.
+      for kind in pairs(confirmations) do
+
+        if not finderConfirmations[kind] then
+          cancel(audio, kind)
+        end
+      end
+    end
+
+    updateBatteryConnection(
+      audio,
+      state,
+      profile,
+      now
+    )
+
+    updateActivationSounds(
+      audio,
+      state
+    )
+
+    local gpsReady =
+      state.gpsState == "GPS OK"
+
+    updateSatellites(audio, state, now)
+
+    audio.gpsReady = gpsReady
+
+    if gpsReady then
+      audio.hadGpsFix = true
+    end
+
+    local critical =
+      state.batteryValid
+      and state.battery < profile.critical
+
+    updateBatteryEpisode(
+      audio,
+      audio.batteryCritical,
+      "batteryCritical",
+      state.batteryValid,
+      state.battery,
+      profile.critical,
+      profile.critical
+        + (config.batteryCriticalRecoveryMargin or 0.08),
+      now,
+      config.batteryCriticalHoldSeconds or 1.0
+    )
+
+    updateBatteryEpisode(
+      audio,
+      audio.batteryLow,
+      "batteryLow",
+      state.batteryValid,
+      state.battery,
+      profile.warn,
+      profile.recover,
+      now,
+      config.batteryHoldSeconds or 1.2
+    )
+
+    if critical then
+
+      -- Ne pas jouer une annonce de niveau bas quand
+      -- le niveau critique est déjà atteint.
+      cancel(audio, "batteryLow")
+
+      audio.batteryLow.since = nil
+    end
+
+    local poorLink =
+      inFlight
+      and state.lqValid
+      and state.lq < config.lqWarn
+
+    if updateEpisode(
+        audio.link,
+        poorLink,
+        now,
+        config.linkHoldSeconds)
+       and not audio.link.announced then
+
+      request(audio, "link")
+
+      audio.link.announced = true
+    end
+
+    if state.lqValid
+       and state.lq >= config.lqRecover then
+
+      resetEpisode(audio.link)
+    end
+
+    local gpsLost =
+      inFlight
+      and state.throttleValid ~= false and (state.throttle or 0) > 5
+      and audio.hadGpsFix
+      and not gpsReady
+      -- Les niveaux satellites ont maintenant leurs annonces dediees.
+      -- gps.wav reste reserve a une perte des donnees/coordonnees.
+      and (not state.satsValid or (state.satelliteLevel == 3 and not state.gpsValid))
+
+    if updateEpisode(
+        audio.gps,
+        gpsLost,
+        now,
+        config.gpsLostHoldSeconds)
+       and not audio.gps.announced then
+
+      request(audio, "gps")
+
+      audio.gps.announced = true
+    end
+
+    -- Reference du gain figée au front ARM.
+    if not inFlight then
+
+      if state.altitudeValid then
+        audio.groundAltitude = state.altitude
+        audio.groundAltitudeAt = now
+      end
+
+    elseif wasArmed == false then
+
+      if state.altitudeValid then
+
+        audio.altitudeBaseline =
+          state.altitude
+
+      elseif audio.groundAltitudeAt
+         and now - audio.groundAltitudeAt <= 2.5 then
+
+        audio.altitudeBaseline =
+          audio.groundAltitude
+      end
+    end
+
+    local altitudeForAlert = nil
+
+    if not state.altitudeValid then
+      cancel(audio, "altitude")
+    end
+
+    if state.altitudeValid then
+
+      if config.altitudeReference == "sensor" then
+
+        altitudeForAlert =
+          state.altitude
+
+      elseif audio.altitudeBaseline then
+
+        altitudeForAlert =
+          state.altitude
+          - audio.altitudeBaseline
+      end
+    end
+
+    if inFlight
+       and not audio.altitudeAnnounced
+       and altitudeForAlert
+       and altitudeForAlert > config.altitudeAlertMeters then
+
+      request(audio, "altitude")
+    end
+
+    local highThrottle =
+      inFlight
+      and state.throttle
+          >= config.throttleAlertPercent
+
+    if updateEpisode(
+        audio.throttle,
+        highThrottle,
+        now,
+        config.throttleAlertSeconds)
+       and not audio.throttle.announced then
+
+      request(audio, "throttle")
+
+      audio.throttle.announced = true
+    end
+
+    if state.throttle
+       <= config.throttleResetPercent then
+
+      resetEpisode(audio.throttle)
+    end
+
+    if not inFlight then
+
+      resetEpisode(audio.link)
+      resetEpisode(audio.gps)
+      resetEpisode(audio.throttle)
+
+      audio.hadGpsFix = gpsReady
+
+      audio.altitudeAnnounced = false
+      audio.altitudeBaseline = nil
+
+      cancel(audio, "altitude")
+      cancel(audio, "link")
+      cancel(audio, "gps")
+      cancel(audio, "throttle")
+    end
+
+    if not poorLink then
+      cancel(audio, "link")
+    end
+
+    if not gpsLost then
+      cancel(audio, "gps")
+    end
+
+    if not highThrottle then
+      cancel(audio, "throttle")
+    end
+
+    -- Un seul evenement de report par annonce.
+    for _, kind in ipairs(audio.queue) do
+
+      if not audio.deferred[kind]
+         and (
+           audio.finderActive
+           or now < audio.nextPlay
+         ) then
+
+        audio.deferred[kind] = true
+
+        if audio.emit then
+          audio.emit(
+            "deferred",
+            kind,
+            audio.finderActive
+              and "finder_priority"
+              or "audio_busy"
+          )
+        end
+      end
+    end
+
+    playNext(audio, now)
+  end
+
+  function M.playFinderBip(audio, now)
+
+    -- Priorité Finder sur la file JWAIO.
+    -- Respecter la fin du WAV déjà lancé évite
+    -- d'empiler les sons EdgeTX.
+    if not audio.finderActive
+       or now < audio.nextPlay
+       or not playFile then
+
+      return false
+    end
+
+    local path =
+      fileFor("finderBip", audio)
+
+    if not path then
+      return false
+    end
+
+    local ok, result =
+      pcall(playFile, path)
+
+    if not ok
+       or result == false then
+
+      return false
+    end
+
+    -- Réserve uniquement la durée approximative
+    -- du petit bip Finder.
+    audio.nextPlay =
+      now +
+      math.max(config.finderAudioReserveSeconds or 0.20,
+        audio.assets and audio.assets.finderBip and
+          (audio.assets.finderBip.duration + 0.05) or 0)
+
+    if audio.emit then
+      audio.emit(
+        "submitted",
+        "finderBip",
+        "playFile"
+      )
+    end
+
+    return true
+  end
+
+  return M
+end

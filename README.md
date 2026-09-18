@@ -1,4 +1,6 @@
-# JWAIO v0.3.1
+# JWAIO v0.3.1 Alpha
+
+**Alpha testée positivement sur TX15 et TX16S Mk1/Mk2.**
 
 **Jeckyll Widget All in One** rassemble les informations FPV, les alertes vocales et une aide à la recherche du quad sur l'écran de votre radio RadioMaster. Trois archives distinctes sont proposées pour **TX15/TX15 Max**, **TX16S Mk1/Mk2** et **TX16S Mk3**, avec EdgeTX 2.12.x.
 
@@ -10,15 +12,15 @@
 
 | Votre radio | Archive v0.3.1 | État des essais |
 |---|---|---|
-| TX15 / TX15 Max | [Télécharger TX15](releases/v0.3.1/JWAIO_v0.3.1_TX15_EdgeTx%202.12.x.zip?raw=true) | Testée, fonctionnelle pour tous les usages selon le créateur |
-| TX16S Mk1 / Mk2 | [Télécharger Mk1/Mk2](releases/v0.3.1/JWAIO_v0.3.1_TX16MK1_MK2_EdgeTx%202.12.x.zip?raw=true) | Testée, fonctionnelle pour tous les usages selon le créateur |
-| TX16S Mk3 | [Télécharger Mk3](releases/v0.3.1/JWAIO_v0.3.1_TX16MK3_EdgeTx%202.12.x.zip?raw=true) | Adaptation disponible ; essais physiques à réaliser |
+| TX15 / TX15 Max | [Télécharger TX15](releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX15.zip?raw=true) | Testée, fonctionnelle pour tous les usages selon le créateur |
+| TX16S Mk1 / Mk2 | [Télécharger Mk1/Mk2](releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk1-Mk2.zip?raw=true) | Testée, fonctionnelle pour tous les usages selon le créateur |
+| TX16S Mk3 | [Télécharger Mk3](releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk3.zip?raw=true) | Adaptation disponible ; essais physiques à réaliser |
 
 **TX15 et TX16S Mk1/Mk2 :** les scripts ont été testés et sont fonctionnels pour tous les usages. Seuls des correctifs mineurs et des optimisations restent possibles.
 
 **TX16S Mk3 :** Je ne possède pas cette radio. Le widget a été adapté à partir des spécifications matérielles publiées par RadioMaster et **n'a pas été testé physiquement**. Il nécessite **EdgeTX 2.12.0 ou supérieur** ; le fonctionnement du widget sur le firmware exact installé reste à confirmer. **Des testeurs TX16S Mk3 sont recherchés** : [procédure et informations à transmettre](docs/TESTS_TX16_MK3.md).
 
-Les fichiers conservent leur nom et leur contenu d'origine, ainsi que l'identifiant interne « Preview ». La notice incluse dans le ZIP Mk3 mentionne encore EdgeTX 3.0.0 : consultez la [note de compatibilité](docs/COMPATIBILITE.md) avant installation. La prise en charge de la radio par EdgeTX ne constitue pas un essai physique du widget.
+Les archives Alpha et les sources du dépôt correspondent à la même base v0.3.1. Les identifiants de version et les notices ont été harmonisés ; la logique du widget est conservée. Le statut Alpha permet encore des correctifs et des optimisations.
 
 [Guide débutant](docs/INSTALLATION.md) · [Mode d'emploi](docs/MODE_EMPLOI.md) · [Version texte](MODE_EMPLOI.txt) · [Notes de version](CHANGELOG.md)
 
@@ -26,12 +28,12 @@ Les fichiers conservent leur nom et leur contenu d'origine, ainsi que l'identifi
 
 1. Téléchargez **uniquement l'archive de votre radio** dans le tableau ci-dessus. Le ZIP général « Code / Download ZIP » du dépôt n'est pas un paquet d'installation.
 2. Sauvegardez le stockage de la radio et votre modèle EdgeTX, y compris vos réglages JWAIO, skins et journaux.
-3. Décompressez l'archive sur l'ordinateur. **Pour Mk1/Mk2, ouvrez d'abord le dossier `JWAIO-v0.3.1_TX16S-Mk1-Mk2`.**
+3. Décompressez l'archive sur l'ordinateur. Les trois paquets présentent directement les dossiers à copier.
 4. Branchez le port USB de données de la radio, choisissez **USB Storage / Stockage USB**, puis ouvrez le volume utilisé par EdgeTX pour ses scripts.
-5. Copiez les dossiers **WIDGETS, SOUNDS, SCRIPTS et LOGS** à la racine de ce volume. Fusionnez les dossiers et remplacez uniquement les fichiers JWAIO concernés.
+5. Copiez les dossiers **WIDGETS, SOUNDS et LOGS** à la racine de ce volume. Fusionnez les dossiers et remplacez uniquement les fichiers JWAIO concernés.
 6. Éjectez proprement le volume et redémarrez la radio. Découvrez les capteurs du modèle, ajoutez JWAIO dans une zone unique et vérifiez les dix options.
 7. Effectuez les premiers contrôles au sol, hélices retirées. Le [guide illustré par des chemins concrets](docs/INSTALLATION.md) détaille chaque étape et le dépannage.
-8. NOTE : Pour la version TX16 -> Une fois le widget sur votre écran d'accueil, il faudra le mettre manuellement en plein écran pour bénéficié de l'affichage.
+8. Sur TX16S, passez manuellement le widget en plein écran depuis l’écran d’accueil pour bénéficier de tout l’affichage.
 
 Le chemin final doit être `/WIDGETS/JWAIO/main.lua`, sans dossier d'archive intermédiaire. Une seule variante et une seule instance JWAIO par modèle : toutes utilisent les mêmes chemins.
 
@@ -41,7 +43,7 @@ Le chemin final doit être `/WIDGETS/JWAIO/main.lua`, sans dossier d'archive int
 
 JWAIO Cleaner vous accompagne pour retirer JWAIO et les anciennes versions du stockage de votre radio. C'est un logiciel **portable** : téléchargez **JWAIO-Cleaner.exe** dans la rubrique **Assets** de la release, puis lancez-le depuis le Bureau ou une clé USB. Aucun installateur ni droit administrateur n'est nécessaire ; aucune dépendance n'est à ajouter sur un Windows 10/11 standard.
 
-[![Présentation de JWAIO Cleaner : sélection du stockage de la radio, conservation des skins et des logs, analyse avant suppression](docs/assets/cleaner-preview.png)](docs/CLEANER.md)
+[![Présentation de JWAIO Cleaner : sélection du stockage de la radio, conservation des skins et des logs, analyse avant suppression](docs/assets/JWAIO-0.3.1-et-Cleaner-Facebook.png)](docs/CLEANER.md)
 
 ### Ce que fait Cleaner
 
@@ -61,7 +63,7 @@ JWAIO Cleaner vous accompagne pour retirer JWAIO et les anciennes versions du st
 
 **La suppression est définitive, sans Corbeille.** Les archives ZIP et toutes les copies renommées ou profondément imbriquées ne sont pas recherchées. Le [guide complet](docs/CLEANER.md) précise le périmètre, la restauration des skins et la conduite à tenir en cas d'erreur.
 
-**À lire avant le lancement :** cette version est une **Preview**, sans essai sur radio physique à ce stade. L'EXE n'est pas signé. Les analyses documentées du 15 septembre 2026 donnent **5/69 détections VirusTotal** et **0/13 chez Jotti** : des faux positifs sont possibles, mais aucun éditeur ne les a confirmés. Le [guide explique les avertissements Windows et antivirus](docs/CLEANER.md#mon-antivirus-affiche-une-alerte--que-signifie-t-elle-) et le [rapport détaille les résultats](docs/CLEANER-ANTIVIRUS.md). En cas de blocage, gardez votre protection active et utilisez la [désinstallation manuelle](docs/INSTALLATION.md#désinstaller).
+**À lire avant le lancement :** cette version est une **Preview** indépendante du widget Alpha. Le mainteneur rapporte des essais réussis sur radios TX15 et TX16. L'EXE n'est pas signé. Les analyses documentées du 15 septembre 2026 donnent **5/69 détections VirusTotal** et **0/13 chez Jotti** : des faux positifs sont possibles, mais aucun éditeur ne les a confirmés. Le [guide explique les avertissements Windows et antivirus](docs/CLEANER.md#mon-antivirus-affiche-une-alerte--que-signifie-t-elle-) et le [rapport détaille les résultats](docs/CLEANER-ANTIVIRUS.md). En cas de blocage, gardez votre protection active et utilisez la [désinstallation manuelle](docs/INSTALLATION.md#désinstaller).
 
 ## Ce que propose le widget
 
@@ -107,10 +109,10 @@ Les fichiers `F*.csv`, `E*.csv`, `lastpos.txt` et `lastdistance.txt` sont enregi
 - [Compatibilité et état des essais](docs/COMPATIBILITE.md)
 - [Appel aux testeurs Mk3](docs/TESTS_TX16_MK3.md)
 - [Personnaliser les skins](docs/SKINS.md)
-- [Archives originales v0.3.1 et empreintes SHA-256](releases/v0.3.1/README.md)
+- [Archives v0.3.1 Alpha et empreintes SHA-256](releases/v0.3.1/README.md)
 
-Le dossier `sdcard/`, les outils de construction et les tests historiques concernent encore la base 0.3.0-alpha. **Pour installer v0.3.1, utilisez les trois archives ci-dessus.** L'ancienne archive et la release alpha restent disponibles pour l'historique.
+Les sources v0.3.1 sont organisées dans `radios/TX15/`, `radios/TX16S-Mk1-Mk2/` et `radios/TX16S-Mk3/`. Les outils et contrôles du dépôt ciblent ces trois variantes. Pour installer le widget, choisissez le ZIP de votre radio.
 
-Code : [Apache 2.0](LICENSE). Documents et médias concernés : [licence des ressources](LICENSE-ASSETS.md). [Auteurs](AUTHORS.md), [NOTICE](NOTICE), [composants tiers](sdcard/THIRD_PARTY_NOTICES.txt).
+Code : [Apache 2.0](LICENSE). Documents et médias concernés : [licence des ressources](LICENSE-ASSETS.md). [Auteurs](AUTHORS.md), [NOTICE](NOTICE), [composants tiers](THIRD_PARTY_NOTICES.txt).
 
 © 2026 **DrJeckyllMrHyde** — [YouTube JeckyllHydeFpv](https://www.youtube.com/@JeckyllHydeFpv)

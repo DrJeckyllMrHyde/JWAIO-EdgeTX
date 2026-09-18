@@ -1,12 +1,12 @@
-# Installer JWAIO v0.3.1 — guide débutant
+# Installer JWAIO v0.3.1 Alpha — guide débutant
 
 ## 1. Choisir la bonne archive
 
 Commencez par le [tableau de téléchargement](../README.md). TX15/TX15 Max, TX16S Mk1/Mk2 et TX16S Mk3 ont chacun leur paquet. N'installez pas les trois : ils utilisent tous le nom JWAIO et les mêmes dossiers.
 
-TX15 et Mk1/Mk2 ont été testés et sont fonctionnels pour tous les usages selon le créateur ; des correctifs mineurs/optimisations restent possibles. La Mk3 a été adaptée aux spécifications RadioMaster sans radio physique : elle reste à tester. EdgeTX 2.12.0 ou supérieur est requis ; la série visée par les archives est 2.12.x. Consultez les [précisions de compatibilité](COMPATIBILITE.md), notamment pour la notice Mk3.
+TX15 et Mk1/Mk2 ont été testés et sont fonctionnels pour tous les usages selon le créateur ; des correctifs mineurs/optimisations restent possibles. La Mk3 a été adaptée aux spécifications RadioMaster sans radio physique : elle reste à tester. EdgeTX 2.12.0 ou supérieur est requis ; la série visée par les archives est 2.12.x. Consultez les [précisions de compatibilité](COMPATIBILITE.md).
 
-Le téléchargement général du dépôt et son ancien dossier `sdcard/` ne sont pas les paquets v0.3.1. Les ZIP fournis contiennent le widget et ses médias, pas un firmware à flasher.
+Le téléchargement général du dépôt contient les sources des trois radios. Pour l’installation, choisissez le paquet Alpha de votre radio. Les ZIP fournis contiennent le widget et ses médias, pas un firmware à flasher.
 
 ## 2. Préparer et sauvegarder
 
@@ -21,10 +21,10 @@ Ouvrez le ZIP et extrayez ses fichiers dans un dossier de votre ordinateur.
 | Archive | Où trouver les dossiers à copier |
 |---|---|
 | TX15 | Directement dans le dossier extrait |
-| TX16S Mk1/Mk2 | Ouvrez `JWAIO-v0.3.1_TX16S-Mk1-Mk2` dans le dossier extrait |
+| TX16S Mk1/Mk2 | Directement dans le dossier extrait |
 | TX16S Mk3 | Directement dans le dossier extrait ; les notices supplémentaires restent consultables sur l'ordinateur |
 
-Vous devez voir ensemble **WIDGETS**, **SOUNDS** et **LOGS**. L'archive TX15 contient aussi un dossier `SCRIPTS/TOOLS` vide ; il n'est pas nécessaire pour ajouter ce widget.
+Vous devez voir ensemble **WIDGETS**, **SOUNDS** et **LOGS**. Les notices et licences peuvent rester sur l’ordinateur.
 
 ## 4. Copier vers le stockage EdgeTX
 
@@ -55,7 +55,7 @@ Racine du stockage EdgeTX/
 ```
 
 Correct : `/WIDGETS/JWAIO/main.lua`.
-Incorrect : `/JWAIO-v0.3.1_TX16S-Mk1-Mk2/WIDGETS/JWAIO/main.lua`.
+Incorrect : `/JWAIO-v0.3.1-Alpha-TX16S-Mk1-Mk2/WIDGETS/JWAIO/main.lua`.
 
 ## 5. Découvrir les capteurs
 
