@@ -58,6 +58,7 @@ JWAIO Cleaner vous accompagne pour retirer JWAIO et les anciennes versions du st
 1. Sauvegardez le contenu de votre radio sur votre ordinateur.
 2. Branchez la radio et choisissez **Stockage USB / USB Storage**.
 3. Lancez Cleaner, sélectionnez le lecteur de la radio et choisissez de conserver ou non vos skins et logs.
+[JWAIO Cleaner 1](docs/assets/JWAIO-Cleaner_md1.jpg)
 4. Cliquez sur **Analyser la radio**, vérifiez la liste, puis sur **Vérifier et supprimer…** si tout correspond à vos choix.
 5. Attendez le bilan, éjectez le stockage avant de débrancher, puis retirez les instances JWAIO des écrans des modèles concernés dans EdgeTX.
 
