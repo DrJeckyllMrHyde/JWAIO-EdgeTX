@@ -12,7 +12,7 @@
 
 | Radio | Archive v0.3.1 |
 |-------|----------------|
-| TX15 / TX15 Max | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.3.1/JWAIO-v0.3.1-Alpha-TX15.zip) |
+| TX15 / TX15 Max | [Télécharger](releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX15.zip) |
 | TX16S Mk1 / Mk2 | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk1-Mk2.zip) |
 | TX16S Mk3 | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/download/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk3.zip) |
 
