@@ -24,6 +24,8 @@ Les archives Alpha et les sources du dépôt correspondent à la même base v0.3
 
 [Guide débutant](docs/INSTALLATION.md) · [Mode d'emploi](docs/MODE_EMPLOI.md) · [Version texte](MODE_EMPLOI.txt) · [Notes de version](CHANGELOG.md)
 
+**Mise à jour TX15 du 22 septembre 2026 :** effets LED du skin JWAIO activés par défaut, avec animations des manches, batterie, RTH, Finder et acquisition GPS. [Réglages et fonctionnement](docs/SKINS.md#led-du-skin-jwaio-sur-tx15).
+
 ## Installer en quelques étapes
 
 1. Téléchargez **uniquement l'archive de votre radio** dans le tableau ci-dessus. Le ZIP général « Code / Download ZIP » du dépôt n'est pas un paquet d'installation.

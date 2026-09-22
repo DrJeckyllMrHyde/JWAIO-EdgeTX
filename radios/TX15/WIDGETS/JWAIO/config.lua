@@ -63,6 +63,12 @@ return {
   batteryReconnectSeconds = 3.0,
   perCellAutoMax = 5.20,
 
+  -- Sources physiques des manches, utilisees uniquement par les animations
+  -- LED. Elles restent independantes de l'ordre des voies du modele.
+  -- Sources physiques des manches. Elles reprennent exactement les noms
+  -- du script RGBLED de reference, independamment du mixage des voies.
+  stickSources = {ail="ail", ele="ele", rud="rud", thr="thr"},
+
   -- Compteurs EdgeTX : index 0 = TIMER 1, index 1 = TIMER 2.
   flyTimeTimer = 0,
   flyTotalTimer = 1,

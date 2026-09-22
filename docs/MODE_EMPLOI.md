@@ -79,7 +79,7 @@ Plus le signal est fort, plus les bips sont rapprochés. La cadence visée va d'
 
 Le skin JWAIO est fourni dans les trois variantes. Pour ajouter une apparence, consultez le [guide des skins](SKINS.md). Les images livrées sont communes ; leur placement et leur adaptation dépendent de la radio.
 
-Les effets lumineux sont optionnels et désactivés par défaut. Sur Mk3, leur adaptation vise les 20 LED des anneaux lorsqu'ils sont présents, sans les six LED de boutons ; leur fonctionnement réel reste à tester. Conservez le réglage désactivé pour une première installation.
+Les effets lumineux sont optionnels. Ils sont activés par défaut dans le paquet TX15 actualisé le 22 septembre 2026 et restent désactivés dans les paquets TX16S. Sur Mk3, leur adaptation vise les 20 LED des anneaux lorsqu'ils sont présents, sans les six LED de boutons ; leur fonctionnement réel reste à tester. Conservez le réglage désactivé pour une première installation Mk3.
 
 ## Journaux et aide au diagnostic
 
@@ -90,3 +90,7 @@ Dans les diagnostics, `submitted` signifie qu'un appel audio a été accepté, p
 Les CSV s'ouvrent dans un tableur. Le [convertisseur Open Drone Log](OPEN_DRONE_LOG.md) adapte les journaux au format d'import ; gardez le fichier original pour les diagnostics. Avant partage, retirez les coordonnées que vous souhaitez garder privées.
 
 Pour signaler un problème dans les [Issues](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/issues), indiquez la radio exacte, la version complète d'EdgeTX, le paquet utilisé, les options, les capteurs concernés, le résultat attendu et observé. Les retours Mk3 peuvent suivre la [fiche dédiée](TESTS_TX16_MK3.md).
+
+## LED du skin TX15
+
+Le paquet TX15 du 22 septembre 2026 active les LED du skin JWAIO par défaut. Désactivez les autres scripts RGBLED et consultez le [guide des effets et réglages](SKINS.md#led-du-skin-jwaio-sur-tx15). Les paquets TX16S gardent leur réglage désactivé.

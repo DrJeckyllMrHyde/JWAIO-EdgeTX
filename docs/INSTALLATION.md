@@ -73,6 +73,8 @@ Privilégiez le plein écran : TX15 480 × 320, Mk1/Mk2 480 × 272, Mk3 800 × 4
 
 Réglez **BatType** et **Cells** pour votre batterie, puis **ARM, PreArm, Beeper, Flip, RTH et Thr** selon les commandes déjà configurées dans le modèle. Ne conservez pas un interrupteur par défaut sans le vérifier. Le [tableau des dix options](MODE_EMPLOI.md) explique chaque choix.
 
+**TX15, paquet LED du 22 septembre 2026 :** les effets du skin JWAIO sont activés par défaut. Désactivez les autres scripts RGBLED avant utilisation ; consultez les [réglages LED](SKINS.md#led-du-skin-jwaio-sur-tx15) pour les couper ou les personnaliser.
+
 ## 7. Première vérification
 
 - La tension et le nombre de cellules correspondent à la batterie du véhicule.

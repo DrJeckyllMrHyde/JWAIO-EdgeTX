@@ -5,7 +5,7 @@ ni les alertes, ni le fonctionnement du widget. Le skin officiel **JWAIO** est i
 
 ## Affichage selon la radio en v0.3.1
 
-Les trois ZIP fournissent le même fond 480 × 320 et le même logo 216 × 132. Le code adapte leur affichage à la radio : TX15 480 × 320, Mk1/Mk2 480 × 272 (fond centré et recadré), Mk3 800 × 480 (mise à l'échelle). Vérifiez donc la lisibilité et le cadrage sur votre radio ; la Mk3 reste sans validation physique. Les effets LED optionnels sont désactivés par défaut et dépendent de l'équipement et du firmware.
+Les trois ZIP fournissent le même fond 480 × 320 et le même logo 216 × 132. Le code adapte leur affichage à la radio : TX15 480 × 320, Mk1/Mk2 480 × 272 (fond centré et recadré), Mk3 800 × 480 (mise à l'échelle). Vérifiez donc la lisibilité et le cadrage sur votre radio ; la Mk3 reste sans validation physique. Les effets LED dépendent de l’équipement et du firmware. Ils sont activés par défaut dans le paquet TX15 actualisé ; les paquets TX16S gardent leur réglage désactivé.
 
 ## Installer et choisir un skin
 
@@ -90,6 +90,32 @@ premier skin. Ne changez pas les positions des informations dans le code.
 Conservez une différence nette entre les états normal, avertissement et critique.
 Testez le résultat sur la radio, avec et sans télémétrie : un joli fond sur PC
 peut masquer les petites valeurs sur l'écran.
+
+## LED du skin JWAIO sur TX15
+
+Le paquet TX15 actualisé le 22 septembre 2026 **active les LED par défaut** dans le skin JWAIO. Les paquets TX16S restent inchangés, avec leurs LED désactivées par défaut. Le module nécessite les fonctions RGBLED du firmware ; s’il ne les trouve pas, il reste inactif.
+
+Les fichiers se trouvent dans `/WIDGETS/JWAIO/skins/jwaio/leds/` : `config.lua` contient les réglages et `effects.lua` les animations. Copiez le paquet TX15 complet pour disposer aussi des modules qui lisent les manches et pilotent les LED.
+
+1. Désactivez les autres scripts RGBLED de la radio pour éviter qu’ils pilotent les mêmes LED.
+2. Installez le paquet TX15, sélectionnez le skin JWAIO et redémarrez la radio.
+3. Le réglage fourni utilise `enabled = 1`, `count = 20`, `brightness = 30` et `fps = 10`. La luminosité est un pourcentage de commande, pas une mesure de consommation.
+4. Pour couper les effets, ouvrez `leds/config.lua` sur l’ordinateur, passez `local enabled = 1` à `local enabled = 0`, enregistrez puis redémarrez. Ne modifiez pas ce fichier pendant que le widget fonctionne.
+5. Vérifiez les anneaux et leurs réactions au sol. Les commandes du modèle et les alertes vocales gardent leur rôle habituel.
+
+| État | Effet fourni |
+|---|---|
+| Batterie faible ou critique | Clignotement rouge prioritaire, selon le type de batterie configuré |
+| RTH | Pulsation rouge |
+| Beeper / Flip (Finder) | Pulsation verte, accélérée lorsque le signal augmente |
+| Armé | Halos bleus suivant les manches ; disposition prévue pour les modes 1 et 2 |
+| Acquisition GPS, niveau satellite 3 | Trois impulsions vertes sur 1,5 seconde, si aucun état prioritaire ne masque l’effet |
+| Pré-armement | Pulsation dorée |
+| Ready | Respiration blanc chaud |
+
+Priorité : batterie → RTH → Finder/Flip → armement → GPS → pré-armement → Ready. L’animation armée utilise actuellement le bleu également en ANGLE : la couleur `angle` présente dans la configuration n’est pas utilisée par l’effet fourni. Un Finder sans signal valide conserve une pulsation verte lente ; elle ne confirme pas une liaison valide.
+
+Les LED signalent les valeurs et commandes connues du widget ; elles ne constituent pas une confirmation d’armement ou de RTH transmise par le drone. Cette mise en ligne et ses simulations sur ordinateur n’ajoutent pas de validation physique des effets.
 
 ## Si le skin ne fonctionne pas
 

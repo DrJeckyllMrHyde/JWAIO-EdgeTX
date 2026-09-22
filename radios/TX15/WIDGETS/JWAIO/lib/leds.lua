@@ -49,12 +49,20 @@ return function()
     led.nextUpdate=now+led.period
     if ownership[1] and ownership[1]~=led then led.status="IN USE"; return end
     -- Copie scalaire : l'effet ne recoit pas l'etat mutable du widget.
+    local lowBattery=state.batteryValid and state.batteryProfile and
+      state.battery<state.batteryProfile.warn
+    local criticalBattery=state.batteryValid and state.batteryProfile and
+      state.battery<state.batteryProfile.critical
     local snapshot={armed=state.armed,prearmed=state.prearmed,
-      satelliteLevel=state.satelliteLevel,throttle=state.throttle,
-      batteryCritical=state.batteryValid and state.batteryProfile and
-        state.battery<state.batteryProfile.critical and audio and
-        (audio.batteryCritical.announced or audio.queued.batteryCritical) or false,
-      finderActive=state.beeper or state.flip or state.rth,
+      satelliteLevel=state.satelliteLevel,mode=state.mode,
+      throttle=state.throttle,
+      stickActivity=state.stickActivity or 0,
+      stickAil=state.stickAil or 0, stickEle=state.stickEle or 0,
+      stickRud=state.stickRud or 0, stickThr=state.stickThr or 0,
+      stickMode=state.stickMode or 2,
+      batteryLow=lowBattery == true, batteryCritical=criticalBattery == true,
+      rth=state.rth == true,
+      finderActive=(state.beeper or state.flip) and not state.rth,
       finderValid=finder and finder.valid or false,
       finderStrength=finder and finder.strength or 0}
     local ok,frame=pcall(led.render,snapshot,now,led.count,led.config)

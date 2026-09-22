@@ -69,6 +69,22 @@ return function(config, util)
     return util.clamp(util.round((value + 1024) * 100 / 2048), 0, 100), true
   end
 
+  local function readStickActivity(source)
+    if not source or source == 0 then return 0 end
+    local ok, value = pcall(getValue, source)
+    if not ok or type(value) ~= "number" or value ~= value or
+       value == math.huge or value == -math.huge then return 0 end
+    return util.clamp(math.abs(value) * 100 / 1024, 0, 100)
+  end
+
+  local function readStickPosition(source)
+    if not source or source == 0 then return 0 end
+    local ok, value = pcall(getValue, source)
+    if not ok or type(value) ~= "number" or value ~= value or
+       value == math.huge or value == -math.huge then return 0 end
+    return util.clamp(value, -1024, 1024)
+  end
+
   -- TIMER 1 et TIMER 2 restent les compteurs natifs du modele EdgeTX. Le widget
   -- les affiche sans maintenir un second chronometre concurrent.
   local function timerValue(index)
@@ -122,6 +138,12 @@ return function(config, util)
     return {
       now = 0,
       throttle = 0,
+      stickActivity = 0,
+      stickAil = 0,
+      stickEle = 0,
+      stickRud = 0,
+      stickThr = 0,
+      stickMode = 2,
       mode = "ACRO",
       battery = nil,
       batteryValid = false,
@@ -167,7 +189,13 @@ return function(config, util)
         speed = util.sourceIndex(config.speedSource),
         satellites = util.sourceIndex(config.satellitesSource),
         lq = util.sourceIndex(config.lqSource),
-        rssi = util.sourceIndex(config.rssiSource)
+        rssi = util.sourceIndex(config.rssiSource),
+        -- getValue accepte ces noms directement : cela preserve les sources
+        -- physiques Ail/Ele/Rud/Thr, comme le script RGBLED de reference.
+        ail = (config.stickSources or {}).ail or "ail",
+        ele = (config.stickSources or {}).ele or "ele",
+        rud = (config.stickSources or {}).rud or "rud",
+        thr = (config.stickSources or {}).thr or "thr"
       },
       linkType = "ELRS"
     }
@@ -178,6 +206,19 @@ return function(config, util)
     state.now = getTime() / 100
     state.navigationUpdated = false
     state.throttle, state.throttleValid = readThrottle(util.option(options, "Thr", 0))
+    state.stickActivity = math.max(
+      state.throttleValid and state.throttle or 0,
+      readStickActivity(state.sources.ail),
+      readStickActivity(state.sources.ele),
+      readStickActivity(state.sources.rud))
+    state.stickAil = readStickPosition(state.sources.ail)
+    state.stickEle = readStickPosition(state.sources.ele)
+    state.stickRud = readStickPosition(state.sources.rud)
+    state.stickThr = readStickPosition(state.sources.thr)
+    if getStickMode then
+      local ok, mode = pcall(getStickMode)
+      if ok and (mode == 1 or mode == 2) then state.stickMode = mode end
+    end
 
     local profileIndex = util.clamp(util.option(options, "BatType", 1), 1, 3)
     state.batteryProfile = config.batteryProfiles[profileIndex] or config.batteryProfiles[1]

@@ -31,17 +31,18 @@ def package_files(variant):
             raise ValueError(f'{variant}: missing {required}')
     return files
 
-def build(output):
+def build(output, variants=VARIANTS):
     output.mkdir(parents=True, exist_ok=True)
     sums = []
-    for variant in VARIANTS:
+    for variant in variants:
         archive = output / f'JWAIO-v0.3.1-Alpha-{variant}.zip'
         with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
             for name, file in sorted(package_files(variant).items()):
-                info = zipfile.ZipInfo(name, date_time=(2026, 9, 17, 0, 0, 0))
+                info = zipfile.ZipInfo(name, date_time=(2026, 9, 22 if variant == "TX15" else 17, 0, 0, 0))
                 info.compress_type = zipfile.ZIP_DEFLATED
                 info.external_attr = 0o100644 << 16
                 z.writestr(info, file.read_bytes(), compresslevel=9)
+    for archive in sorted(output.glob('JWAIO-v0.3.1-Alpha-*.zip')):
         sums.append(f'{hashlib.sha256(archive.read_bytes()).hexdigest()}  {archive.name}')
     (output / 'SHA256SUMS.txt').write_text('\n'.join(sums)+'\n', encoding='utf-8', newline='\n')
     print('\n'.join(sums))
@@ -49,4 +50,6 @@ def build(output):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=ROOT / 'outputs' / 'v0.3.1')
-    build(parser.parse_args().output)
+    parser.add_argument('--variant', choices=VARIANTS, help='Build only this radio package')
+    args = parser.parse_args()
+    build(args.output, (args.variant,) if args.variant else VARIANTS)

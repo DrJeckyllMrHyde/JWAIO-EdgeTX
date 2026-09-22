@@ -15,3 +15,9 @@ Les trois ZIP sont reconstruits depuis `radios/`, avec les identifiants Alpha et
 Copier WIDGETS, SOUNDS et LOGS, directement présents dans chaque ZIP, à la racine du stockage EdgeTX. Installer une seule variante. Les licences et le guide texte sont inclus.
 
 [Guide débutant](../../docs/INSTALLATION.md) · [SHA-256](SHA256SUMS.txt) · [Sources](../../radios/)
+
+## Mise à jour TX15 — 22 septembre 2026
+
+Le paquet TX15 inclut maintenant les effets LED du skin JWAIO activés par défaut. Il provient de la nouvelle archive du créateur ; les anciennes mentions internes ont été harmonisées en Alpha et les notices/ licences incluses. Le code fonctionnel fourni est conservé. Les deux paquets TX16S restent identiques.
+
+[Utiliser les LED et les désactiver](../../docs/SKINS.md#led-du-skin-jwaio-sur-tx15). Aucun nouvel essai physique n’est revendiqué par ces contrôles logiciels.

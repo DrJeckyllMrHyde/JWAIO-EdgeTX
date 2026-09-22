@@ -1,5 +1,14 @@
 # Notes de version
 
+## JWAIO v0.3.1 Alpha — mise à jour TX15 du 22 septembre 2026
+
+- Remplacement du paquet TX15 depuis l’archive fournie par le créateur ; sources TX15 synchronisées.
+- LED du skin JWAIO activées par défaut : 20 LED ciblées, luminosité 30 %, rafraîchissement maximal 10 Hz.
+- Halos bleus réagissant aux manches en modes 1 et 2 ; effets batterie, RTH, Finder/Flip, GPS et pré-armement.
+- Anciennes mentions internes harmonisées en v0.3.1 Alpha, sans modification de la logique fournie.
+- Instructions LED et empreinte SHA-256 actualisées. Paquets TX16S et Cleaner inchangés.
+- Contrôles logiciels réalisés sur ordinateur ; aucun nouvel essai physique revendiqué.
+
 ## JWAIO v0.3.1 Alpha — 17 septembre 2026
 
 - Alpha testée positivement sur TX15/TX15 Max et TX16S Mk1/Mk2, fonctionnelle pour tous les usages selon le créateur ; correctifs mineurs et optimisations restant possibles.

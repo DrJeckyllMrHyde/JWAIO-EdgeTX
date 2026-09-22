@@ -75,7 +75,10 @@ NO_DATA : vérifier connexion, découverte et noms des capteurs.
 Pas de sons : vérifier volume, dossier SOUNDS/fr/JWAIO et Finder inactif.
 Temps immobile : vérifier la condition de marche des minuteries EdgeTX.
 Conserver les journaux /LOGS/JWAIO/ ; retirer les coordonnées avant partage.
-Les effets LED sont optionnels, désactivés par défaut ; commencer ainsi.
+TX15 (mise à jour LED) : effets activés par défaut, 20 LED, luminosité 30 %, 10 Hz.
+Désactiver les autres scripts RGBLED. Pour couper les effets, passer enabled à 0
+dans /WIDGETS/JWAIO/skins/jwaio/leds/config.lua puis redémarrer.
+Les paquets TX16S restent avec leurs LED désactivées par défaut.
 
 GUIDES COMPLETS
 Installation, dépannage, désinstallation :
