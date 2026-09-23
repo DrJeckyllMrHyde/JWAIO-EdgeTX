@@ -18,7 +18,7 @@ J'ai créé **Jeckyll Widget All in One** pour rassembler les informations FPV, 
 
 **TX15 et TX16S Mk1/Mk2 :** j'ai testé ces versions avec succès. Elles sont fonctionnelles pour tous les usages ; je pourrai encore apporter de petits correctifs et des optimisations.
 
-**TX16S Mk3 :** je ne possède pas cette radio. J'ai adapté le widget à partir des spécifications matérielles publiées par RadioMaster et **n'a pas été testé physiquement**. Il nécessite **EdgeTX 2.12.0 ou supérieur** ; le fonctionnement du widget sur le firmware exact installé reste à confirmer. **Je recherche des testeurs TX16S Mk3** : [procédure et informations à transmettre](docs/TESTS_TX16_MK3.md).
+**TX16S Mk3 :** je ne possède pas cette radio. J'ai adapté le widget à partir des spécifications matérielles publiées par RadioMaster, mais **je n'ai pas pu le tester sur cette radio**. Il nécessite **EdgeTX 2.12.0 ou supérieur** ; le fonctionnement du widget sur le firmware exact installé reste à confirmer. **Je recherche des testeurs TX16S Mk3** : [procédure et informations à transmettre](docs/TESTS_TX16_MK3.md).
 
 La v0.3.1 Alpha est la base actuelle du projet. Vous trouverez ici les fichiers à installer et leurs sources.
 
@@ -144,3 +144,4 @@ Les sources v0.3.1 sont organisées dans `radios/TX15/`, `radios/TX16S-Mk1-Mk2/`
 Code : [Apache 2.0](LICENSE). Documents et médias concernés : [licence des ressources](LICENSE-ASSETS.md). [Auteurs](AUTHORS.md), [NOTICE](NOTICE), [composants tiers](THIRD_PARTY_NOTICES.txt).
 
 © 2026 **DrJeckyllMrHyde** — [YouTube JeckyllHydeFpv](https://www.youtube.com/@JeckyllHydeFpv)
+
