@@ -1,6 +1,6 @@
 # Contrôler JWAIO v0.3.1 Alpha
 
-Ces contrôles sur ordinateur ne remplacent pas des essais sur radio. TX15 et TX16S Mk1/Mk2 ont été testés positivement selon le créateur ; Mk3 attend toujours des essais physiques.
+Ces contrôles sur ordinateur ne remplacent pas des essais sur radio. J'ai testé TX15 et TX16S Mk1/Mk2 avec succès ; je recherche encore des testeurs Mk3.
 
 Depuis la racine du dépôt, avec Python 3 :
 
@@ -9,9 +9,9 @@ python tests/test_release_package.py
 python tests/test_opendronelog_converter.py
 ```
 
-Le premier contrôle reconstruit le ZIP TX15 dans un dossier temporaire et le compare au paquet publié. Il contrôle les sources, les médias et les empreintes des trois paquets ; les notices TX16S restent celles de leur date de publication. Les médias, licences, sources propres à chaque radio et identifiants Alpha sont contrôlés.
+Le premier contrôle reconstruit les trois ZIP dans un dossier temporaire et les compare aux paquets publiés. Il vérifie aussi leurs sources, médias, notices, licences, identifiants Alpha et empreintes SHA-256.
 
-Avec Lua 5.2 ou supérieur, exécuter ces quatre tests pour chacun des chemins `radios/TX15`, `radios/TX16S-Mk1-Mk2` et `radios/TX16S-Mk3` :
+Avec Lua 5.2, exécutez ces quatre tests pour chacun des chemins `radios/TX15`, `radios/TX16S-Mk1-Mk2` et `radios/TX16S-Mk3` :
 
 ```text
 lua tests/test_alpha_integration.lua radios/TX15

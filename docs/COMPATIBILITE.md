@@ -1,21 +1,21 @@
-# JWAIO v0.3.1 Alpha — compatibilité et état des essais
+# JWAIO v0.3.1 Alpha — compatibilité
 
-| Variante | Affichage ciblé | Firmware demandé | Validation du widget |
+J'ai testé JWAIO sur TX15 et TX16S Mk1/Mk2 avec succès. Ces versions sont fonctionnelles pour tous les usages ; de petits correctifs et des optimisations restent possibles.
+
+| Radio | Écran | Firmware | État des essais |
 |---|---|---|---|
-| TX15 / TX15 Max | 480 × 320 | EdgeTX 2.12.x | Testé et fonctionnel pour tous les usages, selon le créateur |
-| TX16S Mk1 / Mk2 | 480 × 272 | EdgeTX 2.12.x | Testé et fonctionnel pour tous les usages, selon le créateur |
-| TX16S Mk3 | 800 × 480 | EdgeTX 2.12.0 ou supérieur ; série 2.12.x visée | Aucun essai physique ; testeurs recherchés |
+| TX15 / TX15 Max | 480 × 320 | EdgeTX 2.12.x | Testée positivement |
+| TX16S Mk1 / Mk2 | 480 × 272 | EdgeTX 2.12.x | Testée positivement |
+| TX16S Mk3 | 800 × 480 | EdgeTX 2.12.0 ou supérieur ; série 2.12.x visée | Pas d'essai physique |
 
-Sur TX15 et Mk1/Mk2, seuls des correctifs mineurs et des optimisations restent possibles. Ce bilan reprend la déclaration du créateur ; la mise en ligne n'ajoute pas de nouveaux essais sur radio.
+Je ne possède pas de TX16S Mk3. J'ai adapté le widget à partir des spécifications matérielles de RadioMaster, mais je recherche des testeurs pour vérifier son fonctionnement sur cette radio. Il reste à confirmer l'affichage, les commandes, les sons, la télémétrie, les journaux et la stabilité.
 
-Pour Mk3, le créateur ne possède pas la radio. Le widget a été adapté à partir des spécifications matérielles RadioMaster. Les contrôles logiciels ne remplacent pas un essai physique. Il faut confirmer l'affichage, les commandes, les sons, la télémétrie, les journaux et la stabilité sur la version exacte d'EdgeTX utilisée.
+## Ce que signifie Alpha
 
-## Statut Alpha
+La v0.3.1 est la base actuelle du projet. Le statut Alpha permet encore des corrections et des améliorations. Les essais réussis sur TX15 et Mk1/Mk2 ne valident pas automatiquement la Mk3 ni toutes les futures versions d'EdgeTX.
 
-TX15 et TX16S Mk1/Mk2 constituent la base testée positivement. Mk3 reste une adaptation à valider sur le matériel réel. La série EdgeTX visée est 2.12.x ; le minimum demandé pour Mk3 est 2.12.0, sans validation automatique de toutes les versions ultérieures.
+Les contrôles logiciels complètent les essais sur radio ; ils ne les remplacent pas. Les LED sont activées par défaut sur TX15 et désactivées sur les variantes TX16S.
 
-Les archives Alpha contiennent les sources v0.3.1 et des notices cohérentes avec ce périmètre. La logique des trois variantes fournies est conservée ; seules les informations de version et les notices ont été actualisées.
+## M'aider à tester la Mk3
 
-## Participer aux essais
-
-Les propriétaires de TX16S Mk3 sont invités à suivre la [fiche de validation](TESTS_TX16_MK3.md).
+Si vous possédez cette radio, vous pouvez suivre la [fiche d'essais](TESTS_TX16_MK3.md). Pensez à indiquer la version exacte d'EdgeTX et le paquet JWAIO utilisé.

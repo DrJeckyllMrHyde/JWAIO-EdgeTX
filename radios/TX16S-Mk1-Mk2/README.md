@@ -1,7 +1,9 @@
 # JWAIO v0.3.1 Alpha — TX16S-Mk1-Mk2
 
-Testée positivement et fonctionnelle pour tous les usages selon le créateur. Correctifs mineurs et optimisations restant possibles.
+J'ai testé cette version avec succès. Elle est fonctionnelle pour tous les usages ; de petits correctifs et des optimisations restent possibles.
 
-Sources propres à cette radio. Copier uniquement WIDGETS, SOUNDS et LOGS à la racine du stockage EdgeTX. Une seule variante par radio.
+Ce dossier contient les sources de cette variante. Pour installer JWAIO, choisissez son ZIP dans les téléchargements, puis copiez WIDGETS, SOUNDS et LOGS à la racine du stockage EdgeTX. Installez une seule variante par radio.
 
-[Installation](../../docs/INSTALLATION.md) · [Archives](../../releases/v0.3.1/README.md) · [Licences et crédits](../../README.md#documentation-archives-et-licences)
+Les LED sont désactivées par défaut.
+
+[Installation](../../docs/INSTALLATION.md) · [Téléchargements](../../releases/v0.3.1/README.md) · [Skins et LED](../../docs/SKINS.md) · [Licences](../../README.md#documentation-archives-et-licences)

@@ -4,7 +4,7 @@
 
 Commencez par le [tableau de téléchargement](../README.md). TX15/TX15 Max, TX16S Mk1/Mk2 et TX16S Mk3 ont chacun leur paquet. N'installez pas les trois : ils utilisent tous le nom JWAIO et les mêmes dossiers.
 
-TX15 et Mk1/Mk2 ont été testés et sont fonctionnels pour tous les usages selon le créateur ; des correctifs mineurs/optimisations restent possibles. La Mk3 a été adaptée aux spécifications RadioMaster sans radio physique : elle reste à tester. EdgeTX 2.12.0 ou supérieur est requis ; la série visée par les archives est 2.12.x. Consultez les [précisions de compatibilité](COMPATIBILITE.md).
+J'ai testé les versions TX15 et Mk1/Mk2 avec succès : elles sont fonctionnelles pour tous les usages. De petits correctifs et des optimisations restent possibles. Je ne possède pas de Mk3 ; j'ai adapté cette variante aux spécifications RadioMaster et je recherche des testeurs. EdgeTX 2.12.0 ou supérieur est requis ; la série visée par les archives est 2.12.x. Consultez les [précisions de compatibilité](COMPATIBILITE.md).
 
 Le téléchargement général du dépôt contient les sources des trois radios. Pour l’installation, choisissez le paquet Alpha de votre radio. Les ZIP fournis contiennent le widget et ses médias, pas un firmware à flasher.
 
@@ -73,7 +73,7 @@ Privilégiez le plein écran : TX15 480 × 320, Mk1/Mk2 480 × 272, Mk3 800 × 4
 
 Réglez **BatType** et **Cells** pour votre batterie, puis **ARM, PreArm, Beeper, Flip, RTH et Thr** selon les commandes déjà configurées dans le modèle. Ne conservez pas un interrupteur par défaut sans le vérifier. Le [tableau des dix options](MODE_EMPLOI.md) explique chaque choix.
 
-**TX15, paquet LED du 22 septembre 2026 :** les effets du skin JWAIO sont activés par défaut. Désactivez les autres scripts RGBLED avant utilisation ; consultez les [réglages LED](SKINS.md#led-du-skin-jwaio-sur-tx15) pour les couper ou les personnaliser.
+**LED sur TX15 :** les effets du skin JWAIO sont activés par défaut. Désactivez les autres scripts RGBLED avant utilisation ; consultez les [réglages LED](SKINS.md#led-du-skin-jwaio-sur-tx15) pour les couper ou les personnaliser.
 
 ## 7. Première vérification
 
@@ -91,7 +91,7 @@ Pour Mk3, suivez en plus la [fiche de retour d'essais](TESTS_TX16_MK3.md).
 
 Après sauvegarde, recopiez le paquet correspondant à votre radio. Ne remettez pas l'ancien `config.lua` entier sur le nouveau : reportez seulement vos personnalisations nécessaires dans le fichier v0.3.1. Restaurez vos skins personnels sans écraser le skin de secours JWAIO fourni.
 
-Si l'ancien menu ne contenait pas **Skin**, retirez l'instance JWAIO de la page puis ajoutez-la de nouveau. Sinon vous pouvez conserver l'instance, en contrôlant toutes les options. En cas de changement de variante ou de problème de configuration, recréez l'instance après avoir noté vos réglages.
+Après la copie, vérifiez toutes les options du widget. En cas de problème de configuration, notez vos réglages, retirez JWAIO de l'écran puis ajoutez-le de nouveau.
 
 ## Dépannage rapide
 

@@ -1,7 +1,6 @@
 # Personnaliser JWAIO avec les skins
 
-Un skin change le fond, le logo et les couleurs. Il ne modifie ni les capteurs,
-ni les alertes, ni le fonctionnement du widget. Le skin officiel **JWAIO** est inclus.
+Un skin change le fond, le logo et les couleurs de l'écran. Il peut aussi proposer des effets LED. Pour commencer, je vous conseille de dupliquer le skin **JWAIO** fourni, puis de personnaliser cette copie.
 
 ## Affichage selon la radio en v0.3.1
 
@@ -15,9 +14,7 @@ Les trois ZIP fournissent le même fond 480 × 320 et le même logo 216 × 132. 
 4. Dans les réglages du widget JWAIO, choisissez **Skin**, la première option.
 
 Les dossiers sont recherchés au démarrage. Il ne faut pas remplacer le dossier
-`jwaio` : il sert de secours. Si le menu affiche encore LQ au lieu de Skin,
-retirez le widget de son emplacement, ajoutez-le à nouveau et vérifiez toutes
-ses options, surtout les switches.
+`jwaio` : il sert de secours. Si votre choix n'apparaît pas, vérifiez le dossier du skin et redémarrez la radio. Contrôlez ensuite les options du widget, en particulier les interrupteurs.
 
 ## Créer son premier skin
 
@@ -93,9 +90,9 @@ peut masquer les petites valeurs sur l'écran.
 
 ## LED du skin JWAIO sur TX15
 
-Le paquet TX15 actualisé le 22 septembre 2026 **active les LED par défaut** dans le skin JWAIO. Les paquets TX16S restent inchangés, avec leurs LED désactivées par défaut. Le module nécessite les fonctions RGBLED du firmware ; s’il ne les trouve pas, il reste inactif.
+Le paquet TX15 **active les LED par défaut** dans le skin JWAIO. Les paquets TX16S restent inchangés, avec leurs LED désactivées par défaut. Le module nécessite les fonctions RGBLED du firmware ; s’il ne les trouve pas, il reste inactif.
 
-Les fichiers se trouvent dans `/WIDGETS/JWAIO/skins/jwaio/leds/` : `config.lua` contient les réglages et `effects.lua` les animations. Copiez le paquet TX15 complet pour disposer aussi des modules qui lisent les manches et pilotent les LED.
+Les fichiers se trouvent dans `/WIDGETS/JWAIO/skins/jwaio/leds/` : `config.lua` contient les réglages, `effects.lua` les animations et `LISEZ_MOI.txt` un aide-mémoire. Copiez le paquet TX15 complet pour disposer aussi des modules qui lisent les manches et pilotent les LED.
 
 1. Désactivez les autres scripts RGBLED de la radio pour éviter qu’ils pilotent les mêmes LED.
 2. Installez le paquet TX15, sélectionnez le skin JWAIO et redémarrez la radio.
@@ -111,11 +108,11 @@ Les fichiers se trouvent dans `/WIDGETS/JWAIO/skins/jwaio/leds/` : `config.lua` 
 | Armé | Halos bleus suivant les manches ; disposition prévue pour les modes 1 et 2 |
 | Acquisition GPS, niveau satellite 3 | Trois impulsions vertes sur 1,5 seconde, si aucun état prioritaire ne masque l’effet |
 | Pré-armement | Pulsation dorée |
-| Ready | Respiration blanc chaud |
+| Ready | Respiration blanche légèrement bleutée |
 
-Priorité : batterie → RTH → Finder/Flip → armement → GPS → pré-armement → Ready. L’animation armée utilise actuellement le bleu également en ANGLE : la couleur `angle` présente dans la configuration n’est pas utilisée par l’effet fourni. Un Finder sans signal valide conserve une pulsation verte lente ; elle ne confirme pas une liaison valide.
+Priorité : batterie → RTH → Finder/Flip → armement → GPS → pré-armement → Ready. L’animation armée utilise actuellement le bleu également en ANGLE : les couleurs `angle` et `lost` présentes dans la configuration ne sont pas utilisées par les effets fournis. Un Finder sans signal valide conserve une pulsation verte lente ; elle ne confirme pas une liaison valide.
 
-Les LED signalent les valeurs et commandes connues du widget ; elles ne constituent pas une confirmation d’armement ou de RTH transmise par le drone. Cette mise en ligne et ses simulations sur ordinateur n’ajoutent pas de validation physique des effets.
+Les LED signalent les valeurs et commandes connues du widget ; elles ne constituent pas une confirmation d’armement ou de RTH transmise par le drone. Les essais logiciels sur ordinateur ne remplacent pas une vérification des effets sur la radio.
 
 ## Si le skin ne fonctionne pas
 

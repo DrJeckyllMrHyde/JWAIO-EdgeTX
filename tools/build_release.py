@@ -38,7 +38,7 @@ def build(output, variants=VARIANTS):
         archive = output / f'JWAIO-v0.3.1-Alpha-{variant}.zip'
         with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
             for name, file in sorted(package_files(variant).items()):
-                info = zipfile.ZipInfo(name, date_time=(2026, 9, 22 if variant == "TX15" else 17, 0, 0, 0))
+                info = zipfile.ZipInfo(name, date_time=(2026, 9, 23, 0, 0, 0))
                 info.compress_type = zipfile.ZIP_DEFLATED
                 info.external_attr = 0o100644 << 16
                 z.writestr(info, file.read_bytes(), compresslevel=9)

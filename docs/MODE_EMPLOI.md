@@ -1,6 +1,6 @@
-# Utiliser JWAIO v0.3.1
+# Utiliser JWAIO v0.3.1 Alpha
 
-Pour la première installation, suivez le [guide débutant](INSTALLATION.md). Les [statuts par radio](COMPATIBILITE.md) distinguent TX15/Mk1/Mk2 testés et Mk3 sans essai physique.
+Je vous conseille de commencer par l'installation et les réglages au sol. Pour la première installation, suivez le [guide débutant](INSTALLATION.md). Les [statuts par radio](COMPATIBILITE.md) distinguent TX15/Mk1/Mk2 testés et Mk3 sans essai physique.
 
 ## Régler les dix options
 
@@ -79,7 +79,7 @@ Plus le signal est fort, plus les bips sont rapprochés. La cadence visée va d'
 
 Le skin JWAIO est fourni dans les trois variantes. Pour ajouter une apparence, consultez le [guide des skins](SKINS.md). Les images livrées sont communes ; leur placement et leur adaptation dépendent de la radio.
 
-Les effets lumineux sont optionnels. Ils sont activés par défaut dans le paquet TX15 actualisé le 22 septembre 2026 et restent désactivés dans les paquets TX16S. Sur Mk3, leur adaptation vise les 20 LED des anneaux lorsqu'ils sont présents, sans les six LED de boutons ; leur fonctionnement réel reste à tester. Conservez le réglage désactivé pour une première installation Mk3.
+Les effets lumineux sont optionnels. Ils sont activés par défaut sur TX15 et restent désactivés dans les paquets TX16S. Sur Mk3, leur adaptation vise les 20 LED des anneaux lorsqu'ils sont présents, sans les six LED de boutons ; leur fonctionnement réel reste à tester. Conservez le réglage désactivé pour une première installation Mk3.
 
 ## Journaux et aide au diagnostic
 
@@ -93,4 +93,4 @@ Pour signaler un problème dans les [Issues](https://github.com/DrJeckyllMrHyde/
 
 ## LED du skin TX15
 
-Le paquet TX15 du 22 septembre 2026 active les LED du skin JWAIO par défaut. Désactivez les autres scripts RGBLED et consultez le [guide des effets et réglages](SKINS.md#led-du-skin-jwaio-sur-tx15). Les paquets TX16S gardent leur réglage désactivé.
+Le paquet TX15 active les LED du skin JWAIO par défaut. Désactivez les autres scripts RGBLED et consultez le [guide des effets et réglages](SKINS.md#led-du-skin-jwaio-sur-tx15). Les paquets TX16S gardent leur réglage désactivé.

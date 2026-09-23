@@ -1,14 +1,14 @@
 JWAIO v0.3.1 Alpha — TX15
 
-Alpha testée positivement et fonctionnelle pour tous les usages selon le créateur. Correctifs mineurs et optimisations restant possibles.
+J'ai testé cette version avec succès. Elle est fonctionnelle pour tous les usages ; de petits correctifs et des optimisations restent possibles.
 Série EdgeTX visée : 2.12.x.
 
-Lire MODE_EMPLOI.txt avant installation.
-Copier uniquement WIDGETS, SOUNDS et LOGS à la racine du stockage EdgeTX.
-Une seule variante et une seule instance par modèle. Sauvegarder avant mise à jour.
-Les notices et licences restent consultables sur l’ordinateur.
+Je vous conseille de lire MODE_EMPLOI.txt avant de commencer.
+Sauvegardez le stockage de votre radio et les réglages du modèle.
+Copiez WIDGETS, SOUNDS et LOGS à la racine du stockage EdgeTX.
+Installez une seule variante et une seule instance JWAIO par modèle.
+Les notices et les licences peuvent rester sur l'ordinateur.
+
+Les LED du skin JWAIO sont activées par défaut : 20 LED, luminosité 30 %, 10 Hz. Désactivez les autres scripts RGBLED. Pour couper les effets, passez local enabled à 0 dans /WIDGETS/JWAIO/skins/jwaio/leds/config.lua, puis redémarrez.
 
 Guide : https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/blob/main/docs/INSTALLATION.md
-
-Mise à jour TX15 du 22 septembre 2026 : LED du skin JWAIO activées par défaut (20 LED, luminosité 30 %, 10 Hz). Désactivez les autres scripts RGBLED. Pour couper les effets, passez enabled à 0 dans /WIDGETS/JWAIO/skins/jwaio/leds/config.lua, puis redémarrez.
-Guide : https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/blob/main/docs/SKINS.md#led-du-skin-jwaio-sur-tx15

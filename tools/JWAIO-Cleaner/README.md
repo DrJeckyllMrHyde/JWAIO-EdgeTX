@@ -1,6 +1,6 @@
 # JWAIO Cleaner
 
-Outil portable Windows 10/11 pour désinstaller JWAIO et les anciennes versions SIXTY9, avec conservation optionnelle des skins et journaux de vol.
+Outil portable Windows 10/11 pour désinstaller JWAIO, avec conservation optionnelle des skins et journaux de vol.
 
 **La release reste en brouillon pendant l'examen des alertes antivirus. Aucun EXE public pour le moment.**
 

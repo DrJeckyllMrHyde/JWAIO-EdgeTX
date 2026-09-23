@@ -11,7 +11,7 @@ JWAIO étant volontairement adaptés à EdgeTX, un convertisseur est fourni dans
 
 ## Conversion simple
 
-Avec Python 3 installé, ouvrir un terminal à la racine du projet puis lancer :
+Copiez votre journal de vol sur l'ordinateur. Avec Python 3 installé, ouvrez un terminal à la racine du projet, puis lancez la commande ci-dessous en remplaçant le nom du fichier par le vôtre :
 
 ```text
 python tools/jwaio_to_opendronelog.py "F260903_112000.csv"
@@ -45,7 +45,7 @@ ne pas fausser les graphiques d'Open Drone Log. La colonne séparée
 `pack_v` alimente la tension totale ; elle peut être estimée à partir de la
 tension cellule et du nombre de cellules configuré.
 
-Dans cette alpha, les journaux de vol portent le préfixe **F**. Les journaux
+Dans JWAIO v0.3.1 Alpha, les journaux de vol portent le préfixe **F**. Les journaux
 **E** contiennent les événements de diagnostic et ne se convertissent pas en
 trace de vol. Les colonnes supplémentaires du journal F ne bloquent pas le
 convertisseur. Sans GPS, aucune trajectoire ne peut être reconstituée.

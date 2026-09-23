@@ -1,12 +1,12 @@
 # Testeurs recherchés — JWAIO v0.3.1 sur TX16S Mk3
 
-Le créateur ne possède pas de TX16S Mk3. Cette variante a été adaptée à partir des spécifications matérielles RadioMaster et n'a pas été testée physiquement. **Nous recherchons des propriétaires de TX16S Mk3 pour confirmer son fonctionnement avec EdgeTX 2.12.0 ou supérieur.** Les archives ciblent la série 2.12.x ; indiquez toujours votre firmware exact.
+Je ne possède pas de TX16S Mk3. J'ai adapté cette variante à partir des spécifications matérielles RadioMaster, sans pouvoir la tester sur cette radio. **Je recherche des propriétaires de TX16S Mk3 pour confirmer son fonctionnement avec EdgeTX 2.12.0 ou supérieur.** Les archives ciblent la série 2.12.x ; indiquez toujours votre firmware exact.
 
-Les versions TX15 et TX16S Mk1/Mk2 sont testées et fonctionnelles pour tous les usages selon le créateur, avec seulement des correctifs mineurs/optimisations restant possibles. Cela ne valide pas automatiquement la Mk3.
+J'ai testé les versions TX15 et TX16S Mk1/Mk2 avec succès. Elles sont fonctionnelles pour tous les usages, avec encore de petits correctifs et des optimisations possibles. Cela ne valide pas automatiquement la Mk3.
 
 ## Avant de commencer
 
-Sauvegardez votre modèle et votre stockage, installez uniquement l'archive Mk3 suivant le [guide](INSTALLATION.md), puis effectuez les premiers essais au sol, hélices retirées. Laissez les effets LED désactivés au départ. Consultez la [clarification 2.12.0 / 3.0.0](COMPATIBILITE.md).
+Sauvegardez votre modèle et votre stockage, installez uniquement l'archive Mk3 suivant le [guide](INSTALLATION.md), puis effectuez les premiers essais au sol, hélices retirées. Laissez les effets LED désactivés au départ. Consultez la [précisions de compatibilité](COMPATIBILITE.md).
 
 ## Contrôles à rapporter
 
@@ -19,7 +19,7 @@ Sauvegardez votre modèle et votre stockage, installez uniquement l'archive Mk3 
 - Création des journaux dans `/LOGS/JWAIO/`, absence de ralentissement ou de blocage.
 - Si la radio dispose d'anneaux LED et que vous choisissez de les essayer ensuite : préciser l'équipement, l'activation optionnelle et le comportement observé. Ne pas lancer plusieurs scripts pilotant les mêmes LED.
 
-La validation physique reste à documenter ; les contrôles avec API simulées rapportés dans le ZIP ne sont pas une validation en vol.
+La validation physique reste à documenter ; les contrôles avec API simulées ne sont pas une validation en vol.
 
 ## Format de retour
 

@@ -2,7 +2,7 @@
 
 **Alpha testée positivement sur TX15 et TX16S Mk1/Mk2.**
 
-**Jeckyll Widget All in One** rassemble les informations FPV, les alertes vocales et une aide à la recherche du quad sur l'écran de votre radio RadioMaster. Trois archives distinctes sont proposées pour **TX15/TX15 Max**, **TX16S Mk1/Mk2** et **TX16S Mk3**, avec EdgeTX 2.12.x.
+J'ai créé **Jeckyll Widget All in One** pour rassembler les informations FPV, les alertes vocales et une aide à la recherche du quad sur l'écran de votre radio RadioMaster. Trois archives distinctes sont proposées pour **TX15/TX15 Max**, **TX16S Mk1/Mk2** et **TX16S Mk3**, avec EdgeTX 2.12.x.
 
 ![Présentation de JWAIO v0.3.1 pour TX15 et TX16 : votre vol, vos données, votre style.](docs/assets/JWAIO-0.3.1-Widget-Facebook-v3.png)
 
@@ -16,15 +16,15 @@
 | TX16S Mk1 / Mk2 | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/raw/main/releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk1-Mk2.zip) |
 | TX16S Mk3 | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/raw/main/releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk3.zip) |
 
-**TX15 et TX16S Mk1/Mk2 :** les scripts ont été testés et sont fonctionnels pour tous les usages. Seuls des correctifs mineurs et des optimisations restent possibles.
+**TX15 et TX16S Mk1/Mk2 :** j'ai testé ces versions avec succès. Elles sont fonctionnelles pour tous les usages ; je pourrai encore apporter de petits correctifs et des optimisations.
 
-**TX16S Mk3 :** Je ne possède pas cette radio. Le widget a été adapté à partir des spécifications matérielles publiées par RadioMaster et **n'a pas été testé physiquement**. Il nécessite **EdgeTX 2.12.0 ou supérieur** ; le fonctionnement du widget sur le firmware exact installé reste à confirmer. **Des testeurs TX16S Mk3 sont recherchés** : [procédure et informations à transmettre](docs/TESTS_TX16_MK3.md).
+**TX16S Mk3 :** je ne possède pas cette radio. J'ai adapté le widget à partir des spécifications matérielles publiées par RadioMaster et **n'a pas été testé physiquement**. Il nécessite **EdgeTX 2.12.0 ou supérieur** ; le fonctionnement du widget sur le firmware exact installé reste à confirmer. **Je recherche des testeurs TX16S Mk3** : [procédure et informations à transmettre](docs/TESTS_TX16_MK3.md).
 
-Les archives Alpha et les sources du dépôt correspondent à la même base v0.3.1. Les identifiants de version et les notices ont été harmonisés ; la logique du widget est conservée. Le statut Alpha permet encore des correctifs et des optimisations.
+La v0.3.1 Alpha est la base actuelle du projet. Vous trouverez ici les fichiers à installer et leurs sources.
 
 [Guide débutant](docs/INSTALLATION.md) · [Mode d'emploi](docs/MODE_EMPLOI.md) · [Version texte](MODE_EMPLOI.txt) · [Notes de version](CHANGELOG.md)
 
-**Mise à jour TX15 du 22 septembre 2026 :** effets LED du skin JWAIO activés par défaut, avec animations des manches, batterie, RTH, Finder et acquisition GPS. [Réglages et fonctionnement](docs/SKINS.md#led-du-skin-jwaio-sur-tx15).
+**LED sur TX15 :** effets LED du skin JWAIO activés par défaut, avec animations des manches, batterie, RTH, Finder et acquisition GPS. [Réglages et fonctionnement](docs/SKINS.md#led-du-skin-jwaio-sur-tx15).
 
 ## Installer en quelques étapes
 
@@ -39,31 +39,29 @@ Les archives Alpha et les sources du dépôt correspondent à la même base v0.3
 
 Le chemin final doit être `/WIDGETS/JWAIO/main.lua`, sans dossier d'archive intermédiaire. Une seule variante et une seule instance JWAIO par modèle : toutes utilisent les mêmes chemins.
 
-## Supprimer le Widget
+## Désinstaller le widget
 
 **[Télécharger JWAIO Cleaner pour Windows 10/11](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/cleaner-v0.1.0-preview)** · [Mode d'emploi débutant](docs/CLEANER.md)
 
-JWAIO Cleaner vous accompagne pour retirer JWAIO et les anciennes versions du stockage de votre radio. C'est un logiciel **portable** : téléchargez **JWAIO-Cleaner.exe** dans la rubrique **Assets** de la release, puis lancez-le depuis le Bureau ou une clé USB. Aucun installateur ni droit administrateur n'est nécessaire ; aucune dépendance n'est à ajouter sur un Windows 10/11 standard.
+JWAIO Cleaner vous accompagne pour retirer JWAIO du stockage de votre radio. C'est un logiciel **portable** : téléchargez **JWAIO-Cleaner.exe** dans la rubrique **Assets** de la release, puis lancez-le depuis le Bureau ou une clé USB. Aucun installateur ni droit administrateur n'est nécessaire ; aucune dépendance n'est à ajouter sur un Windows 10/11 standard.
 
 [![Présentation de JWAIO Cleaner : sélection du stockage de la radio, conservation des skins et des logs, analyse avant suppression](docs/assets/JWAIO-0.3.1-et-Cleaner-Facebook.png)](docs/CLEANER.md)
 
 ### Ce que fait Cleaner
 
-- **Repère le stockage de la radio** et analyse les emplacements JWAIO reconnus, y compris certaines copies d'anciennes versions.
-- **Choississez ce que vous souhaitez garder** : les skins (apparence personnalisée) et les logs (journaux de vol) sont conservés par défaut.
+- **Repère le stockage de la radio** et analyse les emplacements JWAIO reconnus.
+- **Vous laisse choisir ce que vous souhaitez garder** : les skins (apparence personnalisée) et les logs (journaux de vol) sont conservés par défaut.
 - **Sauvegarde les skins sur la radio** dans `JWAIO-Sauvegardes/<date-identifiant>/`, avec vérification des copies avant suppression. Les logs conservés restent à leur emplacement d'origine.
 - **Affiche les fichiers concernés et demande confirmation** avant de retirer le widget et ses sons dédiés. L'analyse seule ne supprime rien.
 - **Cible les fichiers du widget** sans modifier les modèles EdgeTX ni les autres widgets. 
 
-**Rappel :**
-- Ce soft ne modifie en rien EdgeTx, Il supprime un Widget donc un Addon optionnel sans conséquence que le reste de votre radio.
-- Ce soft ne modifie pas le registre Windows et ne crée pas de cache ou de journal applicatif sur l'ordinateur.
+Cleaner retire les fichiers du widget et ses sons dédiés. Il ne modifie pas le firmware EdgeTX, les modèles ou les autres widgets. Il ne modifie pas non plus le registre Windows et ne crée ni cache ni journal applicatif sur l'ordinateur.
 
 ### Le nettoyage en quelques étapes
 
 1. Sauvegardez le contenu de votre radio sur votre ordinateur.
 2. Branchez la radio et choisissez **Stockage USB / USB Storage**.
-3. Lancez Cleaner, sélectionnez le lecteur de la radio.
+3. Lancez Cleaner, sélectionnez le lecteur de la radio et choisissez si vous souhaitez conserver vos skins et vos journaux de vol.
 
 ![JWAIO Cleaner 1](docs/assets/JWAIO-Cleaner_md1.jpg)
 
@@ -71,17 +69,17 @@ JWAIO Cleaner vous accompagne pour retirer JWAIO et les anciennes versions du st
 
 ![JWAIO Cleaner 2](docs/assets/JWAIO-Cleaner_md2.jpg)
 
-5. Attendez le bilan 
+5. Vérifiez la liste des fichiers proposés.
 
 ![JWAIO Cleaner 3](docs/assets/JWAIO-Cleaner_md3.jpg)
 
-6. Choisir si vous souhaitez garder vos skins et Logs de vol puis **Confirmer la suppression**
+6. Cliquez sur **Vérifier et supprimer…**, puis confirmez vos choix.
 
 ![JWAIO Cleaner 4](docs/assets/JWAIO-Cleaner_md4.jpg)  
 
 ![JWAIO Cleaner 5](docs/assets/JWAIO-Cleaner_md5.jpg)
 
-7. Attendre la fin du nettoyage puis eteignez votre radio.
+7. Attendez la fin du nettoyage, éjectez proprement le stockage et débranchez la radio. Retirez ensuite JWAIO des écrans de vos modèles.
 
 ![JWAIO Cleaner 6](docs/assets/JWAIO-Cleaner_md6.jpg)
 
@@ -89,11 +87,11 @@ JWAIO Cleaner vous accompagne pour retirer JWAIO et les anciennes versions du st
 
 **La suppression est définitive, sans Corbeille.** Les archives ZIP et toutes les copies renommées ou profondément imbriquées ne sont pas recherchées. Le [guide complet](docs/CLEANER.md) précise le périmètre, la restauration des skins et la conduite à tenir en cas d'erreur.
 
-**À lire avant le lancement :** cette version est une **Preview** indépendante du widget Alpha. Tout les testes ont été réaliser avec succès sur tx15 et tx16. L'EXE n'est pas signé. 
+**À lire avant le lancement :** cette version est une **Preview** indépendante du widget Alpha. J'ai testé Cleaner avec succès sur TX15 et TX16, sans problème constaté. L'EXE n'est pas signé. 
 
 Les analyses documentées du 15 septembre 2026 donnent **5/69 détections VirusTotal** et **0/13 chez Jotti** : des faux positifs sont possibles, mais aucun éditeur ne les a confirmés. Le [guide explique les avertissements Windows et antivirus](docs/CLEANER.md#mon-antivirus-affiche-une-alerte--que-signifie-t-elle-) et le [rapport détaille les résultats](docs/CLEANER-ANTIVIRUS.md). En cas de blocage, gardez votre protection active et utilisez la [désinstallation manuelle](docs/INSTALLATION.md#désinstaller).
 
-L'envois du **Cleaner** a été envoyer vers divers éditeur ( Malwarebytes et autre ) pour démontrer que le logiciel est propre et supprimer les 5 faux positifs.
+J'ai envoyé **Cleaner** à plusieurs éditeurs antivirus, dont Malwarebytes, pour leur demander de réexaminer les alertes. J'attends leur confirmation avant de parler de faux positifs.
 
 ## Ce que propose le widget
 

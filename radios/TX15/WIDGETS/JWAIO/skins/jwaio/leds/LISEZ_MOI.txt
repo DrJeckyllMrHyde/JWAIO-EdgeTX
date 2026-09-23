@@ -1,0 +1,30 @@
+JWAIO v0.3.1 Alpha — Personnaliser les LED
+
+Pour changer les couleurs et la luminosité, je vous conseille de modifier
+uniquement le fichier config.lua de ce dossier. Les animations sont déjà prêtes.
+
+1. Sauvegardez le fichier, puis ouvrez-le avec un éditeur de texte.
+2. Laissez local enabled = 1 pour activer les LED ; mettez 0 pour les couper.
+3. Réglez brightness entre 0 et 100. Je conseille de commencer à 20 ou 30 %.
+4. Modifiez les couleurs dans la section colors.
+5. Enregistrez, éjectez proprement le stockage, puis redémarrez la radio.
+
+Une couleur s'écrit {rouge, vert, bleu}. Chaque valeur va de 0 à 255.
+Rouge : {255, 0, 0} ; vert : {0, 255, 0} ; bleu : {0, 0, 255}.
+Blanc : {255, 255, 255} ; or : {224, 178, 58} ; violet : {180, 40, 255}.
+
+Effets fournis :
+- Ready : respiration lente, blanc légèrement bleuté.
+- Préarmement : pulsation dorée.
+- Armement : halos bleus qui suivent les manches, en modes 1 et 2.
+- GPS : trois impulsions lorsque le niveau satellite passe au vert.
+- Finder : pulsation verte, plus rapide lorsque le signal augmente.
+- RTH : respiration rouge.
+- Batterie faible ou critique : clignotement rouge prioritaire.
+
+La couleur armed est aussi utilisée en ANGLE. Les réglages angle et lost ne
+sont pas utilisés par les effets actuels. Sans signal Finder valide, la
+pulsation reste lente : elle ne confirme pas une liaison avec le drone.
+
+Désactivez les autres scripts RGBLED : JWAIO doit être le seul à piloter ces LED.
+Les paquets TX16S conservent leurs LED désactivées par défaut.

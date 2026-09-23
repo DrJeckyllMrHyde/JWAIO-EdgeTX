@@ -1,11 +1,14 @@
 JWAIO v0.3.1 Alpha — TX16S-Mk1-Mk2
 
-Alpha testée positivement et fonctionnelle pour tous les usages selon le créateur. Correctifs mineurs et optimisations restant possibles.
+J'ai testé cette version avec succès. Elle est fonctionnelle pour tous les usages ; de petits correctifs et des optimisations restent possibles.
 Série EdgeTX visée : 2.12.x.
 
-Lire MODE_EMPLOI.txt avant installation.
-Copier uniquement WIDGETS, SOUNDS et LOGS à la racine du stockage EdgeTX.
-Une seule variante et une seule instance par modèle. Sauvegarder avant mise à jour.
-Les notices et licences restent consultables sur l’ordinateur.
+Je vous conseille de lire MODE_EMPLOI.txt avant de commencer.
+Sauvegardez le stockage de votre radio et les réglages du modèle.
+Copiez WIDGETS, SOUNDS et LOGS à la racine du stockage EdgeTX.
+Installez une seule variante et une seule instance JWAIO par modèle.
+Les notices et les licences peuvent rester sur l'ordinateur.
+
+Les LED sont désactivées par défaut.
 
 Guide : https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/blob/main/docs/INSTALLATION.md

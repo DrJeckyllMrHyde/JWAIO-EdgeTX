@@ -5,10 +5,10 @@ https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/tree/main/releases/v0.3.1
 
 CHOISIR UNE SEULE VARIANTE
 TX15/TX15 Max ; TX16S Mk1/Mk2 ; ou TX16S Mk3.
-TX15 et Mk1/Mk2 ont été testés et sont fonctionnels pour tous les usages selon
-le créateur. Des correctifs mineurs et optimisations restent possibles.
-Le créateur ne possède pas de Mk3 : adaptation aux spécifications matérielles
-RadioMaster, sans essai physique. EdgeTX 2.12.0 ou supérieur requis ; testeurs
+J'ai testé TX15 et Mk1/Mk2 avec succès : ces versions sont fonctionnelles
+pour tous les usages. De petits correctifs et des optimisations restent possibles.
+Je ne possède pas de Mk3. J'ai adapté le widget aux spécifications matérielles
+RadioMaster, sans pouvoir l'essayer sur cette radio. EdgeTX 2.12.0 ou supérieur requis ; testeurs
 Mk3 recherchés. La série visée est 2.12.x, sans garantie de chaque version future.
 Compatibilité et état des essais :
 https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/blob/main/docs/COMPATIBILITE.md
@@ -67,15 +67,15 @@ restent autorisées. Ne pas compter sur une relecture systématique des alertes.
 Éviter les doublons avec les annonces configurées dans EdgeTX.
 
 MISE À JOUR ET DÉPANNAGE
-Si l'ancien menu n'avait pas Skin, retirer puis recréer l'instance JWAIO.
-Toujours vérifier toutes les options. Reporter les personnalisations dans le
+Vérifier toutes les options. En cas de problème, noter les réglages, retirer
+le widget de l'écran puis l'ajouter à nouveau. Reporter les personnalisations dans le
 nouveau config.lua plutôt que le remplacer par l'ancien fichier complet.
 Widget absent : vérifier le chemin et le volume, puis redémarrer.
 NO_DATA : vérifier connexion, découverte et noms des capteurs.
 Pas de sons : vérifier volume, dossier SOUNDS/fr/JWAIO et Finder inactif.
 Temps immobile : vérifier la condition de marche des minuteries EdgeTX.
 Conserver les journaux /LOGS/JWAIO/ ; retirer les coordonnées avant partage.
-TX15 (mise à jour LED) : effets activés par défaut, 20 LED, luminosité 30 %, 10 Hz.
+LED sur TX15 : effets activés par défaut, 20 LED, luminosité 30 %, 10 Hz.
 Désactiver les autres scripts RGBLED. Pour couper les effets, passer enabled à 0
 dans /WIDGETS/JWAIO/skins/jwaio/leds/config.lua puis redémarrer.
 Les paquets TX16S restent avec leurs LED désactivées par défaut.

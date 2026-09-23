@@ -16,14 +16,13 @@ class Packages(unittest.TestCase):
     def test_three_radio_packages(self):
         with tempfile.TemporaryDirectory() as tmp:
             output = Path(tmp)
-            builder.build(output, ('TX15',))
+            builder.build(output)
             manifest = dict(line.split('  ', 1)[::-1] for line in
                             (ROOT/'releases/v0.3.1/SHA256SUMS.txt').read_text().splitlines())
             for variant in builder.VARIANTS:
                 archive = output/f'JWAIO-v0.3.1-Alpha-{variant}.zip'
                 published = ROOT/'releases/v0.3.1'/archive.name
-                if variant == 'TX15':
-                    self.assertEqual(archive.read_bytes(), published.read_bytes())
+                self.assertEqual(archive.read_bytes(), published.read_bytes())
                 self.assertEqual(hashlib.sha256(published.read_bytes()).hexdigest(), manifest[published.name])
                 with zipfile.ZipFile(published) as z:
                     self.assertIsNone(z.testzip())
@@ -34,9 +33,7 @@ class Packages(unittest.TestCase):
                     self.assertEqual(sum(n.endswith('.wav') for n in z.namelist()), 20)
                     self.assertEqual(sum(n.endswith('.png') for n in z.namelist()), 8)
                     for name, source in expected.items():
-                        # Notices are snapshots of each radio's publication date.
-                        if name.startswith(('WIDGETS/', 'SOUNDS/', 'LOGS/')) or variant == 'TX15':
-                            self.assertEqual(z.read(name), source.read_bytes())
+                        self.assertEqual(z.read(name), source.read_bytes())
                         self.assertNotIn('..', Path(name).parts)
                     config = z.read('WIDGETS/JWAIO/config.lua').decode('utf-8')
                     self.assertRegex(config, r'version\s*=\s*"0\.3\.1"')

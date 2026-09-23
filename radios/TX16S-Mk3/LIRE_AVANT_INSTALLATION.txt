@@ -1,11 +1,14 @@
 JWAIO v0.3.1 Alpha — TX16S-Mk3
 
-Adaptation aux spécifications RadioMaster, sans essai physique faute de radio. Testeurs recherchés. EdgeTX 2.12.0 ou supérieur requis.
+Je ne possède pas de TX16S Mk3. J'ai adapté cette version aux spécifications matérielles RadioMaster, sans essai physique. Je recherche des testeurs. EdgeTX 2.12.0 ou supérieur est requis.
 Série EdgeTX visée : 2.12.x.
 
-Lire MODE_EMPLOI.txt avant installation.
-Copier uniquement WIDGETS, SOUNDS et LOGS à la racine du stockage EdgeTX.
-Une seule variante et une seule instance par modèle. Sauvegarder avant mise à jour.
-Les notices et licences restent consultables sur l’ordinateur.
+Je vous conseille de lire MODE_EMPLOI.txt avant de commencer.
+Sauvegardez le stockage de votre radio et les réglages du modèle.
+Copiez WIDGETS, SOUNDS et LOGS à la racine du stockage EdgeTX.
+Installez une seule variante et une seule instance JWAIO par modèle.
+Les notices et les licences peuvent rester sur l'ordinateur.
+
+Les LED sont désactivées par défaut.
 
 Guide : https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/blob/main/docs/INSTALLATION.md

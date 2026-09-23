@@ -2,7 +2,7 @@
 
 Version 0.1 Preview, Windows 10/11 uniquement. Linux est reporté.
 
-**Avant téléchargement : VirusTotal signale 5/69 détections, Jotti 0/13.** Consultez les [rapports complets et l'empreinte du fichier](CLEANER-ANTIVIRUS.md). Les alertes restent à examiner ; aucune garantie d'innocuité n'est revendiquée.
+**Analyses du 15 septembre 2026 : 5/69 détections chez VirusTotal, 0/13 chez Jotti.** Consultez les [rapports complets et l'empreinte du fichier](CLEANER-ANTIVIRUS.md). Les alertes restent à examiner ; aucune garantie d'innocuité n'est revendiquée.
 
 **Distribution : Preview publique autorisée le 16 septembre 2026, avec alertes antivirus non résolues.**
 
@@ -16,7 +16,7 @@ Version 0.1 Preview, Windows 10/11 uniquement. Linux est reporté.
 
 **[Ouvrir la release JWAIO Cleaner v0.1.0 Preview](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/cleaner-v0.1.0-preview)**, puis déplier **Assets** et choisir **JWAIO-Cleaner.exe**. Les fichiers « Source code » servent aux développeurs : ils ne sont pas nécessaires pour utiliser Cleaner. L'EXE peut rester sur le Bureau ou une clé USB ; il n'y a rien à installer.
 
-« Preview » signifie première version de test. Le mainteneur a testé Cleaner avec succès sur des radios physiques RadioMaster TX15 et TX16, sans problème constaté. Avant tout nettoyage, copiez le contenu du stockage de votre radio dans un dossier de sauvegarde sur votre ordinateur.
+« Preview » signifie première version de test. J'ai testé Cleaner avec succès sur des radios physiques RadioMaster TX15 et TX16, sans problème constaté. Avant tout nettoyage, copiez le contenu du stockage de votre radio dans un dossier de sauvegarde sur votre ordinateur.
 
 ### Mon antivirus affiche une alerte : que signifie-t-elle ?
 
@@ -28,7 +28,7 @@ L'examen a relié l'indicateur « obfuscation/Base64 » au contrôle des emprein
 
 **L'EXE n'est pas signé numériquement.** Windows peut donc afficher un éditeur inconnu ou un avertissement de réputation SmartScreen. Ce message est distinct d'une détection de menace par l'antivirus. Les propriétés Windows affichent aussi `0.0.0.0` : la version du produit n'a pas encore été renseignée dans cette compilation.
 
-**En cas de blocage :** fermez le lancement, gardez votre protection active et n'ajoutez pas d'exclusion. Vous pouvez utiliser la [désinstallation manuelle](INSTALLATION.md#désinstaller) ou attendre une version dont les alertes auront été clarifiées. Pour demander de l'aide, indiquez le nom de l'antivirus et le texte exact de l'alerte dans les [Issues](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/issues), sans joindre vos logs de vol ni vos données personnelles.
+**En cas de blocage :** fermez l'application, gardez votre protection active et n'ajoutez pas d'exclusion. Vous pouvez utiliser la [désinstallation manuelle](INSTALLATION.md#désinstaller) ou attendre une version dont les alertes auront été clarifiées. Pour demander de l'aide, indiquez le nom de l'antivirus et le texte exact de l'alerte dans les [Issues](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/issues), sans joindre vos logs de vol ni vos données personnelles.
 
 [Rapport VirusTotal](https://www.virustotal.com/gui/file/e41575b496a3298df5b76de15e7e0dd58d3c65d6170d98295e2b08f23129d8b3/detection) · [Rapport Jotti](https://virusscan.jotti.org/fr-FR/filescanjob/5gc2mp87km) · [Examen détaillé et vérification du téléchargement](CLEANER-ANTIVIRUS.md)
 
@@ -48,7 +48,7 @@ La suppression est définitive, sans passage par la Corbeille. Aucune suppressio
 
 ## Skins et logs
 
-Les skins conservés sont copiés dans `JWAIO-Sauvegardes/<date-identifiant>/`, **sur la radio**. Leur arborescence d’origine est conservée et chaque copie est vérifiée par SHA-256 avant de supprimer les originaux. Le widget et ses sons sont ensuite retirés. Pour les anciennes versions sans dossier `skins`, le dossier `img` et le fichier `config.lua` sont sauvegardés pour préserver les éléments visuels personnalisés.
+Les skins conservés sont copiés dans `JWAIO-Sauvegardes/<date-identifiant>/`, **sur la radio**. Leur arborescence d’origine est conservée et chaque copie est vérifiée par SHA-256 avant de supprimer les originaux. Le widget et ses sons sont ensuite retirés. Si aucun dossier `skins` n'est présent, le dossier `img` et le fichier `config.lua` sont sauvegardés pour préserver les éléments visuels personnalisés.
 
 Pour réutiliser un skin, réinstallez la version souhaitée du widget, puis recopiez votre dossier de skin depuis cette sauvegarde. Ne remplacez pas tout le `config.lua` d’une nouvelle version par une ancienne configuration.
 
@@ -73,11 +73,11 @@ Les seules écritures normales sont les sauvegardes demandées et les suppressio
 
 ## Vérifications et limites
 
-45 assertions automatisées ont passé : quatre combinaisons de conservation, préservation des autres données, sauvegarde vérifiée, détection de changements avant suppression, fichier en lecture seule, copies anciennes et refus d’une jonction vers un autre dossier.
+45 vérifications automatisées ont réussi : quatre combinaisons de conservation, préservation des autres données, sauvegarde vérifiée, détection de changements avant suppression, fichier en lecture seule, copies du widget et refus d’une jonction vers un autre dossier.
 
-11 copies d’archives réelles ont également été nettoyées avec vérification des sauvegardes : SIXTY9 0.1.0 à 0.1.6, une ancienne archive JWAIO et les trois variantes JWAIO 0.3.1 (TX15, TX16 Mk1/Mk2, TX16 Mk3). Interface compilée, démarrée et contrôlée visuellement sur cette machine Windows.
+Les essais ont aussi porté sur 11 copies d'archives, dont les trois variantes JWAIO v0.3.1 (TX15, TX16S Mk1/Mk2 et TX16S Mk3), avec vérification des sauvegardes. L'interface a été compilée, démarrée et contrôlée sur l'ordinateur de développement.
 
-Cette Preview a été testée avec succès sur des radios physiques RadioMaster TX15 et TX16, sans problème constaté. Elle n’a pas encore été validée sur des installations Windows 10 et Windows 11 distinctes. L’exécutable n’est pas signé numériquement. Une déconnexion, une panne de stockage ou une erreur d’accès pendant la suppression peut laisser un nettoyage partiel : le bilan l’indique ; les suppressions déjà effectuées ne sont pas annulées. Ne débranchez pas la radio pendant l’opération.
+J'ai testé cette Preview avec succès sur des radios physiques RadioMaster TX15 et TX16, sans problème constaté. Elle n’a pas encore été validée sur des installations Windows 10 et Windows 11 distinctes. L’exécutable n’est pas signé numériquement. Une déconnexion, une panne de stockage ou une erreur d’accès pendant la suppression peut laisser un nettoyage partiel : le bilan l’indique ; les suppressions déjà effectuées ne sont pas annulées. Ne débranchez pas la radio pendant l’opération.
 
 ## Sources
 
