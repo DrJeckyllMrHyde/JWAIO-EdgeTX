@@ -1,5 +1,12 @@
 # Notes de version
 
+## Organisation des skins — 28 septembre 2026
+
+- Ajout d'une galerie pour prévisualiser les skins et télécharger uniquement celui qui sera utilisé.
+- Publication séparée du skin JWAIO de base pour TX15/TX15 Max, TX16S Mk1/Mk2 et TX16S Mk3.
+- Ajout d'un tableau de compatibilité par radio, destiné à servir de modèle aux prochains skins.
+- Clarification du guide d'installation et correction des textes concernés.
+
 ## JWAIO v0.3.1 Alpha — mise à jour TX15 du 22 septembre 2026
 
 - Remplacement du paquet TX15 depuis l’archive TX15 ; sources TX15 synchronisées.

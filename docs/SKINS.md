@@ -1,6 +1,8 @@
-# Personnaliser JWAIO avec les skins
+# Installer et personnaliser les skins JWAIO
 
-Un skin change le fond, le logo et les couleurs de l'écran. Il peut aussi proposer des effets LED. Pour commencer, je vous conseille de dupliquer le skin **JWAIO** fourni, puis de personnaliser cette copie.
+Un skin change le fond, le logo et les couleurs de l'écran. Il peut aussi proposer des effets LED. La [galerie de skins](../skins/README.md) présente chaque skin avec un aperçu et un tableau de téléchargement par radio. Vous pouvez ainsi installer uniquement celui qui vous plaît.
+
+Pour créer votre propre skin, je vous conseille de dupliquer le skin **JWAIO** fourni, puis de personnaliser cette copie.
 
 ## Affichage selon la radio en v0.3.1
 
@@ -9,12 +11,13 @@ Les trois ZIP fournissent le même fond 480 × 320 et le même logo 216 × 132. 
 ## Installer et choisir un skin
 
 1. Sauvegardez la mémoire de stockage utilisée par la radio.
-2. Copiez le dossier du skin dans `/WIDGETS/JWAIO/skins/`, à côté de `jwaio`.
-3. Éjectez proprement le lecteur et redémarrez la radio.
-4. Dans les réglages du widget JWAIO, choisissez **Skin**, la première option.
+2. Dans la [galerie](../skins/README.md), téléchargez le ZIP correspondant exactement à votre radio.
+3. Décompressez le ZIP sur votre ordinateur.
+4. Copiez le dossier du skin dans `/WIDGETS/JWAIO/skins/`, à côté de `jwaio`.
+5. Éjectez proprement le lecteur et redémarrez la radio.
+6. Dans les réglages du widget JWAIO, choisissez **Skin**, la première option.
 
-Les dossiers sont recherchés au démarrage. Il ne faut pas remplacer le dossier
-`jwaio` : il sert de secours. Si votre choix n'apparaît pas, vérifiez le dossier du skin et redémarrez la radio. Contrôlez ensuite les options du widget, en particulier les interrupteurs.
+Les dossiers sont recherchés au démarrage. Ne remplacez pas le dossier `jwaio` : il sert de secours. La seule exception concerne le paquet **Skin JWAIO — base** de la galerie, prévu pour restaurer ce dossier officiel. Si votre choix n'apparaît pas, vérifiez le dossier du skin et redémarrez la radio. Contrôlez ensuite les options du widget, en particulier les interrupteurs.
 
 ## Créer son premier skin
 

@@ -8,13 +8,15 @@ J'ai créé **Jeckyll Widget All in One** pour rassembler les informations FPV, 
 
 > **JWAIO Cleaner — Windows 10/11 :** outil portable de désinstallation avec conservation optionnelle des skins et logs. [Télécharger la Preview](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/cleaner-v0.1.0-preview) · [Mode d'emploi débutant](docs/CLEANER.md) · [Rapports antivirus](docs/CLEANER-ANTIVIRUS.md). **Analyses documentées du 15/09/2026 : VirusTotal 5/69, Jotti 0/13 ; faux positifs possibles mais non confirmés.**
 
-## Choisir et télécharger sa version
+## Téléchargements et skins
 
-| Radio | Archive v0.3.1 |
-|-------|----------------|
-| TX15 / TX15 Max | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/raw/main/releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX15.zip) |
-| TX16S Mk1 / Mk2 | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/raw/main/releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk1-Mk2.zip) |
-| TX16S Mk3 | [Télécharger](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/raw/main/releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk3.zip) |
+| Radio | Widget JWAIO v0.3.1 Alpha | Skins |
+|---|---|---|
+| TX15 / TX15 Max | [Télécharger le widget](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/raw/main/releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX15.zip) | [Voir les skins](skins/README.md) |
+| TX16S Mk1 / Mk2 | [Télécharger le widget](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/raw/main/releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk1-Mk2.zip) | [Voir les skins](skins/README.md) |
+| TX16S Mk3 | [Télécharger le widget](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/raw/main/releases/v0.3.1/JWAIO-v0.3.1-Alpha-TX16S-Mk3.zip) | [Voir les skins](skins/README.md) |
+
+JWAIO est fourni avec son skin de base. La [galerie de skins](skins/README.md) permet de voir les aperçus et de télécharger uniquement le skin qui vous plaît, dans la version adaptée à votre radio. Vous évitez ainsi d'encombrer son stockage avec des skins inutilisés.
 
 **TX15 et TX16S Mk1/Mk2 :** j'ai testé ces versions avec succès. Elles sont fonctionnelles pour tous les usages ; je pourrai encore apporter de petits correctifs et des optimisations.
 
@@ -22,7 +24,7 @@ J'ai créé **Jeckyll Widget All in One** pour rassembler les informations FPV, 
 
 La v0.3.1 Alpha est la base actuelle du projet. Vous trouverez ici les fichiers à installer et leurs sources.
 
-[Guide débutant](docs/INSTALLATION.md) · [Mode d'emploi](docs/MODE_EMPLOI.md) · [Version texte](MODE_EMPLOI.txt) · [Notes de version](CHANGELOG.md)
+[Guide débutant](docs/INSTALLATION.md) · [Galerie de skins](skins/README.md) · [Créer ou personnaliser un skin](docs/SKINS.md) · [Mode d'emploi](docs/MODE_EMPLOI.md) · [Version texte](MODE_EMPLOI.txt) · [Notes de version](CHANGELOG.md)
 
 **LED sur TX15 :** effets LED du skin JWAIO activés par défaut, avec animations des manches, batterie, RTH, Finder et acquisition GPS. [Réglages et fonctionnement](docs/SKINS.md#led-du-skin-jwaio-sur-tx15).
 
@@ -144,4 +146,3 @@ Les sources v0.3.1 sont organisées dans `radios/TX15/`, `radios/TX16S-Mk1-Mk2/`
 Code : [Apache 2.0](LICENSE). Documents et médias concernés : [licence des ressources](LICENSE-ASSETS.md). [Auteurs](AUTHORS.md), [NOTICE](NOTICE), [composants tiers](THIRD_PARTY_NOTICES.txt).
 
 © 2026 **DrJeckyllMrHyde** — [YouTube JeckyllHydeFpv](https://www.youtube.com/@JeckyllHydeFpv)
-

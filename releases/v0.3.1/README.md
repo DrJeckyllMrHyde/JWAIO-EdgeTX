@@ -14,4 +14,4 @@ Choisissez uniquement le ZIP de votre radio. Après sauvegarde, copiez WIDGETS, 
 
 Sur TX15, les LED du skin JWAIO sont activées par défaut. Consultez le [guide des LED](../../docs/SKINS.md#led-du-skin-jwaio-sur-tx15) pour les personnaliser ou les couper. Les LED restent désactivées par défaut sur TX16S.
 
-[Guide débutant](../../docs/INSTALLATION.md) · [Empreintes SHA-256](SHA256SUMS.txt) · [Sources actuelles](../../radios/)
+[Guide débutant](../../docs/INSTALLATION.md) · [Galerie de skins](../../skins/README.md) · [Empreintes SHA-256](SHA256SUMS.txt) · [Sources actuelles](../../radios/)
