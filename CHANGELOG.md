@@ -4,6 +4,7 @@
 
 - Ajout d'une galerie pour prévisualiser les skins et télécharger uniquement celui qui sera utilisé.
 - Publication de skins distincts pour TX15/TX15 Max, TX16S Mk1/Mk2 et TX16S Mk3 ; la version TX15 intègre la gestion de ses LED spécifiques.
+- Ajout du skin **D-Sync Crew — Freestyle Underground** pour TX15/TX15 Max, accompagné de son aperçu et de son paquet séparé.
 - Ajout d'un tableau de compatibilité par radio, destiné à servir de modèle aux prochains skins.
 - Clarification du guide d'installation et correction des textes concernés.
 

@@ -34,6 +34,26 @@ Pour installer un futur skin sans remplacer le skin de base, son ZIP contiendra 
 
 Vous souhaitez créer votre propre style ? Consultez le [guide de création et de personnalisation](../docs/SKINS.md).
 
+## D-Sync Crew — Freestyle Underground
+
+<p align="center">
+  <img src="dsync-underground/JWAIO-0.3.1-D-Sync-Crew-Freestyle-Underground.jpg" alt="Aperçu du skin D-Sync Crew Freestyle Underground" width="760">
+</p>
+
+**Votre Freestyle, Votre style !**
+
+Un univers sombre inspiré des bandos et du freestyle FPV, avec un décor noir, des textures carbone et des touches de cyan électrique. Cette première version intègre les effets LED propres à la TX15.
+
+| Radio | Disponibilité | Télécharger |
+|---|---|---|
+| TX15 / TX15 Max | Disponible avec effets LED spécifiques | [Télécharger le skin](dsync-underground/JWAIO-v0.3.1-skin-dsync-underground-TX15.zip?raw=true) |
+| TX16S Mk1 / Mk2 | Pas encore disponible | — |
+| TX16S Mk3 | Pas encore disponible | — |
+
+[Vérifier l'empreinte SHA-256](dsync-underground/SHA256SUMS.txt)
+
+Après avoir décompressé le ZIP, copiez le dossier `dsync-underground` dans `/WIDGETS/JWAIO/skins/`, à côté du dossier `jwaio`. Redémarrez ensuite la radio et choisissez **DSYNC** dans l'option **Skin** du widget.
+
 ## Modèle pour les prochains skins
 
 Chaque nouveau skin ajouté à cette galerie reprendra la même présentation : un aperçu, une courte description et un tableau proposant le bon paquet pour chaque radio compatible. Vous pourrez ainsi comparer les styles avant de télécharger quoi que ce soit.
