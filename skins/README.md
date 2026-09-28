@@ -34,6 +34,26 @@ Pour installer un futur skin sans remplacer le skin de base, son ZIP contiendra 
 
 Vous souhaitez créer votre propre style ? Consultez le [guide de création et de personnalisation](../docs/SKINS.md).
 
+## Black Carbon — TX15 Edition
+
+<p align="center">
+  <img src="black-carbon/JWAIO-0.3.1-Black-Carbon.jpg" alt="Aperçu du skin Black Carbon TX15 Edition" width="760">
+</p>
+
+**Votre vol, taillé dans le carbone.**
+
+Une présentation sobre et sportive mêlant carbone noir, métal sombre et accents bleu froid. Cette édition intègre les effets LED propres à la TX15.
+
+| Radio | Disponibilité | Télécharger |
+|---|---|---|
+| TX15 / TX15 Max | Disponible avec effets LED spécifiques | [Télécharger le skin](black-carbon/JWAIO-v0.3.1-skin-black-carbon-TX15.zip?raw=true) |
+| TX16S Mk1 / Mk2 | Pas encore disponible | — |
+| TX16S Mk3 | Pas encore disponible | — |
+
+[Vérifier l'empreinte SHA-256](black-carbon/SHA256SUMS.txt)
+
+Après avoir décompressé le ZIP, copiez le dossier `black-carbon` dans `/WIDGETS/JWAIO/skins/`, à côté du dossier `jwaio`. Redémarrez ensuite la radio et choisissez **CARBON** dans l'option **Skin** du widget.
+
 ## D-Sync Crew — Freestyle Underground
 
 <p align="center">
