@@ -6,7 +6,9 @@ Pour créer votre propre skin, je vous conseille de dupliquer le skin **JWAIO** 
 
 ## Affichage selon la radio en v0.3.1
 
-Les trois ZIP fournissent le même fond 480 × 320 et le même logo 216 × 132. Le code adapte leur affichage à la radio : TX15 480 × 320, Mk1/Mk2 480 × 272 (fond centré et recadré), Mk3 800 × 480 (mise à l'échelle). Vérifiez donc la lisibilité et le cadrage sur votre radio ; la Mk3 reste sans validation physique. Les effets LED dépendent de l’équipement et du firmware. Ils sont activés par défaut dans le paquet TX15 actualisé ; les paquets TX16S gardent leur réglage désactivé.
+Les skins ne sont pas interchangeables entre la TX15 et les TX16S. La TX15 possède des LED pilotables que les TX16S ne possèdent pas ; son paquet contient donc une gestion et des effets LED spécifiques.
+
+Les trois versions utilisent un fond de 480 × 320 et un logo de 216 × 132, mais le code adapte leur affichage et leurs fonctions à la radio : TX15 480 × 320, Mk1/Mk2 480 × 272 avec un fond centré et recadré, et Mk3 800 × 480 avec une mise à l'échelle. Téléchargez toujours le skin prévu pour votre modèle. Vérifiez ensuite sa lisibilité et son cadrage sur la radio ; la Mk3 reste sans validation physique.
 
 ## Installer et choisir un skin
 

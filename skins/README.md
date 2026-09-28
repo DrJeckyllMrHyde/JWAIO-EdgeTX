@@ -10,13 +10,15 @@ Pour chaque skin, je propose un aperçu et un tableau de téléchargement par ra
   <img src="../docs/assets/JWAIO-0.3.1-Widget-Facebook-v3.png" alt="Aperçu du skin JWAIO de base" width="760">
 </p>
 
-Le skin JWAIO est fourni avec le widget. Les paquets ci-dessous permettent de le restaurer ou de l'utiliser comme base pour créer un nouveau skin. Le fond, le logo et les couleurs sont identiques sur les trois radios ; les réglages LED sont adaptés à chaque modèle.
+Le skin JWAIO est fourni avec le widget. Les paquets ci-dessous permettent de le restaurer ou de l'utiliser comme base pour créer un nouveau skin.
 
-| Radio | Réglage LED fourni | Télécharger |
+La version TX15 est différente des versions TX16S : la TX15 possède des LED pilotables que les TX16S ne possèdent pas. Son skin contient donc des fichiers et des effets LED spécifiques. Il est important de télécharger le paquet correspondant exactement à votre radio, même si l'apparence affichée à l'écran reste proche.
+
+| Radio | Particularité du skin | Télécharger |
 |---|---|---|
-| TX15 / TX15 Max | Activé par défaut | [Skin JWAIO pour TX15](jwaio/JWAIO-Skin-JWAIO-TX15.zip?raw=true) |
-| TX16S Mk1 / Mk2 | Désactivé par défaut | [Skin JWAIO pour TX16S Mk1/Mk2](jwaio/JWAIO-Skin-JWAIO-TX16S-Mk1-Mk2.zip?raw=true) |
-| TX16S Mk3 | Désactivé par défaut ; essai physique recherché | [Skin JWAIO pour TX16S Mk3](jwaio/JWAIO-Skin-JWAIO-TX16S-Mk3.zip?raw=true) |
+| TX15 / TX15 Max | Gestion et effets LED propres à la TX15 | [Skin JWAIO pour TX15](jwaio/JWAIO-Skin-JWAIO-TX15.zip?raw=true) |
+| TX16S Mk1 / Mk2 | Version sans les effets LED de la TX15 | [Skin JWAIO pour TX16S Mk1/Mk2](jwaio/JWAIO-Skin-JWAIO-TX16S-Mk1-Mk2.zip?raw=true) |
+| TX16S Mk3 | Version sans les effets LED de la TX15 ; essai physique recherché | [Skin JWAIO pour TX16S Mk3](jwaio/JWAIO-Skin-JWAIO-TX16S-Mk3.zip?raw=true) |
 
 [Vérifier les empreintes SHA-256](jwaio/SHA256SUMS.txt)
 
