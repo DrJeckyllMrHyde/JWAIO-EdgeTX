@@ -21,10 +21,6 @@
 
 ## État des essais
 
-Le 31 octobre 2026, Charly a confirmé le démarrage du correctif, l'absence de gel et l'audibilité de tous les sons pendant les derniers essais réalisés sans connexion USB.
+L'ensemble des fonctions en vol n'est pas encore déclaré valide. Il reste notamment à poursuivre les essais du Finder, du retour au bilan, du nouveau chronomètre après réarmement, des journaux CSV et des alertes en conditions réelles.
 
-Les contrôles sur ordinateur couvrent la syntaxe Lua 5.3, les menus, les transitions d'écran, les sauvegardes simulées, le séquencement audio et les contraintes de l'interface monochrome. Ils ne reproduisent pas entièrement le matériel ni le lecteur audio natif de la radio.
-
-L'ensemble des fonctions en vol n'est pas encore déclaré validé. Il reste notamment à poursuivre les essais du Finder, du retour au bilan, du nouveau chronomètre après réarmement, des journaux CSV et des alertes en conditions réelles.
-
-Les tests logiciels seront distingués des essais effectués sur une vraie RadioMaster Boxer.
+Les tests logiciels seront distingués des essais effectués sur sur un vrai bando.
