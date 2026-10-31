@@ -18,10 +18,10 @@ J'ai créé JWAIO Boxer pour retrouver l'esprit de JWAIO sur une radio qui ne pe
 
 Le 31 octobre 2026, les essais sur RadioMaster Boxer ont confirmé :
 
-- le démarrage du correctif ;
-- l'absence de gel pendant les derniers essais réalisés sans connexion USB ;
+- le bon fontionnement des toutes les interfaces ;
+- l'absence de Freeze pendant les derniers essais réalisés sans connexion USB ;
 - l'audibilité des seize sons fournis ;
-- l'affichage des écrans principaux et des réglages.
+- l'affichage de tout les réglages possible.
 
 L'ensemble des fonctions en vol reste à valider. Cette version conserve donc le statut **Alpha**.
 
