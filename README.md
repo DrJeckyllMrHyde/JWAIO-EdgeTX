@@ -1,4 +1,4 @@
-# JWAIO Boxer v0.2.1 Alpha
+# JWAIO Boxer v0.2.1 Alpha [ FREESTYLE EDITION ]
 
 **Script FPV dédié à la RadioMaster Boxer et à son écran monochrome 128 × 64 pixels.**
 
