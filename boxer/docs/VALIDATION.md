@@ -8,7 +8,6 @@
 | Écran monochrome 128 × 64 | Interface dédiée |
 | EdgeTX | 2.12.2 |
 | Script TOOLS | Oui |
-| Widget TX15/TX16S | Non |
 
 ## Paquet contrôlé
 
