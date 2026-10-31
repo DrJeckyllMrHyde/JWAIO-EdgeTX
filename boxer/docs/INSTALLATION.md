@@ -1,6 +1,6 @@
 # Installer JWAIO Boxer
 
-> Ébauche destinée à la relecture avant publication sur la branche principale.
+> Guide officiel de JWAIO Boxer v0.2.1 Alpha pour EdgeTX 2.12.2.
 
 ## Avant de commencer
 

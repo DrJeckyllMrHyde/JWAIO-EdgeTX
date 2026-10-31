@@ -1,6 +1,6 @@
 # JWAIO Boxer
 
-> Ébauche de la section Boxer, publiée pour relecture avant son intégration à la branche principale.
+> Version Alpha testée sur une RadioMaster Boxer. Les essais complets en vol se poursuivent.
 
 JWAIO Boxer est une interface FPV conçue spécialement pour la **RadioMaster Boxer** et son écran monochrome de 128 × 64 pixels. Il reprend l'esprit de JWAIO dans un script **TOOLS** adapté aux limites et aux commandes de cette radio.
 
