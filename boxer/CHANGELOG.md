@@ -9,5 +9,5 @@
 - Sauvegarde des réglages et compteurs par modèle dans deux copies vérifiées.
 - Journaux CSV sans GPS dans `/LOGS/JWBOX/`.
 - Six scripts Lua et seize sons WAV inclus dans l'archive.
-- Correctif testé sur RadioMaster Boxer : démarrage, absence de gel et sons audibles confirmés hors USB.
+- Correctif testé sur RadioMaster Boxer : démarrage, absence de crash ou freeze et sons audibles confirmés hors USB.
 - Statut Alpha conservé pendant la poursuite des essais complets en vol.
