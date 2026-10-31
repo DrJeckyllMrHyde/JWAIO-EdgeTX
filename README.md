@@ -8,6 +8,8 @@ J'ai créé **Jeckyll Widget All in One** pour rassembler les informations FPV, 
 
 > **JWAIO Cleaner — Windows 10/11 :** outil portable de désinstallation avec conservation optionnelle des skins et logs. [Télécharger la Preview](https://github.com/DrJeckyllMrHyde/JWAIO-EdgeTX/releases/tag/cleaner-v0.1.0-preview) · [Mode d'emploi débutant](docs/CLEANER.md) · [Rapports antivirus](docs/CLEANER-ANTIVIRUS.md). **Analyses documentées du 15/09/2026 : VirusTotal 5/69, Jotti 0/13 ; faux positifs possibles mais non confirmés.**
 
+> **JWAIO Boxer — RadioMaster Boxer :** script TOOLS monochrome 128 × 64 pour EdgeTX 2.12.2. La v0.2.1 Alpha est disponible sur cette branche pour relecture et poursuite des essais en vol. [Découvrir JWAIO Boxer](boxer/README.md) · [Installation illustrée](boxer/docs/INSTALLATION.md) · [Écrans et fonctions](boxer/docs/FONCTIONS.md).
+
 ## Téléchargements et skins
 
 | Radio | Widget JWAIO v0.3.1 Alpha | Skins |
