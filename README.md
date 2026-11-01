@@ -10,9 +10,9 @@ J'ai créé JWAIO Boxer pour retrouver l'esprit de JWAIO sur une radio qui ne pe
 
 | Radio | EdgeTX | Version | Archive |
 |---|---|---|---|
-| RadioMaster Boxer | 2.12.2 | v0.2.1 Alpha | [Télécharger JWAIO Boxer](boxer/releases/JWAIO_BOXER_V0.2.1_Alpha.zip?raw=true) |
+| RadioMaster Boxer | 2.12.2 | v0.2.1 Alpha | [Télécharger JWAIO Boxer](https://raw.githubusercontent.com/DrJeckyllMrHyde/JWAIO-EdgeTX/boxer/boxer/releases/JWAIO_BOXER_V0.2.1_Alpha.zip) |
 
-[Vérifier l'empreinte SHA-256](boxer/releases/SHA256SUMS.txt)
+[Vérifier l'empreinte SHA-256](https://raw.githubusercontent.com/DrJeckyllMrHyde/JWAIO-EdgeTX/boxer/boxer/releases/SHA256SUMS.txt)
 
 ## État de la version
 
