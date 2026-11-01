@@ -60,7 +60,7 @@ Si cette fenêtre apparaît, cliquez sur **Remplacer les fichiers dans la destin
 
 À la première ouverture, vérifiez que l'écran d'accueil apparaît sans erreur. Gardez ensuite le script ouvert pendant son utilisation : il ne peut pas suivre le vol après sa fermeture.
 
-Débranchez le câble USB avant les essais. Les derniers tests sans USB se sont déroulés sans gel et avec tous les sons audibles ; des silences et des gels avaient été associés à certains essais réalisés pendant une connexion USB.
+Débranchez le câble USB avant les essais et redémarrez la radio après avoir éjecté proprement son stockage.
 
 Avant tout essai avec un modèle, effectuez les premiers contrôles sur table, hélices retirées. Vérifiez les interrupteurs, les annonces sonores et les réglages sans modifier les mixages de sécurité de votre modèle.
 

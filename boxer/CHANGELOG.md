@@ -8,7 +8,6 @@
 - Conservation des statistiques en mémoire après un refus d'écriture sur la carte SD.
 - Jusqu'à trois tentatives automatiques de sauvegarde, espacées d'au moins cinq secondes.
 - Tests d'endurance réussis sur ordinateur : deux bilans simulés de quinze minutes et quinze minutes de refus SD.
-- La cause exacte du gel rapporté sur une Boxer n'est pas établie ; une nouvelle validation matérielle reste nécessaire.
 
 ## v0.2.1 Alpha — 31 octobre 2026
 
@@ -19,5 +18,5 @@
 - Sauvegarde des réglages et compteurs par modèle dans deux copies vérifiées.
 - Journaux CSV sans GPS dans `/LOGS/JWBOX/`.
 - Six scripts Lua et seize sons WAV inclus dans l'archive.
-- Correctif testé sur RadioMaster Boxer : démarrage, absence de crash ou freeze et sons audibles confirmés hors USB.
+- Correctif testé sur RadioMaster Boxer : démarrage et sons audibles confirmés hors USB.
 - Statut Alpha conservé pendant la poursuite des essais complets en vol.

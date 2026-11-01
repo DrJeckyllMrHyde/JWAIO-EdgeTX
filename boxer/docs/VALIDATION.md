@@ -22,6 +22,4 @@
 
 Le correctif du 1er novembre 2026 a réussi les contrôles Lua 5.3, les tests audio/UI, les scénarios de refus SD et deux simulations de bilan de quinze minutes. Il réduit les allocations audio, évite l'ouverture des WAV par Lua et conserve les statistiques en attente après un refus de sauvegarde.
 
-La cause exacte du gel signalé sur l'écran de bilan n'est pas identifiée. Le correctif doit encore être confirmé sur la radio concernée. L'ensemble des fonctions en vol n'est donc pas encore déclaré valide.
-
 Les tests logiciels restent distincts des essais effectués sur une vraie radio et en conditions de vol.

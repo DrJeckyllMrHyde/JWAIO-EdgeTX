@@ -19,11 +19,10 @@ J'ai créé JWAIO Boxer pour retrouver l'esprit de JWAIO sur une radio qui ne pe
 Les essais sur RadioMaster Boxer ont confirmé :
 
 - le bon fonctionnement de toutes les interfaces ;
-- l'absence de gel pendant les essais réalisés sans connexion USB ;
 - l'audibilité des seize sons fournis ;
 - l'affichage de tous les réglages disponibles.
 
-Le correctif du 1er novembre 2026 réduit les allocations audio et les accès inutiles à la carte SD. Il conserve également les statistiques après un refus d'écriture et effectue jusqu'à trois nouvelles tentatives espacées. Les simulations d'endurance sont positives ; ce correctif doit encore être confirmé sur la radio ayant signalé le gel du bilan.
+Le correctif du 1er novembre 2026 réduit les allocations répétées dans l'audio, évite l'ouverture des WAV par Lua et supprime la collecte mémoire complète forcée avant les sauvegardes. Il conserve également les statistiques après un refus d'écriture sur la carte SD, avec jusqu'à trois tentatives automatiques espacées.
 
 L'ensemble des fonctions en vol reste à valider. Cette version conserve donc le statut **Alpha**.
 

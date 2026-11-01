@@ -14,7 +14,7 @@ Il ne s'agit pas du widget couleur destiné aux TX15 et TX16S. L'installation, l
 
 Cette version cible **EdgeTX 2.12.2**. Le paquet contient six scripts Lua, seize sons et les documents de licence. [Vérifier l'empreinte SHA-256](releases/SHA256SUMS.txt).
 
-Le 31 octobre 2026, les essais sur RadioMaster Boxer ont confirmé le démarrage du correctif, l'absence de gel et l'audibilité des sons lors des derniers essais réalisés sans connexion USB. L'ensemble des fonctions en vol reste à valider : cette version conserve donc le statut **Alpha**.
+Les essais sur RadioMaster Boxer ont confirmé le démarrage du script et l'audibilité des sons sans connexion USB. L'ensemble des fonctions en vol reste à valider : cette version conserve donc le statut **Alpha**.
 
 ## Ce que le script affiche
 
