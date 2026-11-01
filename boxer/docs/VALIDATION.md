@@ -12,14 +12,16 @@
 ## Paquet contrôlé
 
 - archive : `JWAIO_BOXER_V0.2.1_Alpha.zip` ;
-- 28 fichiers ;
+- 29 fichiers ;
 - six scripts Lua ;
 - seize sons WAV ;
 - dossiers d'installation : `LOGS`, `SCRIPTS` et `SOUNDS` ;
-- empreinte SHA-256 : `041e3595afbcfe3c5c7b92b13b5965f8017fe5083f434e9e7fb475d08e8b8e09`.
+- empreinte SHA-256 : `f6e31a050aa4879e4e7c1ef428bcdced4df18babb9849528ae130509877e0217`.
 
 ## État des essais
 
-L'ensemble des fonctions en vol n'est pas encore déclaré valide. Il reste notamment à poursuivre les essais du Finder, du retour au bilan, du nouveau chronomètre après réarmement, des journaux CSV et des alertes en conditions réelles.
+Le correctif du 1er novembre 2026 a réussi les contrôles Lua 5.3, les tests audio/UI, les scénarios de refus SD et deux simulations de bilan de quinze minutes. Il réduit les allocations audio, évite l'ouverture des WAV par Lua et conserve les statistiques en attente après un refus de sauvegarde.
 
-Les tests logiciels seront distingués des essais effectués sur sur un vrai bando.
+La cause exacte du gel signalé sur l'écran de bilan n'est pas identifiée. Le correctif doit encore être confirmé sur la radio concernée. L'ensemble des fonctions en vol n'est donc pas encore déclaré valide.
+
+Les tests logiciels restent distincts des essais effectués sur une vraie radio et en conditions de vol.

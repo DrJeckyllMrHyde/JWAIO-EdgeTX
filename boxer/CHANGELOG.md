@@ -1,5 +1,15 @@
 # Notes de version JWAIO Boxer
 
+## Correctif bilan et sauvegarde — 1er novembre 2026
+
+- Réduction des allocations répétées dans la gestion audio.
+- Suppression de l'ouverture des fichiers WAV par Lua pour vérifier leur présence.
+- Suppression de la collecte mémoire complète forcée avant chaque sauvegarde.
+- Conservation des statistiques en mémoire après un refus d'écriture sur la carte SD.
+- Jusqu'à trois tentatives automatiques de sauvegarde, espacées d'au moins cinq secondes.
+- Tests d'endurance réussis sur ordinateur : deux bilans simulés de quinze minutes et quinze minutes de refus SD.
+- La cause exacte du gel rapporté sur une Boxer n'est pas établie ; une nouvelle validation matérielle reste nécessaire.
+
 ## v0.2.1 Alpha — 31 octobre 2026
 
 - Interface FPV dédiée à la RadioMaster Boxer et à son écran monochrome 128 × 64.
