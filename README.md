@@ -2,7 +2,7 @@
 
 **Jeckyll Widget All in One** rassemble les informations FPV, les alertes vocales et une aide à la recherche du quad sur l'écran de votre radio RadioMaster. Trois archives distinctes sont proposées pour **TX15/TX15 Max**, **TX16S Mk1/Mk2** et **TX16S Mk3**, avec EdgeTX 2.12.x.
 
-> **JWAIO Cleaner — Windows 10/11 :** outil portable de désinstallation avec conservation optionnelle des skins et logs. [Présentation et état du projet](docs/CLEANER.md) · [Rapports antivirus](docs/CLEANER-ANTIVIRUS.md). **EXE non publié : release en brouillon pendant l'examen de 5 alertes VirusTotal (Jotti : 0/13).**
+> **JWAIO Cleaner 0.2 Preview — Windows 10/11 :** outil portable compatible JWAIO TX15/TX16, anciennes versions SIXTY9 et JWAIO Boxer, avec conservation optionnelle des skins, logs et réglages Boxer. [Présentation et paquet de test](docs/CLEANER.md). Le nouvel EXE possède une nouvelle empreinte ; son rapport antivirus est en cours de relecture et le rapport 0.1 ne s'applique pas à ce fichier.
 
 ## Choisir et télécharger sa version
 

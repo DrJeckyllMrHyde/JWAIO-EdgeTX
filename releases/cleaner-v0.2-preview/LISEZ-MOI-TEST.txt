@@ -1,0 +1,42 @@
+JWAIO CLEANER 0.2 PREVIEW — TEST PC / BOXER
+
+Fichier à lancer : JWAIO-Cleaner.exe
+Installation : aucune
+Droits administrateur : non requis
+
+Cette version détecte :
+- JWAIO pour TX15 / TX16 ;
+- les anciennes versions SIXTY9 ;
+- JWAIO Boxer.
+
+Pour Boxer, elle cible uniquement :
+- SCRIPTS/TOOLS/jwbox.lua
+- SCRIPTS/JWBOX
+- SOUNDS/<langue>/JWBOX
+- LOGS/JWBOX si la conservation des logs est décochée
+
+Les trois protections sont cochées par défaut :
+- conserver les skins ;
+- conserver les logs de vol ;
+- conserver les réglages Boxer du dossier SCRIPTS/JWBOX/CFG.
+
+ESSAI CONSEILLÉ SUR PC
+1. Copiez le contenu de la carte SD de la Boxer dans un dossier de test.
+2. Lancez JWAIO-Cleaner.exe depuis ce dossier de livraison.
+3. Cliquez sur Choisir un dossier et sélectionnez la copie de la racine SD.
+4. Cliquez sur Analyser la radio.
+5. Vérifiez la liste : les autres scripts et outils EdgeTX ne doivent pas apparaître.
+6. Pour un premier contrôle sans suppression, fermez simplement le logiciel après l'analyse.
+7. Pour tester le nettoyage, utilisez uniquement votre copie et confirmez la suppression.
+8. Vérifiez JWAIO-Sauvegardes : le dossier CFG doit s'y trouver si sa conservation était cochée.
+
+Ne testez pas d'abord la suppression sur l'unique carte SD de la radio. Gardez une copie complète.
+
+Validation effectuée avant livraison :
+- 135 assertions automatisées réussies ;
+- copie réelle du paquet JWAIO Boxer v0.2.1 Alpha nettoyée ;
+- 23 fichiers retirés ;
+- réglages CFG sauvegardés et vérifiés ;
+- interface compilée et contrôlée visuellement.
+
+Ce nouvel EXE possède une nouvelle empreinte. Les anciens rapports antivirus du Cleaner 0.1 ne s'appliquent pas à ce fichier de test.

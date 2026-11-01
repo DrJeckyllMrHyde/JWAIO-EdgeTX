@@ -1,5 +1,15 @@
 # Notes de version
 
+## JWAIO Cleaner 0.2 Preview — 1er novembre 2026
+
+- Ajout de JWAIO Boxer aux produits détectés.
+- Nettoyage limité à `SCRIPTS/TOOLS/jwbox.lua`, `SCRIPTS/JWBOX`, `SOUNDS/<langue>/JWBOX` et aux logs Boxer lorsque leur conservation est décochée.
+- Nouvelle option pour sauvegarder et vérifier les réglages `SCRIPTS/JWBOX/CFG` avant suppression.
+- Affichage explicite des produits trouvés pendant l'analyse.
+- 135 assertions automatisées réussies, dont la préservation des autres scripts EdgeTX et le refus des jonctions.
+- Validation sur une copie réelle du paquet JWAIO Boxer v0.2.1 Alpha : 23 fichiers retirés, réglages sauvegardés et vérifiés.
+- Nouvel exécutable non signé et nouvelle empreinte SHA-256 ; rapport antivirus 0.2 en cours de relecture.
+
 ## JWAIO v0.3.1 — 14 septembre 2026
 
 - Publication des trois archives originales : TX15, TX16S Mk1/Mk2 et TX16S Mk3, ciblant EdgeTX 2.12.x.

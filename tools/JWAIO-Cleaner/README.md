@@ -1,6 +1,17 @@
 # JWAIO Cleaner
 
-Outil portable Windows 10/11 pour désinstaller JWAIO et les anciennes versions SIXTY9, avec conservation optionnelle des skins et journaux de vol.
+Outil portable Windows 10/11 pour désinstaller JWAIO, les anciennes versions SIXTY9 et JWAIO Boxer, avec conservation optionnelle des skins, réglages Boxer et journaux de vol.
+
+## Prise en charge de JWAIO Boxer
+
+La détection Boxer couvre uniquement les chemins propres au produit :
+
+- `SCRIPTS/TOOLS/jwbox.lua` ;
+- `SCRIPTS/JWBOX` ;
+- `SOUNDS/<langue>/JWBOX` ;
+- `LOGS/JWBOX` si leur conservation est décochée.
+
+Le dossier de réglages `SCRIPTS/JWBOX/CFG` peut être sauvegardé et vérifié sur la radio avant suppression. Cette option et la conservation des logs sont activées par défaut. Les autres scripts et outils EdgeTX sont exclus du nettoyage.
 
 **La release reste en brouillon pendant l'examen des alertes antivirus. Aucun EXE public pour le moment.**
 
